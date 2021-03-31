@@ -40,7 +40,7 @@ def cmd_export(args):
     return 0
 
 
-def parsecli() -> argparse.Namespace:
+def parsecli(cliargs=None) -> argparse.Namespace:
     """Parse CLI with :class:`argparse.ArgumentParser` and return parsed result
 
     :param cliargs: Arguments to parse or None (=use sys.argv)
@@ -50,7 +50,7 @@ def parsecli() -> argparse.Namespace:
                                      epilog="Version %s written by %s " % (
                                          __version__, __author__)
                                      )
-
+    subparsers = parser.add_subparsers(help='available sub commands')
     # new cmd
     parser_new = subparsers.add_parser('new', help="creates a new day entry")
     parser_new.set_defaults(func=cmd_new)
@@ -82,7 +82,8 @@ def parsecli() -> argparse.Namespace:
     parser_export = subparsers.add_parser(
         "export", help="exports todays changes and saves it to a file")
     parser_export.set_defaults(func=cmd_export)
-    args = parser.parse_args()
+    # end cmd
+    args = parser.parse_args(cliargs)
 
     return args
 
