@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
-"""
-add your description here
-"""
+
 import argparse
-import sys
 import logging
+from logging.config import dictConfig
+import sys
 
 __version__ = "0.2.0"
 __author__ = "Eugen Maksymenko <eugen.maksymenko@suse.com>"
@@ -45,40 +44,54 @@ LOGLEVELS = {None: logging.WARNING,  # 0
              }
 
 
+#: Instantiate our logger
+log = logging.getLogger(__name__)
+
+#: Use best practice from Hitchhiker's Guide
+#: see https://docs.python-guide.org/writing/logging/#logging-in-a-library
+log.addHandler(logging.NullHandler())
+
+
 def cmd_new(args):
     """Creates a new day for the incoming entries"""
+    print()
     print("New selected", args)
-    return 10
+    return 100
 
 
 def cmd_add(args):
     """add a new entry"""
+    print()
     print("add selected", args)
-    return 0
+    return 200
 
 
 def cmd_change(args):
     """change a entry by id"""
+    print()
     print("Change selected", args)
-    return 0
+    return 300
 
 
 def cmd_delete(args):
     """delete an entry by id"""
+    print()
     print("delete sected", args)
-    return 0
+    return 400
 
 
 def cmd_list(args):
     """list all entries of the day by id"""
+    print()
     print("list selected", args)
-    return 0
+    return 500
 
 
 def cmd_export(args):
     """export the day by id"""
+    print()
     print("export selected", args)
-    return 0
+    return 600
 
 
 def parsecli(cliargs=None) -> argparse.Namespace:
@@ -93,7 +106,7 @@ def parsecli(cliargs=None) -> argparse.Namespace:
                                      )
 
     parser.add_argument('-v', action='count',
-                        dest="verbosity", default=0, help="Add a verbosity level for the logger  from ""-v"" to ""-vvvv""")
+                        dest="verbose", default=0, help="Add a verbosity level for the logger  from ""-v"" to ""-vvvv""")
 
     # subparser
     subparsers = parser.add_subparsers(help='available sub commands')
@@ -131,28 +144,37 @@ def parsecli(cliargs=None) -> argparse.Namespace:
     # end cmd
     args = parser.parse_args(cliargs)
 
+    # logging
+    dictConfig(DEFAULT_LOGGING_DICT)
+    log.setLevel(LOGLEVELS.get(args.verbose, logging.DEBUG))
+    log.debug("CLI result: %s", args)
+
     return args
 
 
 def main(cliargs=None) -> int:
     """Entry point for the application script
-
     :param cliargs: Arguments to parse or None (=use :class:`sys.argv`)
     :return: error code
     """
-    exit_code = 0
+
     try:
         args = parsecli(cliargs)
         print(args)
-        exit_code = args.func(args)
+        # do some useful things here...
         # If everything was good, return without error:
         log.info("I'm an info message")
         log.debug("I'm a debug message.")
         log.warning("I'm a warning message.")
         log.error("I'm an error message.")
         log.fatal("I'm a really fatal massage!")
+        # return code with int code of cmd
+        exit_code = args.func(args)
+        return exit_code
 
-    return exit_code
+    except Exception as error:
+        log.fatal(error)
+        return 999
 
 
 if __name__ == "__main__":
