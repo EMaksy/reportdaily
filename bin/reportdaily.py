@@ -16,7 +16,7 @@ DEFAULT_LOGGING_DICT = {
     'version': 1,
     'disable_existing_loggers': False,
     'formatters': {
-        'standard': {'format': '[%(levelname)s] %(name)s: %(message)s'},
+        'standard': {'format': '[%(levelname)s] %(funcName)s: %(message)s'},
     },
     'handlers': {
         'default': {
@@ -54,42 +54,42 @@ log.addHandler(logging.NullHandler())
 
 def cmd_new(args):
     """Creates a new day for the incoming entries"""
-    print()
+    log.debug("New selected %s", args)
     print("New selected", args)
     return 100
 
 
 def cmd_add(args):
     """add a new entry"""
-    print()
+    log.debug("New selected %s", args)
     print("add selected", args)
     return 200
 
 
 def cmd_change(args):
     """change a entry by id"""
-    print()
+    log.debug("New selected %s", args)
     print("Change selected", args)
     return 300
 
 
 def cmd_delete(args):
     """delete an entry by id"""
-    print()
+    log.debug("New selected %s", args)
     print("delete sected", args)
     return 400
 
 
 def cmd_list(args):
     """list all entries of the day by id"""
-    print()
+    log.debug("New selected %s", args)
     print("list selected", args)
     return 500
 
 
 def cmd_export(args):
     """export the day by id"""
-    print()
+    log.debug("New selected %s", args)
     print("export selected", args)
     return 600
 
@@ -160,14 +160,13 @@ def main(cliargs=None) -> int:
 
     try:
         args = parsecli(cliargs)
-        print(args)
         # do some useful things here...
         # If everything was good, return without error:
-        log.info("I'm an info message")
-        log.debug("I'm a debug message.")
-        log.warning("I'm a warning message.")
-        log.error("I'm an error message.")
-        log.fatal("I'm a really fatal massage!")
+       # log.info("I'm an info message")
+       # log.debug("I'm a debug message.")
+       # log.warning("I'm a warning message.")
+       # log.error("I'm an error message.")
+       # log.fatal("I'm a really fatal massage!")
         exit_code = args.func(args)
         return exit_code
 
