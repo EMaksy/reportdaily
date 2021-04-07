@@ -144,7 +144,7 @@ def parsecli(cliargs=None) -> argparse.Namespace:
     # end cmd
     args = parser.parse_args(cliargs)
 
-    # logging
+    # Setup logging and the log level according to the "-v" option
     dictConfig(DEFAULT_LOGGING_DICT)
     log.setLevel(LOGLEVELS.get(args.verbose, logging.DEBUG))
     log.debug("CLI result: %s", args)
