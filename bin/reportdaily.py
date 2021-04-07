@@ -55,42 +55,42 @@ def cmd_new(args):
     """Creates a new day for the incoming entries"""
     log.debug("New selected %s", args)
     print("New selected", args)
-    return 100
+    return 0
 
 
 def cmd_add(args):
     """add a new entry"""
     log.debug("New selected %s", args)
     print("add selected", args)
-    return 200
+    return 0
 
 
 def cmd_change(args):
     """change a entry by id"""
     log.debug("New selected %s", args)
     print("Change selected", args)
-    return 300
+    return 0
 
 
 def cmd_delete(args):
     """delete an entry by id"""
     log.debug("New selected %s", args)
     print("delete sected", args)
-    return 400
+    return 0
 
 
 def cmd_list(args):
     """list all entries of the day by id"""
     log.debug("New selected %s", args)
     print("list selected", args)
-    return 500
+    return 0
 
 
 def cmd_export(args):
     """export the day by id"""
     log.debug("New selected %s", args)
     print("export selected", args)
-    return 600
+    return 0
 
 
 def parsecli(cliargs=None) -> argparse.Namespace:
@@ -170,7 +170,7 @@ def main(cliargs=None) -> int:
         exit_code = args.func(args)
         return exit_code
 
-    except Exception as error:
+    except Exception as error:  # FIXME: add a more specific exception here!
         log.fatal(error)
         return 999
 
