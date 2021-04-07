@@ -8,7 +8,6 @@ import sys
 __version__ = "0.2.0"
 __author__ = "Eugen Maksymenko <eugen.maksymenko@suse.com>"
 
-
 #: The dictionary, passed to :class:`logging.config.dictConfig`,
 #: is used to setup your logging formatters, handlers, and loggers
 #: For details, see https://docs.python.org/3.4/library/logging.config.html#configuration-dictionary-schema
@@ -105,6 +104,7 @@ def parsecli(cliargs=None) -> argparse.Namespace:
                                          __version__, __author__)
                                      )
 
+    
     parser.add_argument('-v', action='count',
                         dest="verbose", default=0, help="Add a verbosity level for the logger  from ""-v"" to ""-vvvv""")
 
@@ -157,7 +157,7 @@ def main(cliargs=None) -> int:
     :param cliargs: Arguments to parse or None (=use :class:`sys.argv`)
     :return: error code
     """
-
+    
     try:
         args = parsecli(cliargs)
         # do some useful things here...
@@ -174,6 +174,6 @@ def main(cliargs=None) -> int:
         log.fatal(error)
         return 999
 
-
+      
 if __name__ == "__main__":
     sys.exit(main())
