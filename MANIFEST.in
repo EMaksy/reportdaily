@@ -1,4 +1,4 @@
 include LICENSE
 include C[hH][aA][nN][gG][eE][lL][oO][gG]*
-
+grafts docs/*
 global-exclude *.py[cod] __pycache__ *.so *.dylib

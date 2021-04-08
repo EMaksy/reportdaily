@@ -1,6 +1,6 @@
 :orphan:
 
-reportdaily|version|
+reportdaily 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Synopsis
