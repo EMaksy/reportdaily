@@ -1,10 +1,10 @@
 :orphan:
 
 reportdaily|version|
-==================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Synopsis
---------
+~~~~~~~~~~~~~~
 
 .. _invocation:
 
@@ -14,7 +14,7 @@ Synopsis
 
 
 Description
------------
+~~~~~~~~~~~~~~
 
 The reportdaily script provides a command line tool to create edit and export daily weekly or monthly reports.
 :command:`reportdaily` to make the functionality accessible for shell
@@ -22,7 +22,7 @@ scripts. The script supports several subcommands.
 
 
 Global Options
-~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. program:: reportdaily
 
@@ -37,13 +37,13 @@ Global Options
 
 
 CMD_OPTIONS Options
-~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 WORK IN PROGRESS
 
 
 Commands
---------
+~~~~~~~~~~~~~~
 
 .. HINT: Sort the subcommands alphabetically
 
@@ -95,17 +95,14 @@ list all entries of the day by id
    reportdaily  list <ID> 
 
 
-export <ID> <OPTION>
+export <ID>
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 export the day by id
 
 .. code:: bash
 
-   reportdaily  export <ID> <FORMAT>
-
-.. option:: <Format>
-    The Format you want to export your report --> PDF ect
+   reportdaily  export <ID> 
 
 See also
 --------
