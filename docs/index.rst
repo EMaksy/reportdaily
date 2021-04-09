@@ -4,10 +4,10 @@
    contain the root `toctree` directive.
 
 Welcome to reportdaily's documentation
-======================================================================
-DISCLAIMER
-===================================================
-Everything you see is work in PROGRESS :D
+======================================
+
+.. note:: DISCLAIMER
+   Everything you see here is *work in progress*.
 
 
 
@@ -16,12 +16,3 @@ Everything you see is work in PROGRESS :D
 
    reportdaily
    
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
-
-
-
