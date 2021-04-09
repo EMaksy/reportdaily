@@ -104,9 +104,6 @@ def parsecli(cliargs=None) -> argparse.Namespace:
                                          __version__, __author__)
                                      )
 
-    parser.add_argument('-v', action='count',
-                        dest="verbose", default=0, help="Add a verbosity level for the logger  from ""-v"" to ""-vvvv""")
-
     # option verbose
     parser.add_argument('-v', action='count',
                         dest="verbose", default=0, help="Add a verbosity level for the logger  from ""-v"" to ""-vvvv""")
