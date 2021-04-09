@@ -104,9 +104,17 @@ def parsecli(cliargs=None) -> argparse.Namespace:
                                          __version__, __author__)
                                      )
 
-    
     parser.add_argument('-v', action='count',
                         dest="verbose", default=0, help="Add a verbosity level for the logger  from ""-v"" to ""-vvvv""")
+
+    # option verbose
+    parser.add_argument('-v', action='count',
+                        dest="verbose", default=0, help="Add a verbosity level for the logger  from ""-v"" to ""-vvvv""")
+    # option version
+    parser.add_argument('--version',
+                        action='version',
+                        version='%(prog)s ' + __version__
+                        )
 
     # subparser
     subparsers = parser.add_subparsers(help='available sub commands')
@@ -157,7 +165,7 @@ def main(cliargs=None) -> int:
     :param cliargs: Arguments to parse or None (=use :class:`sys.argv`)
     :return: error code
     """
-    
+
     try:
         args = parsecli(cliargs)
         # do some useful things here...
@@ -174,6 +182,6 @@ def main(cliargs=None) -> int:
         log.fatal(error)
         return 999
 
-      
+
 if __name__ == "__main__":
     sys.exit(main())
