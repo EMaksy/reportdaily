@@ -34,9 +34,6 @@ Global Options
 
    Increase verbosity (can be repeated).
 
-.. option:: --version
-
-   Display the software version.
 
 
 Subcommands Options
