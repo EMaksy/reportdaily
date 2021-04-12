@@ -4,7 +4,7 @@ reportdaily
 ===========
 
 Synopsis
-~~~~~~~~
+--------
 
 .. _invocation:
 
@@ -14,7 +14,7 @@ Synopsis
 
 
 Description
-~~~~~~~~~~~
+-----------
 
 The reportdaily script provides a command line tool to create edit and export daily weekly or monthly reports.
 :command:`reportdaily` to make the functionality accessible for shell
@@ -22,7 +22,7 @@ scripts. The script supports several subcommands.
 
 
 Global Options
-~~~~~~~~~~~~~~
+--------------
 
 .. program:: reportdaily
 
@@ -39,14 +39,9 @@ Global Options
    Display the software version.
 
 
-Subcommands Options
-~~~~~~~~~~~~~~~~~~~
 
-WORK IN PROGRESS
-
-
-Commands
-~~~~~~~~
+Subcommands
+-----------
 
 .. HINT: Sort the subcommands alphabetically
 
@@ -107,7 +102,7 @@ export the day by id
    reportdaily  export <ID> 
 
 See also
-~~~~~~~~
+--------
 
 :Source code:   https://github.com/SchleichsSalaticus/reportdaily
 

@@ -12,7 +12,7 @@ Welcome to reportdaily's documentation
 
 
 .. toctree::
-   :maxdepth: 2
-
+   :maxdepth: 3
+   
    reportdaily
    
