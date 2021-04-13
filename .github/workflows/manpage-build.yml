@@ -1,0 +1,9 @@
+name: Manpage CI
+# - this workflow will
+# - build manpage on every pull request
+on: [push]
+
+jobs:
+  build-manpage:
+    runs-on: ubuntu-18.04
+    
