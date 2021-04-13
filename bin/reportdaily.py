@@ -5,6 +5,11 @@ import logging
 from logging.config import dictConfig
 import sys
 
+
+class MissingSubCommand(ValueError):
+    pass
+
+
 __version__ = "0.2.0"
 __author__ = "Eugen Maksymenko <eugen.maksymenko@suse.com>"
 
@@ -60,36 +65,36 @@ def cmd_new(args):
 
 def cmd_add(args):
     """add a new entry"""
-    log.debug("New selected %s", args)
-    print("add selected", args)
+    log.debug("Add selected %s", args)
+    print("Add selected", args)
     return 0
 
 
 def cmd_change(args):
     """change a entry by id"""
-    log.debug("New selected %s", args)
+    log.debug("Change selected %s", args)
     print("Change selected", args)
     return 0
 
 
 def cmd_delete(args):
     """delete an entry by id"""
-    log.debug("New selected %s", args)
-    print("delete sected", args)
+    log.debug("Delete selected %s", args)
+    print("Delete selected", args)
     return 0
 
 
 def cmd_list(args):
     """list all entries of the day by id"""
-    log.debug("New selected %s", args)
-    print("list selected", args)
+    log.debug("List selected %s", args)
+    print("List selected", args)
     return 0
 
 
 def cmd_export(args):
     """export the day by id"""
-    log.debug("New selected %s", args)
-    print("export selected", args)
+    log.debug("Export selected %s", args)
+    print("Export selected", args)
     return 0
 
 
@@ -149,6 +154,11 @@ def parsecli(cliargs=None) -> argparse.Namespace:
     # end cmd
     args = parser.parse_args(cliargs)
 
+    # help for the user when no subcommand was passed
+    if "func" not in args:
+        parser.print_help()
+        raise MissingSubCommand("Expected subcommand")
+
     # Setup logging and the log level according to the "-v" option
     dictConfig(DEFAULT_LOGGING_DICT)
     log.setLevel(LOGLEVELS.get(args.verbose, logging.DEBUG))
@@ -175,9 +185,9 @@ def main(cliargs=None) -> int:
         exit_code = args.func(args)
         return exit_code
 
-    except Exception as error:  # FIXME: add a more specific exception here!
+    except MissingSubCommand as error:
         log.fatal(error)
-        return 999
+        return 888
 
 
 if __name__ == "__main__":
