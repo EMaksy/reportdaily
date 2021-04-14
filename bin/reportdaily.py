@@ -100,6 +100,7 @@ def cmd_export(args):
 
 def parsecli(cliargs=None) -> argparse.Namespace:
     """Parse CLI with :class:`argparse.ArgumentParser` and return parsed result
+
     :param cliargs: Arguments to parse or None (=use sys.argv)
     :return: parsed CLI result
     """
@@ -152,6 +153,9 @@ def parsecli(cliargs=None) -> argparse.Namespace:
     parser_export.set_defaults(func=cmd_export)
     # end cmd
     args = parser.parse_args(cliargs)
+    if "func" not in args:
+        parser.print_help()
+        return 100
 
     # help for the user when no subcommand was passed
     if "func" not in args:
