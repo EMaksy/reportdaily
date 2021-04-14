@@ -153,9 +153,6 @@ def parsecli(cliargs=None) -> argparse.Namespace:
     parser_export.set_defaults(func=cmd_export)
     # end cmd
     args = parser.parse_args(cliargs)
-    if "func" not in args:
-        parser.print_help()
-        return 100
 
     # help for the user when no subcommand was passed
     if "func" not in args:
