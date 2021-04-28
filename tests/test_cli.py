@@ -38,13 +38,14 @@ def test_help(capsys):
     assert expected_output in captured.out
 
 
-def test_verbosity(capsys):
+@pytest.mark.parametrize("verbose_count", ["", "-v", "-vv", "-vvv", "-vvvv"])
+def test_verbosity(verbose_count):
     """
     Test if the verbosity option was used correctly 
     """
     # given the user inputs the -v option  to add verbosity level for the logger from -v to -vvvv with an subcommand
     # example cmd  -vvvv and new
-    cliargs = ["-vvvv", "new"]
+    cliargs = ["new"] if not verbose_count else [verbose_count, "new"]
     count = cliargs[0].count("v")
     search_for = "verbose"
 
