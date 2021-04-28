@@ -51,6 +51,7 @@ def test_verbosity(verbose_count):
 
     # when = expect  the execution of the option  + subcommand
     result = rd.parsecli(cliargs)
+
     # then "verbose" should be in the given namespace
     assert search_for in result
     assert result.verbose == count
