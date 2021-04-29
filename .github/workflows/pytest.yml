@@ -32,7 +32,3 @@ jobs:
     - name: Run Tests and create coverage
       run: |
         pytest -v --cov=reportdaily tests/
-
-
-
-      
