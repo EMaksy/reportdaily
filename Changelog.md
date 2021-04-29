@@ -8,7 +8,7 @@ All notable changes to this project will be documented in this file.
 
 - Intergrate CI to run pytest on every merged PR (#26)
 - Make manpage available on GitHub pages (#20)
-- Feature/logging module (#16)
+- Implement logging module to be able to categorize messages (#16)
 - Output help when no subcommand was used (#15)
 - Integrate a test suite (#9)
 - Add a manpage (#8)
