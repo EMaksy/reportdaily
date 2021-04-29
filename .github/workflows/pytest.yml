@@ -24,11 +24,11 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}    
 
-    - name: Test python version [3.6, 3.7, 3.8, 3.9] and install dependencies
+    - name: Test python version ${{ matrix.python-version }} and install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install pytest pytest-cov
+        pip install -r devel-requirements.txt
 
     - name: Run Tests and create coverage
       run: |
-        pytest -v --cov=reportdaily tests/
+        pytest -v 
