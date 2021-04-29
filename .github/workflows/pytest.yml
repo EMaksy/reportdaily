@@ -2,7 +2,7 @@ name: pytest
 
 # This workflow will
 # run all tests with pytest  
-on: [push, pull_request]
+on: [push]
 
 jobs:
   
@@ -32,7 +32,7 @@ jobs:
     - name: Run Tests and create coverage
       run: |
         pytest -v --cov=reportdaily tests/
-        ls -all tests/
+
 
 
       
