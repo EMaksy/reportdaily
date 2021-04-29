@@ -38,7 +38,7 @@ def test_help(capsys):
     assert expected_output in captured.out
 
 
-@pytest.mark.parametrize("verbose_count", ["", "-v", "-vv", "-vvv", "--help"])
+@pytest.mark.parametrize("verbose_count", ["", "-v", "-vv", "-vvv", "-vvvv"])
 def test_verbosity(verbose_count):
     """
     Test if the verbosity option was used correctly 
