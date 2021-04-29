@@ -1,5 +1,7 @@
 [![Pages](https://github.com/SchleichsSalaticus/reportdaily/actions/workflows/manpage-build.yml/badge.svg)](https://github.com/SchleichsSalaticus/reportdaily/actions/workflows/manpage-build.yml)
 
+[![pytest](https://github.com/SchleichsSalaticus/reportdaily/actions/workflows/pytest.yml/badge.svg)](https://github.com/SchleichsSalaticus/reportdaily/actions/workflows/pytest.yml)
+
 # Reportdaily
 
 A command line tool to create edit and export daily, weekly, or monthly reports.

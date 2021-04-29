@@ -30,7 +30,7 @@ jobs:
         pip install pytest pytest-cov
 
     - name: Test with pytest
-      run: pytest -v
+      run: pytest -v --cov=reportdaily tests/
 
 
 
