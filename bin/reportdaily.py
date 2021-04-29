@@ -10,7 +10,7 @@ class MissingSubCommand(ValueError):
     pass
 
 
-__version__ = "0.2.0"
+__version__ = "0.3.0"
 __author__ = "Eugen Maksymenko <eugen.maksymenko@suse.com>"
 
 #: The dictionary, passed to :class:`logging.config.dictConfig`,
