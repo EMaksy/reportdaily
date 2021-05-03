@@ -23,7 +23,7 @@ Python3
 
 Just clone the repository and cd into the directory
 
-`python3 /bin reportdaily.py [commands] [arguments]`
+`python3 bin/reportdaily.py [commands] [arguments]`
 
 ## Commands
 
