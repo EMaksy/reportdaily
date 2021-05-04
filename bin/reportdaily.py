@@ -5,6 +5,10 @@ import logging
 from logging.config import dictConfig
 import sys
 
+# this is required for the configparser
+from datetime import date
+from configparser import ConfigParser
+
 
 class MissingSubCommand(ValueError):
     pass
@@ -58,9 +62,57 @@ log.addHandler(logging.NullHandler())
 
 def cmd_new(args):
     """Creates a new day for the incoming entries"""
+
+    # requires from datetime import date
+    try:
+        check_if_config_exists()
+    except FileNotFoundError:
+        create_config()
+
     log.debug("New selected %s", args)
     print("New selected", args)
     return 0
+
+
+def create_config():
+    """This function will create a config file where the user data is stored"""
+    # time to ask the user for his data
+    # name
+    print("Please enter your full name --> example: 'Max Musterman'")
+    name = input("Ihr name ist ? ")
+    # team
+    team = input("Please enter your team name: ")
+    # year
+    year = int(input("What year of training are you in? "))
+    # optional time input
+    print(
+        f"You are ready to go.  Entries for this {date} can  bee added now with reportdaily add")
+
+    # store configfiles in list
+    config_data = [name, team, date, year]
+
+    # create a config file
+    config = ConfigParser()
+    config["settings"] = {'user_name': name,
+                          'user_team': team, 'user_date': date, 'user_year': year}
+    # create a config file in root
+    with open('./user_config.ini', 'w') as user_config:
+        config.write(user_config)
+
+
+def show_config():
+    """Show the configs to the user"""
+
+
+def check_if_config_exists():
+    """Check if the config files exists"""
+
+    try:
+        with open('./user_config.ini') as user_config:
+            print("Configs already exists")
+    except FileNotFoundError:
+        print("Config File does not exist --> use the new command to create one")
+        create_config()
 
 
 def cmd_add(args):
@@ -177,11 +229,11 @@ def main(cliargs=None) -> int:
         args = parsecli(cliargs)
         # do some useful things here...
         # If everything was good, return without error:
-       # log.info("I'm an info message")
-       # log.debug("I'm a debug message.")
-       # log.warning("I'm a warning message.")
-       # log.error("I'm an error message.")
-       # log.fatal("I'm a really fatal massage!")
+        # log.info("I'm an info message")
+        # log.debug("I'm a debug message.")
+        # log.warning("I'm a warning message.")
+        # log.error("I'm an error message.")
+        # log.fatal("I'm a really fatal massage!")
         exit_code = args.func(args)
         return exit_code
 
