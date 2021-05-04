@@ -66,6 +66,7 @@ def cmd_new(args):
     # requires from datetime import date
     try:
         check_if_config_exists()
+        show_config()
     except FileNotFoundError:
         create_config()
 
@@ -103,9 +104,25 @@ def create_config():
 def show_config():
     """Show the configs to the user"""
 
+    # read the config
+    parser = ConfigParser()
+    parser.read("./user_config.ini")
+
+    print("Your current configuration at the moment")
+    print(f"""
+    Name: {parser.get('settings','user_name')}
+    Team: {parser.get("settings", "user_team")} 
+    Date: {parser.get("settings", "user_date")}
+    Year: {parser.get("settings", "user_year")}
+    """)
+    # Team: {parser.get("settings", "user_team")}
+    # Team: {parser.get("settings", "user_team")},
+    # Date: {parser.get("settings", "user_date")},
+    # Year: {parser.get("settings", "user_year")}")
+
 
 def check_if_config_exists():
-    """Check if the config files exists"""
+    """Check if the config files exists and if not it creates a new config file"""
 
     try:
         with open('./user_config.ini') as user_config:
