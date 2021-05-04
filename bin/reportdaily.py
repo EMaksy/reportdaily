@@ -78,6 +78,7 @@ def cmd_new(args):
 def create_config():
     """This function will create a config file where the user data is stored"""
     # time to ask the user for his data
+
     # name
     print("Please enter your full name --> example: 'Max Musterman'")
     name = input("Ihr name ist ? ")
@@ -85,17 +86,18 @@ def create_config():
     team = input("Please enter your team name: ")
     # year
     year = int(input("What year of training are you in? "))
-    # optional time input
+    # time
+    user_date = date.today()
     print(
-        f"You are ready to go.  Entries for this {date} can  bee added now with reportdaily add")
+        f"You are ready to go.  Entries for this {user_date} can  bee added now with reportdaily add")
 
     # store configfiles in list
-    config_data = [name, team, date, year]
+    config_data = [name, team, user_date, year]
 
     # create a config file
     config = ConfigParser()
     config["settings"] = {'user_name': name,
-                          'user_team': team, 'user_date': date, 'user_year': year}
+                          'user_team': team, 'user_date': user_date, 'user_year': year}
     # create a config file in root
     with open('./user_config.ini', 'w') as user_config:
         config.write(user_config)
