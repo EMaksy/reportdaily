@@ -6,7 +6,7 @@ from logging.config import dictConfig
 import sys
 
 # this is required for the configparser
-from datetime import date
+from datetime import *
 from configparser import ConfigParser
 
 
@@ -66,6 +66,7 @@ def cmd_new(args):
     # requires from datetime import date
     try:
         check_if_config_exists()
+        check_date()
         show_config()
     except FileNotFoundError:
         create_config()
@@ -116,6 +117,8 @@ def show_config():
     Team: {parser.get("settings", "user_team")} 
     Date: {parser.get("settings", "user_date")}
     Year: {parser.get("settings", "user_year")}
+
+    If you desire to make changes to the configuration try the -c or --change option for the new command 
     """)
     # Team: {parser.get("settings", "user_team")}
     # Team: {parser.get("settings", "user_team")},
@@ -130,8 +133,36 @@ def check_if_config_exists():
         with open('./user_config.ini') as user_config:
             print("Configs already exists")
     except FileNotFoundError:
-        print("Config File does not exist --> use the new command to create one")
+        print("Config File does not exist")
         create_config()
+
+
+def check_date():
+    """
+    Check the date in the config file  when using the new command        
+    If the date is outdated, this function will automatically overwrite the config with todays date
+    """
+
+    # what is our date today ?
+    todays_date = date.today()
+
+    # read data from existing user config
+    parser = ConfigParser()
+    parser.read('./user_config.ini')
+
+    # get the date from config for compering
+    config_date = date(parser.getint('settings', 'user_date'))
+
+    # check if todays date is newer then the config date
+    if todays_date > config_date:
+        print(
+            f"Todays date {todays_date} is newer than config date {config_data} --> need to overwrite")
+    elif todays_date == config_date:
+        print(f"{config_date} is same as {todays_date} --> no need to overwrite")
+
+    elif todays_date < config_date:
+        print(
+            f"{config_date} is smaller as  {todays_date} \n Are you a time traveller?")
 
 
 def cmd_add(args):
