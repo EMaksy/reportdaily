@@ -45,6 +45,16 @@ Subcommands
 
 .. HINT: Sort the subcommands alphabetically
 
+init
+~~~~
+
+Is required for the first time use of the programm
+User can enter his data directly or he need to answer some questions provided by this command
+
+..code:: bash 
+   
+   reportdaily init
+
 new
 ~~~
 
