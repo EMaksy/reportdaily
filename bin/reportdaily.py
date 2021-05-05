@@ -17,7 +17,7 @@ class MissingSubCommand(ValueError):
     pass
 
 
-__configpath__ = "~/.config/reportdaily/reportdailyrc"
+CONIFGPATH = os.path.expanduser("~/.config/reportdaily/reportdailyrc")
 __version__ = "0.3.0"
 __author__ = "Eugen Maksymenko <eugen.maksymenko@suse.com>"
 
@@ -68,24 +68,33 @@ def cmd_init(args):
     """Creates an initial config file for a user config file"""
 
     # create config by hand
-    check_if_config_exists()
+    check_if_config_exists(args)
 
     log.debug("INIT selected %s", args)
     print("Init selected", args)
     return 0
 
 
-def create_config():
+def create_config(args):
     """This function will create a config file where the user data is stored"""
     # time to ask the user for his data
 
     # name
-    print("Please enter your full name --> example: 'Max Musterman'")
-    name = input("Ihr name ist ? ")
+    if args.name == None:
+        print("Please enter your full name --> example: 'Max Musterman'")
+        name = input("Ihr name ist ? ")
+    else:
+        name = args.name
     # team
-    team = input("Please enter your team name: ")
+    if args.team == None:
+        team = input("Please enter your team name: ")
+    else:
+        team = args.team
     # year
-    year = int(input("What year of training are you in? "))
+    if args.year == None:
+        year = int(input("What year of training are you in? "))
+    else:
+        year = args.year
     # time
     user_date = date.today()
     print(
@@ -100,10 +109,10 @@ def create_config():
                           'user_team': team, 'user_date': user_date, 'user_year': year}
 
     # create a config file
-    os.makedirs(os.path.dirname(__configpath__), exist_ok=True)
-    with open(__configpath__, 'w') as user_config:
+    os.makedirs(os.path.dirname(CONIFGPATH), exist_ok=True)
+    with open(CONIFGPATH, 'w') as user_config:
         config.write(user_config)
-    print(f"The file was created at this path {__configpath__}")
+    print(f"The file was created at this path {CONIFGPATH}")
 
 
 def show_config():
@@ -111,7 +120,7 @@ def show_config():
 
     # read the config
     parser = ConfigParser()
-    parser.read(f"{__configpath__}")
+    parser.read(f"{CONIFGPATH}")
 
     print("Your current configuration at the moment")
     print(f"""
@@ -128,16 +137,16 @@ def show_config():
     # Year: {parser.get("settings", "user_year")}")
 
 
-def check_if_config_exists():
+def check_if_config_exists(args):
     """Check if the config files exists and if not it creates a new config file"""
 
     try:
-        with open(f'{__configpath__}') as user_config:
+        with open(f'{CONIFGPATH}') as user_config:
             print("Configs already exists")
             show_config()
     except FileNotFoundError:
         print("Config File does not exist")
-        create_config()
+        create_config(args)
 
 
 def check_date():
@@ -236,6 +245,12 @@ def parsecli(cliargs=None) -> argparse.Namespace:
     parser_init = subparsers.add_parser(
         'init', help="Create an initial Configuration file")
     parser_init.set_defaults(func=cmd_init)
+    parser_init.add_argument(
+        '--name', "-n", help='this is a option so the user enters his name')
+    parser_init.add_argument(
+        '--year', "-y", help='this is a option so the user enters his teaching year')
+    parser_init.add_argument(
+        '--team', "-t", help='this is a option so the user enters his team year')
 
     # new cmd
     parser_new = subparsers.add_parser('new', help="creates a new day entry")
