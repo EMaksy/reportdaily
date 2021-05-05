@@ -31,6 +31,7 @@ Just clone the repository and cd into the directory
 
 ### Subcommands
 
+- `init` : initialize and create config on first time
 - `new` : new day for entries
 - `add` : creates a new entry
 - `change` :change an existing entry
@@ -42,7 +43,8 @@ Just clone the repository and cd into the directory
 
 ```bash
     git clone [this project]
-    cd reportdaily
+    python3 bin/reportdaily.py init
+    # create user config
     python3 bin/reportdaily.py new
     # a new day has been added.
     python3 bin/reportdaily.py add "message"
