@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+
 import argparse
 import logging
 from logging.config import dictConfig
@@ -8,12 +9,15 @@ import sys
 # this is required for the configparser
 from datetime import *
 from configparser import ConfigParser
+# os is required for creating a path
+import os
 
 
 class MissingSubCommand(ValueError):
     pass
 
 
+__configpath__ = "~/.config/reportdaily/reportdailyrc"
 __version__ = "0.3.0"
 __author__ = "Eugen Maksymenko <eugen.maksymenko@suse.com>"
 
@@ -60,19 +64,14 @@ log = logging.getLogger(__name__)
 log.addHandler(logging.NullHandler())
 
 
-def cmd_new(args):
-    """Creates a new day for the incoming entries"""
+def cmd_init(args):
+    """Creates an initial config file for a user config file"""
 
-    # requires from datetime import date
-    try:
-        check_if_config_exists()
-        check_date()
-        show_config()
-    except FileNotFoundError:
-        create_config()
+    # create config by hand
+    check_if_config_exists()
 
-    log.debug("New selected %s", args)
-    print("New selected", args)
+    log.debug("INIT selected %s", args)
+    print("Init selected", args)
     return 0
 
 
@@ -99,9 +98,12 @@ def create_config():
     config = ConfigParser()
     config["settings"] = {'user_name': name,
                           'user_team': team, 'user_date': user_date, 'user_year': year}
-    # create a config file in root
-    with open('./user_config.ini', 'w') as user_config:
+
+    # create a config file
+    os.makedirs(os.path.dirname(__configpath__), exist_ok=True)
+    with open(__configpath__, 'w') as user_config:
         config.write(user_config)
+    print(f"The file was created at this path {__configpath__}")
 
 
 def show_config():
@@ -109,7 +111,7 @@ def show_config():
 
     # read the config
     parser = ConfigParser()
-    parser.read("./user_config.ini")
+    parser.read(f"{__configpath__}")
 
     print("Your current configuration at the moment")
     print(f"""
@@ -130,8 +132,9 @@ def check_if_config_exists():
     """Check if the config files exists and if not it creates a new config file"""
 
     try:
-        with open('./user_config.ini') as user_config:
+        with open(f'{__configpath__}') as user_config:
             print("Configs already exists")
+            show_config()
     except FileNotFoundError:
         print("Config File does not exist")
         create_config()
@@ -163,6 +166,13 @@ def check_date():
     elif todays_date < config_date:
         print(
             f"{config_date} is smaller as  {todays_date} \n Are you a time traveller?")
+
+
+def cmd_new(args):
+    """Creates a new day for the incoming entries"""
+    log.debug("New selected %s", args)
+    print("New selected", args)
+    return 0
 
 
 def cmd_add(args):
@@ -222,6 +232,11 @@ def parsecli(cliargs=None) -> argparse.Namespace:
 
     # subparser
     subparsers = parser.add_subparsers(help='available sub commands')
+    # init cmd
+    parser_init = subparsers.add_parser(
+        'init', help="Create an initial Configuration file")
+    parser_init.set_defaults(func=cmd_init)
+
     # new cmd
     parser_new = subparsers.add_parser('new', help="creates a new day entry")
     parser_new.set_defaults(func=cmd_new)
