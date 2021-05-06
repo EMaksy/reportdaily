@@ -125,11 +125,11 @@ def show_config():
     print("Your current configuration at the moment")
     print(f"""
     Name: {parser.get('settings','user_name')}
-    Team: {parser.get("settings", "user_team")} 
+    Team: {parser.get("settings", "user_team")}
     Date: {parser.get("settings", "user_date")}
     Year: {parser.get("settings", "user_year")}
 
-    If you desire to make changes to the configuration try the -c or --change option for the new command 
+    If you desire to make changes to the configuration try the -c or --change option for the new command
     """)
     # Team: {parser.get("settings", "user_team")}
     # Team: {parser.get("settings", "user_team")},
@@ -144,14 +144,81 @@ def check_if_config_exists(args):
         with open(f'{CONIFGPATH}') as user_config:
             print("Configs already exists")
             show_config()
+            change_config(args)
     except FileNotFoundError:
         print("Config File does not exist")
         create_config(args)
 
 
+def change_config(args):
+    """Allows the user to change direct his existing config file when the -c/--change option is true"""
+
+    # all user options
+    choice_table = {"Name": "t1", "Team": "t2", "Year": "t3"}
+    tmp_input = ''
+    overwrite_input = ' '
+    change_data = ''
+
+    if args.change == True:
+        # show and ask user what he wants to overwrite
+        print("""
+            "What do you want to change?"
+            Your options are
+            Name
+            Team
+            Year
+            """)
+        # check for right user input --> keeps going until user enters the right dict
+        keep_going = True
+        while(keep_going):
+            tmp_input = input("Name, Team, Year? ")
+            if tmp_input in choice_table:
+                print(f"{tmp_input} exists in key")
+                # need to map the keys  right to the settings --> from Name to user_name
+                if tmp_input == "Name":
+                    tmp_input = "user_name"
+                elif tmp_input == "Team":
+                    tmp_input = "user_team"
+                elif tmp_input == "Year":
+                    tmp_input = "user_year"
+
+                overwrite_input = input("Enter the change ")
+                keep_going = False
+            else:
+                print("No key in config found --> Try again")
+                keep_going = True
+
+        # add config parser to file
+        config = ConfigParser()
+        config.read(f"{CONIFGPATH}")
+        config.set("settings", f"{tmp_input}", f"{overwrite_input}")
+        with open(f"{CONIFGPATH}", "w") as configfile:
+            config.write(configfile)
+
+        show_config()
+
+    """
+    # read config file
+    read_config = open(f"{CONIFGPATH}", "rt")
+    # read file contents to string
+    config_data = read_config.read()
+    # replace required string
+    config_data = config_data.replace(
+        f"{tmp_input}", f"{tmp_input} = {overwrite_input}")
+    # need to close the input file
+    read_config.close()
+    # open the input file in write mode
+    read_config = open(f"{CONIFGPATH}", "wt")
+    # overwrite input file
+    read_config(config_data)
+    # close input file
+    read_config.close()
+    """
+
+
 def check_date():
     """
-    Check the date in the config file  when using the new command        
+    Check the date in the config file  when using the new command
     If the date is outdated, this function will automatically overwrite the config with todays date
     """
 
@@ -246,11 +313,13 @@ def parsecli(cliargs=None) -> argparse.Namespace:
         'init', help="Create an initial Configuration file")
     parser_init.set_defaults(func=cmd_init)
     parser_init.add_argument(
-        '--name', "-n", help='this is a option so the user enters his name')
+        '--name', "-n", help='This is a option for the user to enter his name direct via console')
     parser_init.add_argument(
-        '--year', "-y", help='this is a option so the user enters his teaching year')
+        '--year', "-y", help='This is a option for the user to enters his teaching year direct via console')
     parser_init.add_argument(
-        '--team', "-t", help='this is a option so the user enters his team year')
+        '--team', "-t", help='This is a option for the user to enter his team year direct via console')
+    parser_init.add_argument(
+        '--change', '-c', action='store_true', help='This is a option for the user to change an existing configuration')
 
     # new cmd
     parser_new = subparsers.add_parser('new', help="creates a new day entry")
