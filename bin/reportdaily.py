@@ -194,26 +194,8 @@ def change_config(args):
         config.set("settings", f"{tmp_input}", f"{overwrite_input}")
         with open(f"{CONIFGPATH}", "w") as configfile:
             config.write(configfile)
-
+        # show config to the user , so changes are visible to the user
         show_config()
-
-    """
-    # read config file
-    read_config = open(f"{CONIFGPATH}", "rt")
-    # read file contents to string
-    config_data = read_config.read()
-    # replace required string
-    config_data = config_data.replace(
-        f"{tmp_input}", f"{tmp_input} = {overwrite_input}")
-    # need to close the input file
-    read_config.close()
-    # open the input file in write mode
-    read_config = open(f"{CONIFGPATH}", "wt")
-    # overwrite input file
-    read_config(config_data)
-    # close input file
-    read_config.close()
-    """
 
 
 def check_date():
