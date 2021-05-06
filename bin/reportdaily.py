@@ -96,23 +96,24 @@ def create_config(args):
     else:
         year = args.year
     # time
-    user_date = date.today()
+    today_date = date.today()
     print(
-        f"You are ready to go.  Entries for this {user_date} can  bee added now with reportdaily add")
+        f"You are ready to go.  Entries for this {today_date} can  bee added now with reportdaily add")
 
     # store configfiles in list
-    config_data = [name, team, user_date, year]
+    config_data = [name, team, today_date, year]
 
     # create a config file
     config = ConfigParser()
-    config["settings"] = {'user_name': name,
-                          'user_team': team, 'user_date': user_date, 'user_year': year}
+    config["settings"] = {'name': name,
+                          'team': team, 'current_day': today_date, 'start_year': year}
 
     # create a config file
     os.makedirs(os.path.dirname(CONIFGPATH), exist_ok=True)
     with open(CONIFGPATH, 'w') as user_config:
         config.write(user_config)
     print(f"The file was created at this path {CONIFGPATH}")
+    show_config()
 
 
 def show_config():
@@ -124,17 +125,17 @@ def show_config():
 
     print("Your current configuration at the moment")
     print(f"""
-    Name: {parser.get('settings','user_name')}
-    Team: {parser.get("settings", "user_team")}
-    Date: {parser.get("settings", "user_date")}
-    Year: {parser.get("settings", "user_year")}
+    Name: {parser.get('settings','name')}
+    Team: {parser.get("settings", "team")}
+    Date: {parser.get("settings", "current_day")}
+    Year: {parser.get("settings", "start_year")}
 
-    If you desire to make changes to the configuration try the -c or --change option for the new command
+    If you desire to make changes to the configuration try the -c or --change option for the init command
     """)
-    # Team: {parser.get("settings", "user_team")}
-    # Team: {parser.get("settings", "user_team")},
-    # Date: {parser.get("settings", "user_date")},
-    # Year: {parser.get("settings", "user_year")}")
+    # Team: {parser.get("settings", "team")}
+    # Team: {parser.get("settings", "team")},
+    # Date: {parser.get("settings", "current_day")},
+    # Year: {parser.get("settings", "start_year")}")
 
 
 def check_if_config_exists(args):
@@ -144,7 +145,8 @@ def check_if_config_exists(args):
         with open(f'{CONIFGPATH}') as user_config:
             print("Configs already exists")
             show_config()
-            change_config(args)
+            if args.change == True:
+                change_config(args)
     except FileNotFoundError:
         print("Config File does not exist")
         create_config(args)
@@ -159,50 +161,51 @@ def change_config(args):
     overwrite_input = ' '
     change_data = ''
 
-    if args.change == True:
-        # show and ask user what he wants to overwrite
-        print("""
-            "What do you want to change?"
-            Your options are
-            Name
-            Team
-            Year
-            """)
-        # check for right user input --> keeps going until user enters the right dict
-        keep_going = True
-        while(keep_going):
-            tmp_input = input("Name, Team, Year? ")
-            if tmp_input in choice_table:
-                print(f"{tmp_input} exists in key")
-                # need to map the keys  right to the settings --> from Name to user_name
-                if tmp_input == "Name":
-                    tmp_input = "user_name"
-                elif tmp_input == "Team":
-                    tmp_input = "user_team"
-                elif tmp_input == "Year":
-                    tmp_input = "user_year"
+    # show and ask user what he wants to overwrite
+    print("""
+        "What do you want to change?"
+        Your options are
+        Name
+        Team
+        Year
+        """)
 
-                overwrite_input = input("Enter the change ")
-                keep_going = False
-            else:
-                print("No key in config found --> Try again")
-                keep_going = True
+    # check for right user input --> keeps going until user enters the right dict
+    keep_going = True
+    while(keep_going):
+        tmp_input = input("Name, Team, Year? ")
+        if tmp_input in choice_table:
+            print(f"{tmp_input} exists in key")
+            # need to map the keys  right to the settings --> from Name to name
+            if tmp_input == "Name":
+                tmp_input = "name"
+            elif tmp_input == "Team":
+                tmp_input = "team"
+            elif tmp_input == "Year":
+                tmp_input = "start_year"
 
-        # add config parser to file
-        config = ConfigParser()
-        config.read(f"{CONIFGPATH}")
-        config.set("settings", f"{tmp_input}", f"{overwrite_input}")
-        with open(f"{CONIFGPATH}", "w") as configfile:
-            config.write(configfile)
-        # show config to the user , so changes are visible to the user
-        show_config()
+            overwrite_input = input("Enter the change ")
+            keep_going = False
+        else:
+            print("No key in config found --> Try again")
+            keep_going = True
+
+    # add config parser to file
+    config = ConfigParser()
+    config.read(f"{CONIFGPATH}")
+    config.set("settings", f"{tmp_input}", f"{overwrite_input}")
+    with open(f"{CONIFGPATH}", "w") as configfile:
+        config.write(configfile)
+    # show config to the user , so changes are visible to the user
+    show_config()
 
 
+"""
 def check_date():
     """
-    Check the date in the config file  when using the new command
-    If the date is outdated, this function will automatically overwrite the config with todays date
-    """
+# Check the date in the config file  when using the new command
+# If the date is outdated, this function will automatically overwrite the config with todays date
+"""
 
     # what is our date today ?
     todays_date = date.today()
@@ -212,7 +215,7 @@ def check_date():
     parser.read('./user_config.ini')
 
     # get the date from config for compering
-    config_date = date(parser.getint('settings', 'user_date'))
+    config_date = date(parser.getint('settings', 'current_day'))
 
     # check if todays date is newer then the config date
     if todays_date > config_date:
@@ -224,6 +227,7 @@ def check_date():
     elif todays_date < config_date:
         print(
             f"{config_date} is smaller as  {todays_date} \n Are you a time traveller?")
+"""
 
 
 def cmd_new(args):
