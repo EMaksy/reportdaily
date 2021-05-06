@@ -43,6 +43,7 @@ Just clone the repository and cd into the directory
 
 ```bash
     git clone [this project]
+    cd reportdaily
     python3 bin/reportdaily.py init
     # create user config
     python3 bin/reportdaily.py new

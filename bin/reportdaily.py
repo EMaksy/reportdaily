@@ -200,36 +200,6 @@ def change_config(args):
     show_config()
 
 
-"""
-def check_date():
-    """
-# Check the date in the config file  when using the new command
-# If the date is outdated, this function will automatically overwrite the config with todays date
-"""
-
-    # what is our date today ?
-    todays_date = date.today()
-
-    # read data from existing user config
-    parser = ConfigParser()
-    parser.read('./user_config.ini')
-
-    # get the date from config for compering
-    config_date = date(parser.getint('settings', 'current_day'))
-
-    # check if todays date is newer then the config date
-    if todays_date > config_date:
-        print(
-            f"Todays date {todays_date} is newer than config date {config_data} --> need to overwrite")
-    elif todays_date == config_date:
-        print(f"{config_date} is same as {todays_date} --> no need to overwrite")
-
-    elif todays_date < config_date:
-        print(
-            f"{config_date} is smaller as  {todays_date} \n Are you a time traveller?")
-"""
-
-
 def cmd_new(args):
     """Creates a new day for the incoming entries"""
     log.debug("New selected %s", args)
