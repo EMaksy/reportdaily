@@ -7,7 +7,7 @@ from logging.config import dictConfig
 import sys
 
 # this is required for the configparser
-from datetime import *
+from datetime import date
 from configparser import ConfigParser
 # os is required for creating a path
 import os
@@ -17,7 +17,7 @@ class MissingSubCommand(ValueError):
     pass
 
 
-CONIFGPATH = os.path.expanduser("~/.config/reportdaily/reportdailyrc")
+CONFIGPATH = os.path.expanduser("~/.config/reportdaily/reportdailyrc")
 __version__ = "0.3.0"
 __author__ = "Eugen Maksymenko <eugen.maksymenko@suse.com>"
 
@@ -66,12 +66,9 @@ log.addHandler(logging.NullHandler())
 
 def cmd_init(args):
     """Creates an initial config file for a user config file"""
-
+    log.debug("INIT selected %s", args)
     # create config by hand
     check_if_config_exists(args)
-
-    log.debug("INIT selected %s", args)
-    print("Init selected", args)
     return 0
 
 
@@ -92,7 +89,7 @@ def create_config(args):
         team = args.team
     # year
     if args.year == None:
-        year = int(input("What year of training are you in? "))
+        year = int(input("In which year did you start the trainership?"))
     else:
         year = args.year
     # time
@@ -109,10 +106,10 @@ def create_config(args):
                           'team': team, 'current_day': today_date, 'start_year': year}
 
     # create a config file
-    os.makedirs(os.path.dirname(CONIFGPATH), exist_ok=True)
-    with open(CONIFGPATH, 'w') as user_config:
+    os.makedirs(os.path.dirname(CONFIGPATH), exist_ok=True)
+    with open(CONFIGPATH, 'w') as user_config:
         config.write(user_config)
-    print(f"The file was created at this path {CONIFGPATH}")
+    print(f"The file was created at this path {CONFIGPATH}")
     show_config()
 
 
@@ -121,10 +118,10 @@ def show_config():
 
     # read the config
     parser = ConfigParser()
-    parser.read(f"{CONIFGPATH}")
+    parser.read(CONFIGPATH)
 
-    print("Your current configuration at the moment")
     print(f"""
+    "Your current configuration at the moment"
     Name: {parser.get('settings','name')}
     Team: {parser.get("settings", "team")}
     Date: {parser.get("settings", "current_day")}
@@ -142,7 +139,7 @@ def check_if_config_exists(args):
     """Check if the config files exists and if not it creates a new config file"""
 
     try:
-        with open(f'{CONIFGPATH}') as user_config:
+        with open(CONFIGPATH) as user_config:
             print("Configs already exists")
             show_config()
             if args.change == True:
@@ -170,9 +167,8 @@ def change_config(args):
         Year
         """)
 
-    # check for right user input --> keeps going until user enters the right dict
-    keep_going = True
-    while(keep_going):
+    # check for right user input
+    while(True):
         tmp_input = input("Name, Team, Year? ")
         if tmp_input in choice_table:
             print(f"{tmp_input} exists in key")
@@ -185,16 +181,15 @@ def change_config(args):
                 tmp_input = "start_year"
 
             overwrite_input = input("Enter the change ")
-            keep_going = False
+            break
         else:
             print("No key in config found --> Try again")
-            keep_going = True
 
     # add config parser to file
     config = ConfigParser()
-    config.read(f"{CONIFGPATH}")
+    config.read(CONFIGPATH)
     config.set("settings", f"{tmp_input}", f"{overwrite_input}")
-    with open(f"{CONIFGPATH}", "w") as configfile:
+    with open(CONFIGPATH, "w") as configfile:
         config.write(configfile)
     # show config to the user , so changes are visible to the user
     show_config()
@@ -269,13 +264,13 @@ def parsecli(cliargs=None) -> argparse.Namespace:
         'init', help="Create an initial Configuration file")
     parser_init.set_defaults(func=cmd_init)
     parser_init.add_argument(
-        '--name', "-n", help='This is a option for the user to enter his name direct via console')
+        '--name', "-n", help='User Name')
     parser_init.add_argument(
-        '--year', "-y", help='This is a option for the user to enters his teaching year direct via console')
+        '--year', "-y", help='Start year of the trainee')
     parser_init.add_argument(
-        '--team', "-t", help='This is a option for the user to enter his team year direct via console')
+        '--team', "-t", help='Current team name')
     parser_init.add_argument(
-        '--change', '-c', action='store_true', help='This is a option for the user to change an existing configuration')
+        '--change', '-c', action='store_true', help='Change an existing configuration')
 
     # new cmd
     parser_new = subparsers.add_parser('new', help="creates a new day entry")
