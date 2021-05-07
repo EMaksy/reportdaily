@@ -150,8 +150,41 @@ def check_if_config_exists(args):
 
 
 def change_config(args):
-    """Allows the user to change direct his existing config file when the -c/--change option is true"""
+    """User can change or overwrite the configs via direct input or console"""
+    if args.name == None and args.year == None and args.team == None and args.change == True:
+        user_input_change(args)
+    else:
+        namespace_config_change(args)
 
+
+def namespace_config_change(args):
+    """Input changes direct via the console, with just filling the namespace"""
+    # store all the args from namespace
+    name = args.name
+    team = args.team
+    year = args.year
+    change = args.change
+
+    # add config parser to file
+    config = ConfigParser()
+    config.read(CONFIGPATH)
+    if change == True:
+        # overwrite if namespace is filled
+        if name != None:
+            config.set("settings", "name", name)
+        if team != None:
+            config.set("settings", "team", team)
+        if year != None:
+            config.set("settings", "start_year", year)
+
+        with open(CONFIGPATH, "w") as configfile:
+            config.write(configfile)
+        # show config to the user , so changes are visible to the user
+        show_config()
+    print("namespace_config was selected")
+
+
+def user_input_change(args):
     # all user options
     choice_table = {"Name": "t1", "Team": "t2", "Year": "t3"}
     tmp_input = ''
