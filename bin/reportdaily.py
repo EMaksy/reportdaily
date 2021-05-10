@@ -67,9 +67,25 @@ log.addHandler(logging.NullHandler())
 def cmd_init(args):
     """Creates an initial config file for a user config file"""
     log.debug("INIT selected %s", args)
-    # create config by hand
-    check_if_config_exists(args)
+
+    # check if a config file already exist
+    if os.path.exists(CONFIGPATH):
+        show_config()
+        # check if tge user wants to change in the existing file
+        if args.change is True:
+            change_config(args)
+    # create a config if there is none
+    else:
+        create_config(args)
+        show_config()
+
     return 0
+
+
+def ask_for_input(var, message):
+    if var is None:
+        var = input(message)
+    return var
 
 
 def create_config(args):
@@ -77,28 +93,19 @@ def create_config(args):
     # time to ask the user for his data
 
     # name
-    if args.name == None:
-        print("Please enter your full name --> example: 'Max Musterman'")
-        name = input("Ihr name ist ? ")
-    else:
-        name = args.name
+    print("Please enter your full name --> example: 'Max Musterman'")
+    name = ask_for_input(args.name, "Enter your Name: ")
+
     # team
-    if args.team == None:
-        team = input("Please enter your team name: ")
-    else:
-        team = args.team
-    # year
-    if args.year == None:
-        year = int(input("In which year did you start the trainership?"))
-    else:
-        year = args.year
+    team = ask_for_input(args.team, "Enter your Team: ")
+
+    year = int(ask_for_input(
+        args.year, "In which year did your start your apprenticeship ?: "))
     # time
+
     today_date = date.today()
     print(
         f"You are ready to go.  Entries for this {today_date} can  bee added now with reportdaily add")
-
-    # store configfiles in list
-    config_data = [name, team, today_date, year]
 
     # create a config file
     config = ConfigParser()
@@ -110,7 +117,6 @@ def create_config(args):
     with open(CONFIGPATH, 'w') as user_config:
         config.write(user_config)
     print(f"The file was created at this path {CONFIGPATH}")
-    show_config()
 
 
 def show_config():
@@ -133,20 +139,6 @@ def show_config():
     # Team: {parser.get("settings", "team")},
     # Date: {parser.get("settings", "current_day")},
     # Year: {parser.get("settings", "start_year")}")
-
-
-def check_if_config_exists(args):
-    """Check if the config files exists and if not it creates a new config file"""
-
-    try:
-        with open(CONFIGPATH) as user_config:
-            print("Configs already exists")
-            show_config()
-            if args.change == True:
-                change_config(args)
-    except FileNotFoundError:
-        print("Config File does not exist")
-        create_config(args)
 
 
 def change_config(args):
@@ -204,7 +196,7 @@ def user_input_change(args):
     while(True):
         tmp_input = input("Name, Team, Year? ")
         if tmp_input in choice_table:
-            print(f"{tmp_input} exists in key")
+            # print(f"{tmp_input} exists in key")
             # need to map the keys  right to the settings --> from Name to name
             if tmp_input == "Name":
                 tmp_input = "name"
