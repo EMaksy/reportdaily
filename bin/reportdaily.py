@@ -73,7 +73,7 @@ def cmd_init(args):
 
 
 def create_config(args):
-    """This function will create a config file where the user data is stored"""
+    """This function will create a config.ini file where the user data is stored as a dict"""
     # time to ask the user for his data
 
     # name
@@ -151,7 +151,7 @@ def check_if_config_exists(args):
 
 def change_config(args):
     """User can change or overwrite the configs via direct input or console"""
-    if args.name == None and args.year == None and args.team == None and args.change == True:
+    if args.name is None and args.year is None and args.team is None and args.change:
         user_input_change(args)
     else:
         namespace_config_change(args)
@@ -168,13 +168,13 @@ def namespace_config_change(args):
     # add config parser to file
     config = ConfigParser()
     config.read(CONFIGPATH)
-    if change == True:
+    if change is True:
         # overwrite if namespace is filled
-        if name != None:
+        if name is not None:
             config.set("settings", "name", name)
-        if team != None:
+        if team is not None:
             config.set("settings", "team", team)
-        if year != None:
+        if year is not None:
             config.set("settings", "start_year", year)
 
         with open(CONFIGPATH, "w") as configfile:
