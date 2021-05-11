@@ -73,23 +73,35 @@ def cmd_init(args):
         show_config()
         # check if tge user wants to change in the existing file
         if args.change is True:
-            change_config(args)
+            how_to_change_config(args)
     # create a config if there is none
     else:
-        create_config(args)
+        create_config(args, CONFIGPATH)
         show_config()
 
     return 0
 
 
-def ask_for_input(var, message):
-    if var is None:
-        var = input(message)
-    return var
+def show_config():
+    """Show the configs to the user"""
+
+    # read the config
+    parser = ConfigParser()
+    parser.read(CONFIGPATH)
+
+    print(f"""
+    "Your current configuration at the moment"
+    Name: {parser.get('settings','name')}
+    Team: {parser.get("settings", "team")}
+    Date: {parser.get("settings", "current_day")}
+    Year: {parser.get("settings", "start_year")}
+
+    If you desire to make changes to the configuration try the -c or --change option for the init command
+    """)
 
 
-def create_config(args):
-    """This function will create a config.ini file where the user data is stored as a dict"""
+def create_config(args, CONFIGPATH):
+    """This function will create a config file where the user data is stored as a dict"""
     # time to ask the user for his data
 
     # name
@@ -119,29 +131,13 @@ def create_config(args):
     print(f"The file was created at this path {CONFIGPATH}")
 
 
-def show_config():
-    """Show the configs to the user"""
-
-    # read the config
-    parser = ConfigParser()
-    parser.read(CONFIGPATH)
-
-    print(f"""
-    "Your current configuration at the moment"
-    Name: {parser.get('settings','name')}
-    Team: {parser.get("settings", "team")}
-    Date: {parser.get("settings", "current_day")}
-    Year: {parser.get("settings", "start_year")}
-
-    If you desire to make changes to the configuration try the -c or --change option for the init command
-    """)
-    # Team: {parser.get("settings", "team")}
-    # Team: {parser.get("settings", "team")},
-    # Date: {parser.get("settings", "current_day")},
-    # Year: {parser.get("settings", "start_year")}")
+def ask_for_input(var, message):
+    if var is None:
+        var = input(message)
+    return var
 
 
-def change_config(args):
+def how_to_change_config(args):
     """User can change or overwrite the configs via direct input or console"""
     if args.name is None and args.year is None and args.team is None and args.change:
         user_input_change(args)
