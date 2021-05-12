@@ -1,23 +1,9 @@
 import pytest
 import sys
 import reportdaily as rd
-from reportdaily import CONFIGPATH
-from datetime import date
 
 # import monkey patching
 from unittest.mock import patch
-import builtins
-
-import os
-
-#import namespace
-from argparse import Namespace
-
-#import configparser
-import configparser
-
-# required for fixture
-import pathlib
 
 
 def test_version(capsys):
@@ -71,50 +57,3 @@ def test_verbosity(verbose_count):
     # then "verbose" should be in the given namespace
     assert search_for in result
     assert result.verbose == count
-
-
-def test_show_config():
-    """Check if the config file is displayed correctly"""
-
-    # given the user  see his existing config  the displayed data  should be correct
-
-
-def test_create_config_with_given_namespace(tmp_path: pathlib.Path):
-    # was müssen wir testen  ?
-    # hat die funktion eine datei erstellt im configpath ?
-    # ist der inhalt dieser datei der selbe wie unsere angaben
-
-    # given
-
-    today_date = date.today()
-
-    args = Namespace(cliargs=["init"], name="NameTest",
-                     team="TeamName", year=int(2020))
-    find_section = ["settings"]
-    find_options = ["name", "team", "start_year", "current_day"]
-    configpath = tmp_path / "reportdailyrc"
-
-    # required mock_input
-    # def mock_input(txt):
-    #    return name, team, year
-
-    # when
-    # when = expect  output of the help option
-
-    rd.create_config(args, configpath)
-
-    config = configparser.ConfigParser()
-    config.read(configpath)
-
-    # then
-    assert os.path.exists(configpath) is True
-    # assert config.has_section(find_section)
-    for section in find_section:
-        assert config.has_section(section)
-        for key in find_options:
-            assert config.has_option(section, key)
-
-            #assert args.__dict__[key] in config[section][key]
-           # assert args.name in config[find_section]["name"]
-           # assert args.team in config[find_section]
-            #assert args.year in config[find_section]
