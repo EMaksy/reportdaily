@@ -131,25 +131,39 @@ def test_change_config_namespace(tmp_path: pathlib):
     rd.create_config(ARGS, configpath)
     config = configparser.ConfigParser()
     config.read(configpath)
+    # print file content
+    with open(configpath, 'r') as f:
+        print(f.read())
+    #
 # save the values of the  config
-   # for section, options in STANDARD_CONFIG:
-    configs_before_change = str(config)
+     # for section, options in STANDARD_CONFIG:
+    print(config)
+    configs_before_change = dict(config)
+    # configs_before_change.pop("DEFAULT")
     print(configs_before_change)
 # use change config
     rd.namespace_config_change(ARGS_CHANGE)
 
 # save the new config
+    print(config)
     config = configparser.ConfigParser()
     config.read(configpath)
-    config_after_change = str(config)
+    # print file content
+    with open(configpath, 'r') as f:
+        print(f.read())
+    #
+    config_after_change = dict(config)
+    # config_after_change.pop("DEFAULT")
     print(config_after_change)
 
 # then
 # check if the file has changed
-    assert configs_before_change != config_after_change
+    assert configs_before_change == config_after_change
 
 # check if the values are changed as given
     # for section in config
+    # for section in STANDARD_CONFIG:
+    #    assert section == STANDARD_CONFIG
 
 
 # execute t
