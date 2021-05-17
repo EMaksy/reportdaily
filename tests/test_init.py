@@ -16,6 +16,7 @@ STANDARD_SECTIONS = ["settings"]
 STANDARD_OPTIONS = ["name", "team", "start_year", "current_day"]
 STANDARD_CONFIG = {  # Section_name: list of key names
     "settings": ("name", "team", "start_year", "current_day"),
+    # "test": ("test1", "test2"),
     # ...
 }
 ARGS = Namespace(cliargs=["init"], name="NameTest",
@@ -56,10 +57,11 @@ def test_config_section_option_namespace(tmp_path: pathlib.Path):
 def test_config_values(tmp_path: pathlib):
     # given
     # ARGS
-    # STANDARD_SECTIONS
-    # STANDARD_OPTIONS
+    # STANDARD_CONFIG
+    # convert date obj to string
     date_today = date.today()
     date_string = date_today.strftime("%Y-%m-%d")
+
     expected = ["NameTest", "TeamName",  "2020", date_string]
     configpath = tmp_path / "reportdailyrc"
 
@@ -76,22 +78,22 @@ def test_config_values(tmp_path: pathlib):
             count = count+1
 
 
-"""
-def test_config_real_section(tmp_path):
-        # ...
-    
-    # given 
+def test_config_real_section(tmp_path: pathlib):
+    # given
+    # ARGS
+    # STANDART_CONFIG
+    std_keys = set(STANDARD_CONFIG)
+    configpath = tmp_path / "reportdailyrc"
 
     # when
-    config = ...
+    rd.create_config(ARGS, configpath)
+    config = configparser.ConfigParser()
+    config.read(configpath)
     real_keys = set(config.keys())
     real_keys.remove("DEFAULT")
-    std_keys = set(STANDARD_CONFIG)
-    
-    # then 
-    assert real_keys == std_keysThanks
 
-
+    # then
+    assert real_keys == std_keys
 
 
 # notion create a test if confit exist
@@ -102,7 +104,6 @@ def test_config_real_section(tmp_path):
 # Welche tests brauchen wir noch ?
 # Cheat sheet was kann dict alles ?
 # was ist ein set und wir nehmen die menge aus file - die menge aus globalen variablen
-"""
 """
 Create config mit simuliertem user input
 
