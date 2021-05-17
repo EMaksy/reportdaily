@@ -22,8 +22,12 @@ STANDARD_CONFIG = {  # Section_name: list of key names
 ARGS = Namespace(cliargs=["init"], name="NameTest",
                  team="TeamName", year=int(2020))
 
+ARGS_CHANGE = Namespace(cliargs=["init"], change=["--change"], name="ChangeName",
+                        team="ChangeTeamName", year=int(2020))
+
 
 def test_config_exists(tmp_path: pathlib.Path):
+    """This test will tests if the config exists"""
     # given
     # ARGS
     configpath = tmp_path / "reportdailyrc"
@@ -36,6 +40,7 @@ def test_config_exists(tmp_path: pathlib.Path):
 
 
 def test_config_section_option_namespace(tmp_path: pathlib.Path):
+    """This test will check the config file if the sections and options are  correct"""
     # given
     # ARGS
     # STANDARD_SECTIONS
@@ -55,6 +60,7 @@ def test_config_section_option_namespace(tmp_path: pathlib.Path):
 
 
 def test_config_values(tmp_path: pathlib):
+    """This test  will prive the values of the config file"""
     # given
     # ARGS
     # STANDARD_CONFIG
@@ -79,6 +85,7 @@ def test_config_values(tmp_path: pathlib):
 
 
 def test_config_real_section(tmp_path: pathlib):
+    """This test will check if all the sections are correct"""
     # given
     # ARGS
     # STANDART_CONFIG
@@ -90,20 +97,62 @@ def test_config_real_section(tmp_path: pathlib):
     config = configparser.ConfigParser()
     config.read(configpath)
     real_keys = set(config.keys())
+    # need to delete default key. DEFAULT is created automatically by the configparser module.
     real_keys.remove("DEFAULT")
 
     # then
     assert real_keys == std_keys
 
 
-# notion create a test if confit exist
-# create a test if section and option exist
-# check if value is correct
-# noch ein test , modul wo du über alle sections iterieren kannst  um zu überprüfen ob alle  sections und options in config vorhanden sind
-# gettattr(args var) var = bar  --> zugriff auf namespace
-# Welche tests brauchen wir noch ?
-# Cheat sheet was kann dict alles ?
-# was ist ein set und wir nehmen die menge aus file - die menge aus globalen variablen
+def test_show_config(tmp_path: pathlib):
+    """This test will check if the output is correct """
+    # GIVEN
+    # ARGS
+    # a config file is created
+    # expected output of show config
+    # This will be finished in a later release
+
+    # noch ein test , modul wo du über alle sections iterieren kannst  um zu überprüfen ob alle  sections und options in config vorhanden sind
+    # gettattr(args var) var = bar  --> zugriff auf namespace
+    # Welche tests brauchen wir noch ?
+    # Cheat sheet was kann dict alles ?
+    # was ist ein set und wir nehmen die menge aus file - die menge aus globalen variablen
+
+
+def test_change_config_namespace(tmp_path: pathlib):
+    """This test will check if the change option works"""
+
+# given values for config creation ARGS: name="NameTest",team="TeamName", year=int(2020)
+# given values for change ARGS_CHANGE:  cliargs=["init -c"], name="ChangeName", team="ChangeTeamName", year=int(2020)
+    configpath = tmp_path / "reportdailyrc"
+
+# when the user input reportdaily init -c  with another option and their  values the config file should be changed
+# create config file  and read it
+    rd.create_config(ARGS, configpath)
+    config = configparser.ConfigParser()
+    config.read(configpath)
+# save the values of the  config
+   # for section, options in STANDARD_CONFIG:
+    configs_before_change = str(config)
+    print(configs_before_change)
+# use change config
+    rd.namespace_config_change(ARGS_CHANGE)
+
+# save the new config
+    config = configparser.ConfigParser()
+    config.read(configpath)
+    config_after_change = str(config)
+    print(config_after_change)
+
+# then
+# check if the file has changed
+    assert configs_before_change != config_after_change
+
+# check if the values are changed as given
+    # for section in config
+
+
+# execute t
 """
 Create config mit simuliertem user input
 
