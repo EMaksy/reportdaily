@@ -20,10 +20,10 @@ STANDARD_CONFIG = {  # Section_name: list of key names
     # ...
 }
 ARGS = Namespace(cliargs=["init"], name="NameTest",
-                 team="TeamName", year=int(2020))
+                 team="TeamName", year="2020")
 
-ARGS_CHANGE = Namespace(cliargs=["init"], change=["--change"], name="ChangeName",
-                        team="ChangeTeamName", year=int(2020))
+ARGS_CHANGE = Namespace(cliargs=["init"], change=True, name="ChangeName",
+                        team="ChangeTeamName", year="2020")
 
 
 def test_config_exists(tmp_path: pathlib.Path):
@@ -60,7 +60,7 @@ def test_config_section_option_namespace(tmp_path: pathlib.Path):
 
 
 def test_config_values(tmp_path: pathlib):
-    """This test  will prive the values of the config file"""
+    """This test  will prove the values of the config file"""
     # given
     # ARGS
     # STANDARD_CONFIG
@@ -132,33 +132,34 @@ def test_change_config_namespace(tmp_path: pathlib):
     config = configparser.ConfigParser()
     config.read(configpath)
     # print file content
-    with open(configpath, 'r') as f:
-        print(f.read())
+    with open(configpath, 'r') as configfile:
+        configs_before_change = configfile.read()
     #
 # save the values of the  config
      # for section, options in STANDARD_CONFIG:
-    print(config)
-    configs_before_change = dict(config)
+    # print(config)
+    #configs_before_change = dict(config)
     # configs_before_change.pop("DEFAULT")
     print(configs_before_change)
 # use change config
-    rd.namespace_config_change(ARGS_CHANGE)
+    print(ARGS_CHANGE)
+    rd.namespace_config_change(ARGS_CHANGE, configpath)
 
 # save the new config
-    print(config)
-    config = configparser.ConfigParser()
+    # config = configparser.ConfigParser()
     config.read(configpath)
+    # print(config.sections())
     # print file content
-    with open(configpath, 'r') as f:
-        print(f.read())
+    with open(configpath, 'r') as configfile:
+        config_after_change = configfile.read()
     #
-    config_after_change = dict(config)
+    # config_after_change = dict(config)
     # config_after_change.pop("DEFAULT")
     print(config_after_change)
 
 # then
 # check if the file has changed
-    assert configs_before_change == config_after_change
+    assert configs_before_change != config_after_change
 
 # check if the values are changed as given
     # for section in config
