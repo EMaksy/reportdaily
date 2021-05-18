@@ -142,10 +142,10 @@ def how_to_change_config(args):
     if args.name is None and args.year is None and args.team is None and args.change:
         user_input_change(args)
     else:
-        namespace_config_change(args)
+        namespace_config_change(args, CONFIGPATH)
 
 
-def namespace_config_change(args):
+def namespace_config_change(args, CONFIGPATH):
     """Input changes direct via the console, with just filling the namespace"""
     # store all the args from namespace
     name = args.name
