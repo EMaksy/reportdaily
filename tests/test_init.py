@@ -11,6 +11,11 @@ from datetime import date
 from argparse import Namespace
 
 
+# monkey patching
+from unittest.mock import patch
+import builtins
+
+
 # Global data
 STANDARD_SECTIONS = ["settings"]
 STANDARD_OPTIONS = ["name", "team", "start_year", "current_day"]
@@ -22,8 +27,10 @@ STANDARD_CONFIG = {  # Section_name: list of key names
 ARGS = Namespace(cliargs=["init"], name="NameTest",
                  team="TeamName", year="2020")
 
-ARGS_CHANGE = Namespace(cliargs=["init"], change=True, name="ChangeName",
-                        team="ChangeTeamName", year="2020")
+ARGS_CHANGE_CMD = Namespace(cliargs=["init"], change=True, name="ChangeName",
+                            team="ChangeTeamName", year="2020")
+
+ARGS_CHANGE = Namespace(cliargs=["init"], change=True)
 
 
 def test_config_exists(tmp_path: pathlib.Path):
@@ -106,7 +113,7 @@ def test_config_real_section(tmp_path: pathlib):
 
 """
 def test_show_config(tmp_path: pathlib):
- 
+
     # GIVEN
     # ARGS
     # a config file is created
@@ -125,7 +132,7 @@ def test_change_config_namespace(tmp_path: pathlib):
     """This test will check if the change option works"""
 # GIVEN
 # given values for config creation ARGS: name="NameTest",team="TeamName", year=int(2020)
-# given values for change ARGS_CHANGE:  cliargs=["init -c"], name="ChangeName", team="ChangeTeamName", year=int(2020)
+# given values for change ARGS_CHANGE_CMD:  cliargs=["init -c"], name="ChangeName", team="ChangeTeamName", year=int(2020)
     configpath = tmp_path / "reportdailyrc"
     data_after_change_dict = {'name': 'ChangeName', 'team': 'ChangeTeamName',
                               'start_year': '2020'}
@@ -143,9 +150,9 @@ def test_change_config_namespace(tmp_path: pathlib):
     configs_before_change_dict = dict(config.items("settings"))
 
     # show the change namespace
-    print(ARGS_CHANGE)
+    print(ARGS_CHANGE_CMD)
     # use change config with namespace
-    rd.namespace_config_change(ARGS_CHANGE, configpath)
+    rd.namespace_config_change(ARGS_CHANGE_CMD, configpath)
     # save the changed config
     config.read(configpath)
     with open(configpath, 'r') as configfile:
@@ -165,3 +172,37 @@ def test_change_config_namespace(tmp_path: pathlib):
     print(data_after_change_dict)
     # prove if the expexted values are in our changed config
     assert data_after_change_dict.items() <= configs_after_change_dict.items()
+
+
+def test_change_by_input(tmp_path: pathlib.Path):
+    """This test will simulate user input and check if  the changes were done correctly"""
+
+
+# GIVEN
+# ARGS without cmd values
+    print(ARGS_CHANGE)
+    configpath = tmp_path / "reportdailyrc"
+    user_input_option = "Name"
+    user_input_str = "TestInputName"
+
+# WHEN
+    # create a config file
+    rd.create_config(ARGS, configpath)
+    config = configparser.ConfigParser()
+    config.read(configpath)
+    with open(configpath, 'r') as configfile:
+        configs_before_change = configfile.read()
+    print(configs_before_change)
+
+    # execute user input change
+    rd.user_input_change(ARGS_CHANGE, configpath)
+    # change files by direct input
+
+    # first input option, maybe loop ?
+    # second input enter the change
+    # save new configs in variable
+
+# THEN
+    # check if  user input str and user input option has changed the config values
+
+    # second test  test for no key in config
