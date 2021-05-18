@@ -104,8 +104,9 @@ def test_config_real_section(tmp_path: pathlib):
     assert real_keys == std_keys
 
 
+"""
 def test_show_config(tmp_path: pathlib):
-    """This test will check if the output is correct """
+ 
     # GIVEN
     # ARGS
     # a config file is created
@@ -117,6 +118,7 @@ def test_show_config(tmp_path: pathlib):
     # Welche tests brauchen wir noch ?
     # Cheat sheet was kann dict alles ?
     # was ist ein set und wir nehmen die menge aus file - die menge aus globalen variablen
+"""
 
 
 def test_change_config_namespace(tmp_path: pathlib):
