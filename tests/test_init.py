@@ -121,63 +121,45 @@ def test_show_config(tmp_path: pathlib):
 
 def test_change_config_namespace(tmp_path: pathlib):
     """This test will check if the change option works"""
-
+# GIVEN
 # given values for config creation ARGS: name="NameTest",team="TeamName", year=int(2020)
 # given values for change ARGS_CHANGE:  cliargs=["init -c"], name="ChangeName", team="ChangeTeamName", year=int(2020)
     configpath = tmp_path / "reportdailyrc"
+    data_after_change_dict = {'name': 'ChangeName', 'team': 'ChangeTeamName',
+                              'start_year': '2020'}
 
-# when the user input reportdaily init -c  with another option and their  values the config file should be changed
+# WHEN
+# the user input reportdaily init -c  with another option and their  values the config file should be changed
 # create config file  and read it
     rd.create_config(ARGS, configpath)
     config = configparser.ConfigParser()
     config.read(configpath)
-    # print file content
     with open(configpath, 'r') as configfile:
         configs_before_change = configfile.read()
-    #
-# save the values of the  config
-     # for section, options in STANDARD_CONFIG:
-    # print(config)
-    #configs_before_change = dict(config)
-    # configs_before_change.pop("DEFAULT")
     print(configs_before_change)
-# use change config
-    print(ARGS_CHANGE)
-    rd.namespace_config_change(ARGS_CHANGE, configpath)
+    # save all values
+    configs_before_change_dict = dict(config.items("settings"))
 
-# save the new config
-    # config = configparser.ConfigParser()
+    # show the change namespace
+    print(ARGS_CHANGE)
+    # use change config with namespace
+    rd.namespace_config_change(ARGS_CHANGE, configpath)
+    # save the changed config
     config.read(configpath)
-    # print(config.sections())
-    # print file content
     with open(configpath, 'r') as configfile:
         config_after_change = configfile.read()
-    #
-    # config_after_change = dict(config)
-    # config_after_change.pop("DEFAULT")
+    # output of the changed content
     print(config_after_change)
+    # save all values
+    configs_after_change_dict = dict(config.items("settings"))
 
-# then
+# THEN
 # check if the file has changed
     assert configs_before_change != config_after_change
 
-# check if the values are changed as given
-    # for section in config
-    # for section in STANDARD_CONFIG:
-    #    assert section == STANDARD_CONFIG
-
-
-# execute t
-"""
-Create config mit simuliertem user input
-
-show config  Überprüfung ob die configs correct angezeigt werden
-
-ask_for_input test ob die eingabe verändert worden ist und oder ob es passt
-
-# nicht sofort nötig. how to change_config  check welche Funktion ausgeführt wird
-
-namespace_config_change soll die config datei mit gegeben argumenten korrekt überschreiben
-
-user input_change soll die config überschreiben mit simulierter user eingabe
-"""
+# check if the  the values are changed as given
+    print(configs_before_change_dict)
+    print(configs_after_change_dict)
+    print(data_after_change_dict)
+    # prove if the expexted values are in our changed config
+    assert data_after_change_dict.items() <= configs_after_change_dict.items()
