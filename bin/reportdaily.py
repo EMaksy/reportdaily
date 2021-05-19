@@ -172,7 +172,7 @@ def namespace_config_change(args, CONFIGPATH):
     print("namespace_config was selected")
 
 
-def user_input_change(args):
+def user_input_change(args, CONFIGPATH):
     # all user options
     choice_table = {"Name": "t1", "Team": "t2", "Year": "t3"}
     tmp_input = ''
