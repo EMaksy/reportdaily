@@ -70,19 +70,19 @@ def cmd_init(args):
 
     # check if a config file already exist
     if os.path.exists(CONFIGPATH):
-        show_config()
+        show_config(CONFIGPATH)
         # check if tge user wants to change in the existing file
         if args.change is True:
             how_to_change_config(args)
     # create a config if there is none
     else:
         create_config(args, CONFIGPATH)
-        show_config()
+        show_config(CONFIGPATH)
     print(args)
     return 0
 
 
-def show_config():
+def show_config(CONFIGPATH):
     """Show the configs to the user"""
 
     # read the config
@@ -145,7 +145,6 @@ def how_to_change_config(args):
         user_input_change(args)
     else:
         namespace_config_change(args, CONFIGPATH)
-        show_config()
 
 
 def namespace_config_change(args, CONFIGPATH):
@@ -171,6 +170,7 @@ def namespace_config_change(args, CONFIGPATH):
         with open(CONFIGPATH, "w") as configfile:
             config.write(configfile)
         # show config to the user , so changes are visible to the user
+    show_config(CONFIGPATH)
     print("namespace_config was selected")
 
 
@@ -215,7 +215,7 @@ def user_input_change(args, CONFIGPATH):
     with open(CONFIGPATH, "w") as configfile:
         config.write(configfile)
     # show config to the user , so changes are visible to the user
-    show_config()
+    show_config(CONFIGPATH)
 
 
 def cmd_new(args):
