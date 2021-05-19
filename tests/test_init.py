@@ -175,26 +175,30 @@ def test_change_config_namespace(tmp_path: pathlib):
     assert data_after_change_dict.items() <= configs_after_change_dict.items()
 
 
-"""
-def test_change_by_input(tmp_path: pathlib.Path):
+def test_change_by_input(tmp_path: pathlib.Path, monkeypatch):
  #   #This test will simulate user input and check if  the changes were done correctly
 
-
-# GIVEN
-# ARGS without cmd values
+    # GIVEN
+    # ARGS without cmd values
     print(ARGS_CHANGE)
     configpath = tmp_path / "reportdailyrc"
     user_input_option = "Name"
     user_input_str = "TestInputName"
+
 
 # WHEN
     # create a config file
     rd.create_config(ARGS, configpath)
     config = configparser.ConfigParser()
     config.read(configpath)
+    # open config and save it for visability
     with open(configpath, 'r') as configfile:
         configs_before_change = configfile.read()
     print(configs_before_change)
+
+    # setup monkeypatch
+    monkeypatch.setattr(
+        'builtins.input', lambda _: user_input_option)
 
     # execute user input change
     rd.user_input_change(ARGS_CHANGE, configpath)
@@ -211,4 +215,3 @@ def test_change_by_input(tmp_path: pathlib.Path):
 
 
 # test is required for create _config with direct user input.
-"""
