@@ -78,7 +78,7 @@ def cmd_init(args):
     else:
         create_config(args, CONFIGPATH)
         show_config()
-
+    print(args)
     return 0
 
 
@@ -89,15 +89,17 @@ def show_config():
     parser = ConfigParser()
     parser.read(CONFIGPATH)
 
-    print(f"""
+    print(
+        f"""
     "Your current configuration at the moment"
-    Name: {parser.get('settings','name')}
+    Name: {parser.get("settings","name")}
     Team: {parser.get("settings", "team")}
     Date: {parser.get("settings", "current_day")}
     Year: {parser.get("settings", "start_year")}
 
     If you desire to make changes to the configuration try the -c or --change option for the init command
-    """)
+    """
+    )
 
 
 def create_config(args, CONFIGPATH):
@@ -143,6 +145,7 @@ def how_to_change_config(args):
         user_input_change(args)
     else:
         namespace_config_change(args, CONFIGPATH)
+        show_config()
 
 
 def namespace_config_change(args, CONFIGPATH):
@@ -168,7 +171,6 @@ def namespace_config_change(args, CONFIGPATH):
         with open(CONFIGPATH, "w") as configfile:
             config.write(configfile)
         # show config to the user , so changes are visible to the user
-        show_config()
     print("namespace_config was selected")
 
 
