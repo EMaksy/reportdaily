@@ -30,7 +30,8 @@ ARGS = Namespace(cliargs=["init"], name="NameTest",
 ARGS_CHANGE_CMD = Namespace(cliargs=["init"], change=True, name="ChangeName",
                             team="ChangeTeamName", year="2020")
 
-ARGS_CHANGE = Namespace(cliargs=["init"], change=True)
+ARGS_CHANGE = Namespace(
+    cliargs=["init"], name=None,  team=None, year=None, change=True)
 
 
 def test_config_exists(tmp_path: pathlib.Path):
