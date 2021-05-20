@@ -192,54 +192,25 @@ def test_change_by_input(tmp_path: pathlib.Path):
     config.read(configpath)
     # open config and save it for visability
     with open(configpath, 'r') as configfile:
-        configs_before_change = configfile.read()
+        configs_before_change = dict(config.items("settings"))
     print(configs_before_change)
 
     def mock_input(txt):
         "This is our function that patches the builtin input function. "
-        if "Name, Team, Year? " in rd.user_input_change(ARGS_CHANGE, configpath):
+        if txt.lower().startswith("name"):
             print(user_input_option)
-            return next(user_input_option)
+            return user_input_option
 
-        if "Enter the change " in rd.user_input_change(ARGS_CHANGE, configpath):
+        elif txt.lower().startswith("enter"):
             print(user_input_str)
-            return next(user_input_str)
+            return user_input_str
 
     with patch.object(builtins, 'input', mock_input):
         rd.user_input_change(ARGS_CHANGE, configpath)
+    config.read(configpath)
+    configs_after_change = dict(config.items("settings"))
+    print(configs_after_change.get("name"))
 
-    # setup monkeypatch
-    # monkeypatch.setattr(
-    #    'builtins.input', lambda _: user_input_option)
+    # THEN
 
-    # execute user input change
-    # rd.user_input_change(ARGS_CHANGE, configpath)
-# change files by direct input
-
-# first input option, maybe loop ?
-# second input enter the change
-# save new configs in variable
-
-# THEN
-# check if  user input str and user input option has changed the config values
-
-# second test  test for no key in config
-
-
-# test is required for create _config with direct user input.
-"""
-    def input():
-        tmp_input = input("Name, Team, Year? ")
-        overwrite_input = input("Enter the change ")
-
-    def content():
-        user_input_option = "Name"
-        user_input_str = "TestInputName"
-
-    def mock_input(txt):
-        "This is our function that patches the builtin input function. "
-        return user_input_option,  user_input_str
-
-    with patch.object(builtins, 'input', mock_input):
-        print(input())  # comment can be removed to see the output
-"""
+    assert configs_after_change.get("name") == user_input_str
