@@ -15,6 +15,7 @@ from argparse import Namespace
 from unittest.mock import patch
 import builtins
 
+import pytest
 
 # Global data
 STANDARD_SECTIONS = ["settings"]
@@ -175,17 +176,19 @@ def test_change_config_namespace(tmp_path: pathlib):
     assert data_after_change_dict.items() <= configs_after_change_dict.items()
 
 
-def test_change_by_input(tmp_path: pathlib.Path):
+@pytest.mark.parametrize("user_category,user_change,user_key", [("Name", "TestInputName", "name"), ("Team", "TestInputTeam", "team"), ("Year", "TestInputYear", "start_year")])
+def test_change_by_input(tmp_path: pathlib.Path,  user_category, user_change, user_key):
  #   #This test will simulate user input and check if  the changes were done correctly
 
     # GIVEN
-    # ARGS without cmd values
-    print(ARGS_CHANGE)
+    # ARGS to create  a config file in the first place
     configpath = tmp_path / "reportdailyrc"
-    user_input_option = "Name"
-    user_input_str = "TestInputName"
+    # simulated user input
+    user_input_option = str(user_category)
+    user_input_str = str(user_change)
+    user_keys = str(user_key)
 
-# WHEN
+    # WHEN
     # create a config file
     rd.create_config(ARGS, configpath)
     config = configparser.ConfigParser()
@@ -193,8 +196,10 @@ def test_change_by_input(tmp_path: pathlib.Path):
     # open config and save it for visability
     with open(configpath, 'r') as configfile:
         configs_before_change = dict(config.items("settings"))
+    # save dict before changes
     print(configs_before_change)
 
+    # patch your input
     def mock_input(txt):
         "This is our function that patches the builtin input function. "
         if txt.lower().startswith("name"):
@@ -209,8 +214,7 @@ def test_change_by_input(tmp_path: pathlib.Path):
         rd.user_input_change(ARGS_CHANGE, configpath)
     config.read(configpath)
     configs_after_change = dict(config.items("settings"))
-    print(configs_after_change.get("name"))
+    print(configs_after_change.get(user_keys))
 
     # THEN
-
-    assert configs_after_change.get("name") == user_input_str
+    assert configs_after_change.get(user_keys) == user_input_str
