@@ -175,7 +175,7 @@ def test_change_config_namespace(tmp_path: pathlib):
     assert data_after_change_dict.items() <= configs_after_change_dict.items()
 
 
-def test_change_by_input(tmp_path: pathlib.Path, monkeypatch):
+def test_change_by_input(tmp_path: pathlib.Path):
  #   #This test will simulate user input and check if  the changes were done correctly
 
     # GIVEN
@@ -184,7 +184,6 @@ def test_change_by_input(tmp_path: pathlib.Path, monkeypatch):
     configpath = tmp_path / "reportdailyrc"
     user_input_option = "Name"
     user_input_str = "TestInputName"
-
 
 # WHEN
     # create a config file
@@ -196,22 +195,51 @@ def test_change_by_input(tmp_path: pathlib.Path, monkeypatch):
         configs_before_change = configfile.read()
     print(configs_before_change)
 
+    def mock_input(txt):
+        "This is our function that patches the builtin input function. "
+        if "Name, Team, Year? " in rd.user_input_change(ARGS_CHANGE, configpath):
+            print(user_input_option)
+            return next(user_input_option)
+
+        if "Enter the change " in rd.user_input_change(ARGS_CHANGE, configpath):
+            print(user_input_str)
+            return next(user_input_str)
+
+    with patch.object(builtins, 'input', mock_input):
+        rd.user_input_change(ARGS_CHANGE, configpath)
+
     # setup monkeypatch
-    monkeypatch.setattr(
-        'builtins.input', lambda _: user_input_option)
+    # monkeypatch.setattr(
+    #    'builtins.input', lambda _: user_input_option)
 
     # execute user input change
-    rd.user_input_change(ARGS_CHANGE, configpath)
-    # change files by direct input
+    # rd.user_input_change(ARGS_CHANGE, configpath)
+# change files by direct input
 
-    # first input option, maybe loop ?
-    # second input enter the change
-    # save new configs in variable
+# first input option, maybe loop ?
+# second input enter the change
+# save new configs in variable
 
 # THEN
-    # check if  user input str and user input option has changed the config values
+# check if  user input str and user input option has changed the config values
 
-    # second test  test for no key in config
+# second test  test for no key in config
 
 
 # test is required for create _config with direct user input.
+"""
+    def input():
+        tmp_input = input("Name, Team, Year? ")
+        overwrite_input = input("Enter the change ")
+
+    def content():
+        user_input_option = "Name"
+        user_input_str = "TestInputName"
+
+    def mock_input(txt):
+        "This is our function that patches the builtin input function. "
+        return user_input_option,  user_input_str
+
+    with patch.object(builtins, 'input', mock_input):
+        print(input())  # comment can be removed to see the output
+"""
