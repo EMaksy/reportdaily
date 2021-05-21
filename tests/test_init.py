@@ -113,23 +113,6 @@ def test_config_real_section(tmp_path: pathlib):
     assert real_keys == std_keys
 
 
-"""
-def test_show_config(tmp_path: pathlib):
-
-    # GIVEN
-    # ARGS
-    # a config file is created
-    # expected output of show config
-    # This will be finished in a later release
-
-    # noch ein test , modul wo du über alle sections iterieren kannst  um zu überprüfen ob alle  sections und options in config vorhanden sind
-    # gettattr(args var) var = bar  --> zugriff auf namespace
-    # Welche tests brauchen wir noch ?
-    # Cheat sheet was kann dict alles ?
-    # was ist ein set und wir nehmen die menge aus file - die menge aus globalen variablen
-"""
-
-
 def test_change_config_namespace(tmp_path: pathlib):
     """This test will check if the change option works"""
 # GIVEN
@@ -177,6 +160,7 @@ def test_change_config_namespace(tmp_path: pathlib):
 
 
 @pytest.mark.parametrize("user_category,user_change,user_key", [("Name", "TestInputName", "name"), ("Team", "TestInputTeam", "team"), ("Year", "TestInputYear", "start_year")])
+# @pytest.mark.parametrize("user_wrong_key,user_category,user_change,user_key", [("WRONG_KEY", "Name", "TestInputName",  "name")])
 def test_change_by_input(tmp_path: pathlib.Path,  user_category, user_change, user_key):
  #   #This test will simulate user input and check if  the changes were done correctly
 
@@ -212,9 +196,49 @@ def test_change_by_input(tmp_path: pathlib.Path,  user_category, user_change, us
 
     with patch.object(builtins, 'input', mock_input):
         rd.user_input_change(ARGS_CHANGE, configpath)
+    # read changed value
     config.read(configpath)
     configs_after_change = dict(config.items("settings"))
     print(configs_after_change.get(user_keys))
 
     # THEN
     assert configs_after_change.get(user_keys) == user_input_str
+
+
+# missing wrong input test
+
+
+def test_create_config_user_input(tmp_path: pathlib):
+
+    # GIVEN
+    name = "TESTNAME"
+    team = "TESTTEAM"
+    year = "2020"
+    ARGS_USER_INPUT = Namespace(
+        cliargs=["init"], name=None,  team=None, year=None)
+    configpath = tmp_path / "reportdailyrc"
+
+    # WHEN
+
+    def mock_input(txt):
+        "This is our function that patches the builtin input function. "
+        if txt.lower().startswith("enter your name"):
+            return name
+        if txt.lower().startswith("enter your team"):
+            return team
+        if txt.lower().startswith("in which"):
+            return year
+
+    with patch.object(builtins, 'input', mock_input):
+        rd.create_config(ARGS_USER_INPUT, configpath)
+
+    # open configs
+    config = configparser.ConfigParser()
+    config.read(configpath)
+    with open(configpath, 'r') as configfile:
+        configs_after_creation = dict(config.items("settings"))
+
+    # THEN
+    assert configs_after_creation.get("name") == name
+    assert configs_after_creation.get("team") == team
+    assert configs_after_creation.get("start_year") == year
