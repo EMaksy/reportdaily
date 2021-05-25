@@ -71,7 +71,7 @@ def cmd_init(args):
     # check if a config file already exist
     if os.path.exists(CONFIGPATH):
         show_config(CONFIGPATH)
-        # check if tge user wants to change in the existing file
+        # check if the user wants to change in the existing file
         if args.change is True:
             how_to_change_config(args)
     # create a config if there is none
@@ -194,7 +194,6 @@ def user_input_change(args, CONFIGPATH):
     while(True):
         tmp_input = input("Name, Team, Year? ")
         if tmp_input in choice_table:
-            # print(f"{tmp_input} exists in key")
             # need to map the keys  right to the settings --> from Name to name
             if tmp_input == "Name":
                 tmp_input = "name"

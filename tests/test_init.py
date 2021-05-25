@@ -14,6 +14,8 @@ from argparse import Namespace
 # monkey patching
 from unittest.mock import patch
 import builtins
+# grab os output
+import subprocess
 
 import pytest
 
@@ -151,6 +153,7 @@ def test_change_config_namespace(tmp_path: pathlib):
 # check if the file has changed
     assert configs_before_change != config_after_change
 
+
 # check if the  the values are changed as given
     print(configs_before_change_dict)
     print(configs_after_change_dict)
@@ -159,8 +162,11 @@ def test_change_config_namespace(tmp_path: pathlib):
     assert data_after_change_dict.items() <= configs_after_change_dict.items()
 
 
-@pytest.mark.parametrize("user_category,user_change,user_key", [("Name", "TestInputName", "name"), ("Team", "TestInputTeam", "team"), ("Year", "TestInputYear", "start_year")])
-# @pytest.mark.parametrize("user_wrong_key,user_category,user_change,user_key", [("WRONG_KEY", "Name", "TestInputName",  "name")])
+@pytest.mark.parametrize("user_category,user_change,user_key",
+                         [("Name", "TestInputName", "name"),
+                          ("Team", "TestInputTeam", "team"),
+                          ("Year", "TestInputYear", "start_year"),
+                          ])
 def test_change_by_input(tmp_path: pathlib.Path,  user_category, user_change, user_key):
  #   #This test will simulate user input and check if  the changes were done correctly
 
@@ -168,9 +174,10 @@ def test_change_by_input(tmp_path: pathlib.Path,  user_category, user_change, us
     # ARGS to create  a config file in the first place
     configpath = tmp_path / "reportdailyrc"
     # simulated user input
-    user_input_option = str(user_category)
-    user_input_str = str(user_change)
-    user_keys = str(user_key)
+    # user_category
+    # no need in this variable , dont forget to delete!!!
+    user_input_str = user_change
+    user_keys = user_key
 
     # WHEN
     # create a config file
@@ -187,8 +194,8 @@ def test_change_by_input(tmp_path: pathlib.Path,  user_category, user_change, us
     def mock_input(txt):
         "This is our function that patches the builtin input function. "
         if txt.lower().startswith("name"):
-            print(user_input_option)
-            return user_input_option
+            print(user_category)
+            return user_category
 
         elif txt.lower().startswith("enter"):
             print(user_input_str)
@@ -205,7 +212,61 @@ def test_change_by_input(tmp_path: pathlib.Path,  user_category, user_change, us
     assert configs_after_change.get(user_keys) == user_input_str
 
 
-# missing wrong input test
+"""
+def test_wrong_input_change(tmp_path: pathlib):
+    
+    # GIVEN
+    user_wrong_input = "TEST"
+    user_right_input = "Name"
+    user_canged_value = "TESTNAME"
+    awaited_output = "No key in config found --> Try again"
+
+    # path
+    configpath = tmp_path / "reportdailyrc"
+    # Given Namespace for the change command
+    # ARGS_CHANGE = Namespace(
+    # cliargs=["init"], name=None,  team=None, year=None, change=True)
+    # Use this Namespace so create a config for the test
+    # ARGS = Namespace(cliargs=["init"], name="NameTest",
+    #             team="TeamName", year="2020")
+    # Grab sdtout
+
+    # WHEN
+    # create a config file
+    rd.create_config(ARGS, configpath)
+    config = configparser.ConfigParser()
+    config.read(configpath)
+    # open config and save it for visability
+    with open(configpath, 'r') as configfile:
+        configs_before_change = dict(config.items("settings"))
+    # save dict before changes
+    print(configs_before_change)
+
+    # simultate input of user
+
+    def mock_input(txt):
+        "This is our function that patches the builtin input function. "
+        run_once = int(0)
+        while 1:
+            if txt.lower().startswith("name") and run_once == 0:
+                print("wrong input")
+                run_once += 1
+                return user_wrong_input
+            if txt.lower().startswith("name") and run_once == 1:
+                print("Right input")
+                run_once += 1
+                return user_right_input
+            if txt.lower().startswith("enter") and run_once == 2:
+                run_once += 1
+                return user_canged_value
+            break
+            # patch the input
+    with patch.object(builtins, 'input', mock_input):
+        # run config input function
+        rd.user_input_change(ARGS_CHANGE, configpath)
+    # THEN
+    #assert awaited_output in given_output
+"""
 
 
 def test_create_config_user_input(tmp_path: pathlib):
@@ -219,7 +280,7 @@ def test_create_config_user_input(tmp_path: pathlib):
     configpath = tmp_path / "reportdailyrc"
 
     # WHEN
-
+    # patch the input of user
     def mock_input(txt):
         "This is our function that patches the builtin input function. "
         if txt.lower().startswith("enter your name"):
