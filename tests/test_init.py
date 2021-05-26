@@ -15,6 +15,10 @@ import builtins
 # required fo tests
 import pytest
 
+
+from io import StringIO  # Python3 use: from io import StringIO
+import sys
+
 # Global data
 STANDARD_SECTIONS = ["settings"]
 STANDARD_OPTIONS = ["name", "team", "start_year", "current_day"]
@@ -291,3 +295,30 @@ def test_create_config_user_input(tmp_path: pathlib):
     assert configs_after_creation.get("name") == name
     assert configs_after_creation.get("team") == team
     assert configs_after_creation.get("start_year") == year
+
+
+def test_show_config(tmp_path: pathlib, capsys):
+    """Test if awaited part of the output is in sdtout"""
+
+    # GIVEN
+    # ARGS = Namespace(cliargs=["init"], name="NameTest",team="TeamName", year="2020")
+    configpath = tmp_path / "reportdailyrc"
+    awaited_part_of_output = "Your current configuration at the moment"
+
+    # WHEN
+    # create a config file
+    rd.create_config(ARGS, configpath)
+    config = configparser.ConfigParser()
+    # show the config
+    rd.show_config(configpath)
+    # capture input with pystest (capsys)
+    captured = capsys.readouterr()
+    print(captured)
+
+    # THEN
+    assert awaited_part_of_output in captured.out
+
+
+# save console output in file
+
+# THEN
