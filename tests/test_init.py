@@ -1,5 +1,6 @@
 # import configparser
 import configparser
+from unittest import mock
 # import script that needs to be tested
 import reportdaily as rd
 # required for fixture
@@ -13,11 +14,8 @@ from argparse import Namespace
 from unittest.mock import patch
 import builtins
 # required fo tests
+import pytest_mock
 import pytest
-
-
-from io import StringIO  # Python3 use: from io import StringIO
-import sys
 
 # Global data
 STANDARD_SECTIONS = ["settings"]
@@ -315,10 +313,21 @@ def test_show_config(tmp_path: pathlib, capsys):
     captured = capsys.readouterr()
     print(captured)
 
-    # THEN
+    # THEN check the captured output if awaited part is in output
     assert awaited_part_of_output in captured.out
 
 
-# save console output in file
+def test_how_to_change_configs_input(tmp_path: pathlib):
 
-# THEN
+    # GIVEN
+    # ARGS_CHANGE = Namespace(cliargs=["init"], name=None,  team=None, year=None, change=True)
+    return_value = 0
+    configpath = tmp_path / "reportdailyrc"
+
+    # WHEN return value == 0 then user_input_change_was_used
+    mocker.patch("rd.how_to_change_config.user_input_change",
+                 return_value=True)
+    return_value = rd.how_to_change_config(ARGS_CHANGE, configpath)
+
+    # THEN
+    assert return_value == 0

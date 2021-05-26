@@ -139,12 +139,14 @@ def ask_for_input(var, message):
     return var
 
 
-def how_to_change_config(args):
+def how_to_change_config(args, CONFIGPATH):
     """User can change or overwrite the configs via direct input or console"""
     if args.name is None and args.year is None and args.team is None and args.change:
-        user_input_change(args)
+        user_input_change(args, CONFIGPATH)
+        return 0
     else:
         namespace_config_change(args, CONFIGPATH)
+        return 1
 
 
 def namespace_config_change(args, CONFIGPATH):
