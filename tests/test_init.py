@@ -3,6 +3,8 @@ import configparser
 from pickle import TRUE
 from unittest import mock
 
+from rx import return_value
+
 
 # import script that needs to be tested
 import reportdaily as rd
@@ -208,7 +210,7 @@ def test_change_by_input(tmp_path: pathlib.Path,  user_category, user_change, us
 
 """
 def test_wrong_input_change(tmp_path: pathlib):
-    
+
     # GIVEN
     user_wrong_input = "TEST"
     user_right_input = "Name"
@@ -259,7 +261,7 @@ def test_wrong_input_change(tmp_path: pathlib):
         # run config input function
         rd.user_input_change(ARGS_CHANGE, configpath)
     # THEN
-    #assert awaited_output in given_output
+    # assert awaited_output in given_output
 """
 
 
@@ -322,8 +324,8 @@ def test_show_config(tmp_path: pathlib, capsys):
 
 
 @patch("reportdaily.user_input_change")
-def test_how_to_change_configs_input(self, mocker, tmp_path: pathlib):
-
+def test_how_to_change_configs_input(mocker, tmp_path: pathlib):
+    """This test will check if the right function (user_input_change) was selected  by a given ARGS Namespace object"""
     # GIVEN
     # ARGS_CHANGE = Namespace(cliargs=["init"], name=None,  team=None, year=None, change=True)
     configpath = tmp_path / "reportdailyrc"
@@ -340,8 +342,8 @@ def test_how_to_change_configs_input(self, mocker, tmp_path: pathlib):
 
 
 @patch("reportdaily.namespace_config_change")
-def test_how_to_change_configs_namespace(self, mocker, tmp_path: pathlib):
-
+def test_how_to_change_configs_namespace(mocker, tmp_path: pathlib):
+    """This test will check if the right function (namespace_config_change) was selected  by a given ARGS Namespace object"""
     # GIVEN
     # ARGS = Namespace(cliargs=["init"], name="NameTest",
     #             team="TeamName", year="2020")
@@ -358,3 +360,51 @@ def test_how_to_change_configs_namespace(self, mocker, tmp_path: pathlib):
     # THEN
     # check return value ,to prove that the right function was used
     assert return_value == 1
+
+
+@patch("reportdaily.create_config")
+@patch("reportdaily.show_config")
+def test_cmd_init_without_configpath(mocker_create_config, mocker_show_config, tmp_path: pathlib):
+    """This test will check the propper use of cmd_init"""
+
+    # GIVEN
+    # ARGS = Namespace(cliargs=["init"], name="NameTest",
+    #             team="TeamName", year="2020")
+    configpath = tmp_path / "reportdailyrc"
+    expected_return_value = 0
+
+    # WHEN
+    # MagicMock
+    mocker_create_config.return_value = MagicMock(return_value=True)
+    mocker_show_config.return_value = MagicMock(return_value=True)
+    return_value = rd.cmd_init(ARGS, configpath)
+
+    # THEN
+    assert expected_return_value == return_value
+
+
+@patch("reportdaily.os.path.exists")
+@patch("reportdaily.show_config")
+@patch("reportdaily.how_to_change_config")
+def test_cmd_init_with_configpath(mocker_os_path_exists, mocker_show_config,  mocker_how_to_change_config, tmp_path: pathlib):
+    """This test will check the propper use of cmd_init if config already exists and the user wants to change it"""
+
+    # GIVEN
+    # ARGS_CHANGE = Namespace(
+    #               cliargs=["init"], name=None,
+    #               team=None, year=None,
+    #               change=True)
+
+    configpath = tmp_path / "reportdailyrc"
+    expected_return_value = 1
+
+    # WHEN
+    # MagicMock
+    mocker_os_path_exists.return_value = MagicMock(return_value=True)
+    mocker_show_config.return_value = MagicMock(return_value=True)
+    mocker_how_to_change_config.return_value = MagicMock(return_value=True)
+    # execute command and gather the return value
+    return_value = rd.cmd_init(ARGS_CHANGE, configpath)
+
+    # THEN
+    assert expected_return_value == return_value
