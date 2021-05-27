@@ -31,7 +31,7 @@ jobs:
       run: |
         ls -all
         pytest -v 
-        coverage-badge -f  -o coverage.svg
+        coverage-badge  -o coverage.svg -f 
         ls -all 
     - name: Commit files
       run: |
