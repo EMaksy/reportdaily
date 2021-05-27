@@ -1,4 +1,4 @@
-name: pytest
+name: coverage-badge
 
 # This workflow will
 # run all tests with pytest  
@@ -11,7 +11,7 @@ jobs:
    strategy:
       matrix:
         os: [ubuntu-18.04]
-        python-version: [3.6, 3.7, 3.8, 3.9]
+        python-version: [3.9]
    steps:
 
     - name: Checkout
@@ -30,3 +30,17 @@ jobs:
     - name: Run Tests and create coverage
       run: |
         pytest -v 
+    - name: Create badge an push to github
+      run: |
+        coverage-badge -o coverage.svg
+    - name: Commit files
+      run: |
+        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add coverage.svg
+        git commit -m "Update coverage badge" -a
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: ${{ github.ref }}
