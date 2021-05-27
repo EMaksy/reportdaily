@@ -1,6 +1,9 @@
 # import configparser
 import configparser
+from pickle import TRUE
 from unittest import mock
+
+
 # import script that needs to be tested
 import reportdaily as rd
 # required for fixture
@@ -10,12 +13,13 @@ import os
 from datetime import date
 # import namespace
 from argparse import Namespace
-# monkey patching
-from unittest.mock import patch
+# monkey patching /mocker patch
+import unittest
+from unittest.mock import MagicMock, patch
 import builtins
 # required fo tests
-import pytest_mock
 import pytest
+
 
 # Global data
 STANDARD_SECTIONS = ["settings"]
@@ -317,17 +321,40 @@ def test_show_config(tmp_path: pathlib, capsys):
     assert awaited_part_of_output in captured.out
 
 
-def test_how_to_change_configs_input(tmp_path: pathlib):
+@patch("reportdaily.user_input_change")
+def test_how_to_change_configs_input(self, mocker, tmp_path: pathlib):
 
     # GIVEN
     # ARGS_CHANGE = Namespace(cliargs=["init"], name=None,  team=None, year=None, change=True)
-    return_value = 0
     configpath = tmp_path / "reportdailyrc"
-
-    # WHEN return value == 0 then user_input_change_was_used
-    mocker.patch("rd.how_to_change_config.user_input_change",
-                 return_value=True)
+    # MagicMock
+    # patch the user_input_change function from reportdaily
+    mocker.return_value = MagicMock(return_value=True)
+    # save return value of function
     return_value = rd.how_to_change_config(ARGS_CHANGE, configpath)
+    print(return_value)
 
     # THEN
+    # check return value ,to prove that the right function was used
     assert return_value == 0
+
+
+@patch("reportdaily.namespace_config_change")
+def test_how_to_change_configs_namespace(self, mocker, tmp_path: pathlib):
+
+    # GIVEN
+    # ARGS = Namespace(cliargs=["init"], name="NameTest",
+    #             team="TeamName", year="2020")
+    configpath = tmp_path / "reportdailyrc"
+
+    # WHEN
+    # MagicMock
+    # patch the user_input_change function from reportdaily
+    mocker.return_value = MagicMock(return_value=True)
+    # save return value of function
+    return_value = rd.how_to_change_config(ARGS, configpath)
+    print(return_value)
+
+    # THEN
+    # check return value ,to prove that the right function was used
+    assert return_value == 1
