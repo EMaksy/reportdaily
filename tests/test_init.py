@@ -326,6 +326,7 @@ def test_how_to_change_configs_input(mocker, tmp_path: pathlib):
     # GIVEN
     # ARGS_CHANGE = Namespace(cliargs=["init"], name=None,  team=None, year=None, change=True)
     configpath = tmp_path / "reportdailyrc"
+    expected_value = 0
     # MagicMock
     # patch the user_input_change function from reportdaily
     mocker.return_value = MagicMock(return_value=True)
@@ -335,7 +336,7 @@ def test_how_to_change_configs_input(mocker, tmp_path: pathlib):
 
     # THEN
     # check return value ,to prove that the right function was used
-    assert return_value == 0
+    assert return_value == expected_value
 
 
 @patch("reportdaily.namespace_config_change")
@@ -345,6 +346,7 @@ def test_how_to_change_configs_namespace(mocker, tmp_path: pathlib):
     # ARGS = Namespace(cliargs=["init"], name="NameTest",
     #             team="TeamName", year="2020")
     configpath = tmp_path / "reportdailyrc"
+    expected_value = 1
 
     # WHEN
     # MagicMock
@@ -356,7 +358,7 @@ def test_how_to_change_configs_namespace(mocker, tmp_path: pathlib):
 
     # THEN
     # check return value ,to prove that the right function was used
-    assert return_value == 1
+    assert return_value == expected_value
 
 
 @patch("reportdaily.create_config")
