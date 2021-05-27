@@ -32,3 +32,4 @@ jobs:
     - name: Run Tests and create coverage
       run: |
         pytest -v 
+        coverage-badge -o coverage.svg

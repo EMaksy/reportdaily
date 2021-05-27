@@ -2,6 +2,8 @@
 
 [![pytest](https://github.com/SchleichsSalaticus/reportdaily/actions/workflows/pytest.yml/badge.svg)](https://github.com/SchleichsSalaticus/reportdaily/actions/workflows/pytest.yml)
 
+![Example](./coverage.svg)
+
 # Reportdaily
 
 A command line tool to create edit and export daily, weekly, or monthly reports.
