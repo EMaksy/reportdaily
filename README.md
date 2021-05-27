@@ -2,6 +2,8 @@
 
 [![pytest](https://github.com/SchleichsSalaticus/reportdaily/actions/workflows/pytest.yml/badge.svg)](https://github.com/SchleichsSalaticus/reportdaily/actions/workflows/pytest.yml)
 
+[![coverage-badge](https://github.com/SchleichsSalaticus/reportdaily/actions/workflows/coverage-badge.yml/badge.svg)](https://github.com/SchleichsSalaticus/reportdaily/actions/workflows/coverage-badge.yml)
+
 ![Example](./coverage.svg)
 
 # Reportdaily

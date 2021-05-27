@@ -30,7 +30,7 @@ jobs:
     - name: Run Tests and create coverage badge
       run: |
         pytest -v 
-        coverage-badge -o -f coverage.svg
+        coverage-badge -f  -o coverage.svg
     - name: Commit files
       run: |
         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
