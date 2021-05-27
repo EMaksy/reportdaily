@@ -64,7 +64,7 @@ log = logging.getLogger(__name__)
 log.addHandler(logging.NullHandler())
 
 
-def cmd_init(args):
+def cmd_init(args, CONFIGPATH):
     """Creates an initial config file for a user config file"""
     log.debug("INIT selected %s", args)
 
@@ -74,12 +74,12 @@ def cmd_init(args):
         # check if the user wants to change in the existing file
         if args.change is True:
             how_to_change_config(args)
+            return 1
     # create a config if there is none
     else:
         create_config(args, CONFIGPATH)
         show_config(CONFIGPATH)
-    print(args)
-    return 0
+        return 0
 
 
 def show_config(CONFIGPATH):

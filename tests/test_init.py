@@ -3,9 +3,6 @@ import configparser
 from pickle import TRUE
 from unittest import mock
 
-from rx import return_value
-
-
 # import script that needs to be tested
 import reportdaily as rd
 # required for fixture
@@ -225,14 +222,14 @@ def test_wrong_input_change(tmp_path: pathlib):
     # Use this Namespace so create a config for the test
     # ARGS = Namespace(cliargs=["init"], name="NameTest",
     #             team="TeamName", year="2020")
-    # Grab sdtout
+    # Grab stdout
 
     # WHEN
     # create a config file
     rd.create_config(ARGS, configpath)
     config = configparser.ConfigParser()
     config.read(configpath)
-    # open config and save it for visability
+    # open config and save it for visibility
     with open(configpath, 'r') as configfile:
         configs_before_change = dict(config.items("settings"))
     # save dict before changes
