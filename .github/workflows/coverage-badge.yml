@@ -35,8 +35,7 @@ jobs:
       run: |
         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
-        git add --force coverage.svg
-        git commit --amend -m "Update coverage badge" 
+        git commit -m "Update coverage badge" 
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
