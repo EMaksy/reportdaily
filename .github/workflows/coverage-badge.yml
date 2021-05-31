@@ -27,9 +27,16 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r devel-requirements.txt
-    - name: Delete old svg badge 
-      run: |
-        rm -r coverage.svg
+
+    - name: "Check file existence"
+      uses: andstor/file-existence-action@v1
+      with:
+        files: "coverage.svg"  
+
+    - name: File exists
+      if: steps.check_files.outputs.files_exists == 'true'
+      run: git rm coverage.svg
+      
     - name: Run Tests and create coverage badge
       run: |
         pytest -v 
