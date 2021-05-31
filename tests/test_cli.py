@@ -6,7 +6,7 @@ import reportdaily as rd
 
 def test_version(capsys):
     """
-    test if the version is correct 
+    test if the version is correct
     """
     # given the user use the --version option
     cliargs = ["--version"]
@@ -21,10 +21,9 @@ def test_version(capsys):
     assert version in captured.out
 
 
-"""
 def test_help(capsys):
     """
-# test if the help option is working
+ test if the help option is working
 """
     # given the user inputs the --help command without a subcommand
     cliargs = ["--help"]
@@ -38,8 +37,7 @@ def test_help(capsys):
     # then  check bash output if help is shown correctly
     assert expected_output in captured.out
 
-"""
-"""
+
 @pytest.mark.parametrize("verbose_count", ["", "-v", "-vv", "-vvv", "-vvvv"])
 def test_verbosity(verbose_count):
     """
@@ -57,4 +55,3 @@ def test_verbosity(verbose_count):
     # then "verbose" should be in the given namespace
     assert search_for in result
     assert result.verbose == count
-"""
