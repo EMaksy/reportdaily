@@ -29,9 +29,11 @@ jobs:
         pip install -r devel-requirements.txt
     - name: Run Tests and create coverage badge
       run: |
+        ls -all
         git rm coverage.svg
         pytest -v 
         coverage-badge  -o coverage.svg -f 
+        ls -all
     - name: Commit files
       run: |
         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
