@@ -124,6 +124,7 @@ def show_config():
     # Team: {parser.get("settings", "user_team")},
     # Date: {parser.get("settings", "user_date")},
     # Year: {parser.get("settings", "user_year")}")
+# test
 
 
 def check_if_config_exists():
