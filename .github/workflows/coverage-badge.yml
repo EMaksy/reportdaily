@@ -27,16 +27,6 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r devel-requirements.txt
-
-    - name: "Check file existence"
-      uses: andstor/file-existence-action@v1
-      with:
-        files: "coverage.svg"  
-
-    - name: File exists
-      if: steps.check_files.outputs.files_exists == 'true'
-      run: git rm coverage.svg
-
     - name: Run Tests and create coverage badge
       run: |
         pytest -v 
@@ -45,8 +35,7 @@ jobs:
       run: |
         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
-        git add coverage.svg
-        git commit -m "Update coverage badge" 
+        git commit --allow-empty  -m "Update coverage badge" 
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
