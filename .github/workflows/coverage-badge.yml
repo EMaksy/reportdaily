@@ -36,7 +36,7 @@ jobs:
     - name: File exists
       if: steps.check_files.outputs.files_exists == 'true'
       run: git rm coverage.svg
-      
+
     - name: Run Tests and create coverage badge
       run: |
         pytest -v 
@@ -53,3 +53,4 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         branch: ${{ github.ref }}
         
+# this is a test run for already existing file
