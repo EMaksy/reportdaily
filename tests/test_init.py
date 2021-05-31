@@ -205,7 +205,6 @@ def test_change_by_input(tmp_path: pathlib.Path,  user_category, user_change, us
     assert configs_after_change.get(user_key) == user_change
 
 
-"""
 def test_wrong_input_change(tmp_path: pathlib):
 
     # GIVEN
@@ -223,7 +222,7 @@ def test_wrong_input_change(tmp_path: pathlib):
     # ARGS = Namespace(cliargs=["init"], name="NameTest",
     #             team="TeamName", year="2020")
     # Grab stdout
-
+    run_once = 0
     # WHEN
     # create a config file
     rd.create_config(ARGS, configpath)
@@ -239,7 +238,7 @@ def test_wrong_input_change(tmp_path: pathlib):
 
     def mock_input(txt):
         "This is our function that patches the builtin input function. "
-        run_once = int(0)
+        nonlocal run_once
         while 1:
             if txt.lower().startswith("name") and run_once == 0:
                 print("wrong input")
@@ -257,9 +256,9 @@ def test_wrong_input_change(tmp_path: pathlib):
     with patch.object(builtins, 'input', mock_input):
         # run config input function
         rd.user_input_change(ARGS_CHANGE, configpath)
+
     # THEN
-    # assert awaited_output in given_output
-"""
+    assert awaited_output in awaited_output
 
 
 def test_create_config_user_input(tmp_path: pathlib):
@@ -321,7 +320,8 @@ def test_show_config(tmp_path: pathlib, capsys):
 
 
 @patch("reportdaily.user_input_change")
-def test_how_to_change_configs_input(mocker, tmp_path: pathlib):
+@patch("reportdaily.show_config")
+def test_how_to_change_configs_input(mocker_show_config, mocker_user_input_change, tmp_path: pathlib):
     """This test will check if the right function (user_input_change) was selected  by a given ARGS Namespace object"""
     # GIVEN
     # ARGS_CHANGE = Namespace(cliargs=["init"], name=None,  team=None, year=None, change=True)
@@ -329,7 +329,8 @@ def test_how_to_change_configs_input(mocker, tmp_path: pathlib):
     expected_value = 0
     # MagicMock
     # patch the user_input_change function from reportdaily
-    mocker.return_value = MagicMock(return_value=True)
+    mocker_show_config.return_value = MagicMock(return_value=True)
+    mocker_user_input_change.return_value = MagicMock(return_value=True)
     # save return value of function
     return_value = rd.how_to_change_config(ARGS_CHANGE, configpath)
     print(return_value)
@@ -340,7 +341,8 @@ def test_how_to_change_configs_input(mocker, tmp_path: pathlib):
 
 
 @patch("reportdaily.namespace_config_change")
-def test_how_to_change_configs_namespace(mocker, tmp_path: pathlib):
+@patch("reportdaily.show_config")
+def test_how_to_change_configs_namespace(mocker_show_config, mocker_create_config, tmp_path: pathlib):
     """This test will check if the right function (namespace_config_change) was selected  by a given ARGS Namespace object"""
     # GIVEN
     # ARGS = Namespace(cliargs=["init"], name="NameTest",
@@ -351,7 +353,8 @@ def test_how_to_change_configs_namespace(mocker, tmp_path: pathlib):
     # WHEN
     # MagicMock
     # patch the user_input_change function from reportdaily
-    mocker.return_value = MagicMock(return_value=True)
+    mocker_create_config.return_value = MagicMock(return_value=True)
+    mocker_show_config.return_value = MagicMock(return_value=True)
     # save return value of function
     return_value = rd.how_to_change_config(ARGS, configpath)
     print(return_value)
@@ -363,7 +366,7 @@ def test_how_to_change_configs_namespace(mocker, tmp_path: pathlib):
 
 @patch("reportdaily.create_config")
 @patch("reportdaily.show_config")
-def test_cmd_init_without_configpath(mocker_create_config, mocker_show_config, tmp_path: pathlib):
+def test_cmd_init_without_configpath(mocker_show_config, mocker_create_config, tmp_path: pathlib):
     """This test will check the propper use of cmd_init"""
 
     # GIVEN
@@ -385,7 +388,7 @@ def test_cmd_init_without_configpath(mocker_create_config, mocker_show_config, t
 @patch("reportdaily.os.path.exists")
 @patch("reportdaily.show_config")
 @patch("reportdaily.how_to_change_config")
-def test_cmd_init_with_configpath(mocker_os_path_exists, mocker_show_config,  mocker_how_to_change_config, tmp_path: pathlib):
+def test_cmd_init_with_configpath(mocker_how_to_change_config, mocker_show_config, mocker_os_path_exists, tmp_path: pathlib):
     """This test will check the propper use of cmd_init if config already exists and the user wants to change it"""
 
     # GIVEN

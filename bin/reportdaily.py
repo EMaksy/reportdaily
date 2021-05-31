@@ -4,6 +4,7 @@
 import argparse
 import logging
 from logging.config import dictConfig
+from pickle import TRUE
 import sys
 
 # this is required for the configparser
@@ -143,10 +144,13 @@ def how_to_change_config(args, CONFIGPATH):
     """User can change or overwrite the configs via direct input or console"""
     if args.name is None and args.year is None and args.team is None and args.change:
         user_input_change(args, CONFIGPATH)
-        return 0
+        result_value = 0
     else:
         namespace_config_change(args, CONFIGPATH)
-        return 1
+
+        result_value = 1
+    show_config(CONFIGPATH)
+    return result_value
 
 
 def namespace_config_change(args, CONFIGPATH):
@@ -172,7 +176,6 @@ def namespace_config_change(args, CONFIGPATH):
         with open(CONFIGPATH, "w") as configfile:
             config.write(configfile)
         # show config to the user , so changes are visible to the user
-    show_config(CONFIGPATH)
     print("namespace_config was selected")
 
 
@@ -216,7 +219,7 @@ def user_input_change(args, CONFIGPATH):
     with open(CONFIGPATH, "w") as configfile:
         config.write(configfile)
     # show config to the user , so changes are visible to the user
-    show_config(CONFIGPATH)
+    return config
 
 
 def cmd_new(args):
