@@ -3,7 +3,6 @@
 import argparse
 import logging
 from logging.config import dictConfig
-from pickle import FALSE, TRUE
 import sys
 # configparser
 from datetime import date
@@ -188,19 +187,19 @@ def namespace_config_change(args, CONFIGPATH):
 
 def check_is_int(input_str, input_is_int):
     """
-    Prove if the given argument is an int and return true or decline and return false
+    Prove if the given argument is an int and return True or decline and return False
     :param  str: String given that needs to be checked
-    :param  bool: bool value default false
-    :return bool value, true if str is an int, false if str is not an int
+    :param  bool: bool value default False
+    :return bool value, True if str is an int, False if str is not an int
     """
 
     if input_str.strip().isdigit():
         print("Year is a int value")
-        input_is_int = TRUE
+        input_is_int = True
         return input_is_int
     else:
         print("Input is not a int sorry, try again")
-        input_is_int = FALSE
+        input_is_int = False
         return input_is_int
 
 
@@ -236,13 +235,13 @@ def user_input_change(args, CONFIGPATH):
             print("No key in config found --> Try again")
             continue
 
-    input_is_int = FALSE
+    input_is_int = False
     while(True):
         overwrite_input = input("Enter the change ")
-        if tmp_input == "start_year" and input_is_int == FALSE:
+        if tmp_input == "start_year" and input_is_int == False:
             input_is_int = check_is_int(
                 overwrite_input, input_is_int)
-            if input_is_int == TRUE:
+            if input_is_int == True:
                 break
         elif tmp_input != "start_year":
             break

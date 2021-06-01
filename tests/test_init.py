@@ -1,6 +1,5 @@
 # import configparser
 import configparser
-from pickle import FALSE, TRUE
 from unittest import mock
 
 # import script that needs to be tested
@@ -47,7 +46,7 @@ def test_config_exists(tmp_path: pathlib.Path):
     # WHEN = expect  a config file is created in tmp_path
     rd.create_config(ARGS, configpath)
 
-    # THEN config file existence is true
+    # THEN config file existence is True
     assert os.path.exists(configpath) is True
 
 
@@ -410,15 +409,15 @@ def test_cmd_init_with_configpath(mocker_how_to_change_config, mocker_show_confi
     assert expected_return_value == return_value
 
 
-def test_check_is_int_is_true():
+def test_check_is_int_is_True():
     """
     Test if the function proves if the given values  are int or not
     """
 
     # GIVEN
     given_str_is_also_int = "2009"
-    given_default_input_return_value = FALSE
-    expexted_return_value = TRUE
+    given_default_input_return_value = False
+    expexted_return_value = True
     given_return_value = None
 
     # WHEN
@@ -429,15 +428,15 @@ def test_check_is_int_is_true():
     assert expexted_return_value == given_return_value
 
 
-def test_check_is_int_is_false():
+def test_check_is_int_is_False():
     """
     Test if the function proves if the given values  are int or not
     """
 
     # GIVEN
     given_str_is_also_int = "TEST2019"
-    given_default_input_return_value = FALSE
-    expexted_return_value = FALSE
+    given_default_input_return_value = False
+    expexted_return_value = False
     given_return_value = None
 
     # WHEN
