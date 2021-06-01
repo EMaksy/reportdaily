@@ -1,6 +1,6 @@
 # import configparser
 import configparser
-from pickle import TRUE
+from pickle import FALSE, TRUE
 from unittest import mock
 
 # import script that needs to be tested
@@ -159,7 +159,7 @@ def test_change_config_namespace(tmp_path: pathlib):
 @pytest.mark.parametrize("user_category,user_change,user_key",
                          [("Name", "TestInputName", "name"),
                           ("Team", "TestInputTeam", "team"),
-                          ("Year", "TestInputYear", "start_year"),
+                          ("Year", "2019", "start_year"),
                           ])
 def test_change_by_input(tmp_path: pathlib.Path,  user_category, user_change, user_key):
     """This test will simulate user input and check the changes"""
@@ -327,7 +327,7 @@ def test_how_to_change_configs_input(mocker_show_config, mocker_user_input_chang
     # ARGS_CHANGE = Namespace(cliargs=["init"], name=None,  team=None, year=None, change=True)
     configpath = tmp_path / "reportdailyrc"
     expected_value = 0
-    # MagicMock
+
     # patch the user_input_change function from reportdaily
     mocker_show_config.return_value = MagicMock(return_value=True)
     mocker_user_input_change.return_value = MagicMock(return_value=True)
@@ -351,7 +351,6 @@ def test_how_to_change_configs_namespace(mocker_show_config, mocker_create_confi
     expected_value = 1
 
     # WHEN
-    # MagicMock
     # patch the user_input_change function from reportdaily
     mocker_create_config.return_value = MagicMock(return_value=True)
     mocker_show_config.return_value = MagicMock(return_value=True)
@@ -376,7 +375,6 @@ def test_cmd_init_without_configpath(mocker_show_config, mocker_create_config, t
     expected_return_value = 0
 
     # WHEN
-    # MagicMock
     mocker_create_config.return_value = MagicMock(return_value=True)
     mocker_show_config.return_value = MagicMock(return_value=True)
     return_value = rd.cmd_init(ARGS, configpath)
@@ -410,3 +408,41 @@ def test_cmd_init_with_configpath(mocker_how_to_change_config, mocker_show_confi
 
     # THEN
     assert expected_return_value == return_value
+
+
+def test_check_is_int_is_true():
+    """
+    Test if the function proves if the given values  are int or not
+    """
+
+    # GIVEN
+    given_str_is_also_int = "2009"
+    given_default_input_return_value = FALSE
+    expexted_return_value = TRUE
+    given_return_value = None
+
+    # WHEN
+    given_return_value = rd.check_is_int(
+        given_str_is_also_int, given_default_input_return_value)
+
+    # THEN
+    assert expexted_return_value == given_return_value
+
+
+def test_check_is_int_is_false():
+    """
+    Test if the function proves if the given values  are int or not
+    """
+
+    # GIVEN
+    given_str_is_also_int = "TEST2019"
+    given_default_input_return_value = FALSE
+    expexted_return_value = FALSE
+    given_return_value = None
+
+    # WHEN
+    given_return_value = rd.check_is_int(
+        given_str_is_also_int, given_default_input_return_value)
+
+    # THEN
+    assert expexted_return_value == given_return_value

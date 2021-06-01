@@ -1,16 +1,13 @@
 #!/usr/bin/env python3
 
-
 import argparse
 import logging
 from logging.config import dictConfig
-from pickle import TRUE
+from pickle import FALSE, TRUE
 import sys
-
-# this is required for the configparser
+# configparser
 from datetime import date
 from configparser import ConfigParser
-# os is required for creating a path
 import os
 
 
@@ -74,7 +71,7 @@ def cmd_init(args, CONFIGPATH):
         show_config(CONFIGPATH)
         # check if the user wants to change in the existing file
         if args.change is True:
-            how_to_change_config(args)
+            how_to_change_config(args, CONFIGPATH)
             return 1
     # create a config if there is none
     else:
@@ -84,7 +81,10 @@ def cmd_init(args, CONFIGPATH):
 
 
 def show_config(CONFIGPATH):
-    """Show the configs to the user"""
+    """
+    Show the configs to the user
+    :param str: String with an absolute path for looking up the values of the configfile
+    """
 
     # read the config
     parser = ConfigParser()
@@ -104,29 +104,24 @@ def show_config(CONFIGPATH):
 
 
 def create_config(args, CONFIGPATH):
-    """This function will create a config file where the user data is stored as a dict"""
-    # time to ask the user for his data
-
+    """
+    Create a config file, from users input, where the user data is stored as a dict
+    :param  namespace: Arguments given by the command line
+    :param  str: Path where the configuration file is stored
+    """
     # name
     print("Please enter your full name --> example: 'Max Musterman'")
     name = ask_for_input(args.name, "Enter your Name: ")
-
     # team
     team = ask_for_input(args.team, "Enter your Team: ")
-
     year = int(ask_for_input(
         args.year, "In which year did your start your apprenticeship ?: "))
     # time
-
     today_date = date.today()
-    print(
-        f"You are ready to go.  Entries for this {today_date} can  bee added now with reportdaily add")
-
     # create a config file
     config = ConfigParser()
     config["settings"] = {'name': name,
                           'team': team, 'current_day': today_date, 'start_year': year}
-
     # create a config file
     os.makedirs(os.path.dirname(CONFIGPATH), exist_ok=True)
     with open(CONFIGPATH, 'w') as user_config:
@@ -135,13 +130,25 @@ def create_config(args, CONFIGPATH):
 
 
 def ask_for_input(var, message):
+    """
+    Asks for input if passed variable is None, otherwise return variable value.
+
+    :param str|None var: The variable to check
+    :param str message: The message to use as a prompt
+    :return: Either the input from the user or the value of a variable
+    :rtype: str
+    """
     if var is None:
         var = input(message)
     return var
 
 
 def how_to_change_config(args, CONFIGPATH):
-    """User can change or overwrite the configs via direct input or console"""
+    """
+    Change or overwrite the configs via direct input or cli Attributes
+    :param  namespace: Attributes given by the command line
+    :param  str: Path where the configuration file is stored
+    """
     if args.name is None and args.year is None and args.team is None and args.change:
         user_input_change(args, CONFIGPATH)
         result_value = 0
@@ -154,7 +161,7 @@ def how_to_change_config(args, CONFIGPATH):
 
 
 def namespace_config_change(args, CONFIGPATH):
-    """Input changes direct via the console, with just filling the namespace"""
+    """Input changes direct via the console, with just filling the namespace object"""
     # store all the args from namespace
     name = args.name
     team = args.team
@@ -179,6 +186,24 @@ def namespace_config_change(args, CONFIGPATH):
     print("namespace_config was selected")
 
 
+def check_is_int(input_str, input_is_int):
+    """
+    Prove if the given argument is an int and return true or decline and return false
+    :param  str: String given that needs to be checked
+    :param  bool: bool value default false
+    :return bool value, true if str is an int, false if str is not an int
+    """
+
+    if input_str.strip().isdigit():
+        print("Year is a int value")
+        input_is_int = TRUE
+        return input_is_int
+    else:
+        print("Input is not a int sorry, try again")
+        input_is_int = FALSE
+        return input_is_int
+
+
 def user_input_change(args, CONFIGPATH):
     # all user options
     choice_table = {"Name": "t1", "Team": "t2", "Year": "t3"}
@@ -197,7 +222,7 @@ def user_input_change(args, CONFIGPATH):
 
     # check for right user input
     while(True):
-        tmp_input = input("Name, Team, Year? ")
+        tmp_input = input("Name, Team, Year? ").capitalize()
         if tmp_input in choice_table:
             # need to map the keys  right to the settings --> from Name to name
             if tmp_input == "Name":
@@ -206,11 +231,21 @@ def user_input_change(args, CONFIGPATH):
                 tmp_input = "team"
             elif tmp_input == "Year":
                 tmp_input = "start_year"
-
-            overwrite_input = input("Enter the change ")
             break
         else:
             print("No key in config found --> Try again")
+            continue
+
+    input_is_int = FALSE
+    while(True):
+        overwrite_input = input("Enter the change ")
+        if tmp_input == "start_year" and input_is_int == FALSE:
+            input_is_int = check_is_int(
+                overwrite_input, input_is_int)
+            if input_is_int == TRUE:
+                break
+        elif tmp_input != "start_year":
+            break
 
     # add config parser to file
     config = ConfigParser()
@@ -265,10 +300,10 @@ def cmd_export(args):
 
 
 def parsecli(cliargs=None) -> argparse.Namespace:
-    """Parse CLI with :class:`argparse.ArgumentParser` and return parsed result
+    """Parse CLI with: class: `argparse.ArgumentParser` and return parsed result
 
-    :param cliargs: Arguments to parse or None (=use sys.argv)
-    :return: parsed CLI result
+    : param cliargs: Arguments to parse or None (=use sys.argv)
+    : return: parsed CLI result
     """
     parser = argparse.ArgumentParser(description=__doc__,
                                      epilog="Version %s written by %s " % (
@@ -361,7 +396,7 @@ def main(cliargs=None) -> int:
         # log.warning("I'm a warning message.")
         # log.error("I'm an error message.")
         # log.fatal("I'm a really fatal massage!")
-        exit_code = args.func(args)
+        exit_code = args.func(args, CONFIGPATH)
         return exit_code
 
     except MissingSubCommand as error:
