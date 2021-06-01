@@ -203,9 +203,11 @@ def namespace_config_change(args, CONFIGPATH):
 def check_is_int(input_str, input_is_int):
     """
     Prove if the given argument is an int and return True or decline and return False
-    :param  str: String given that needs to be checked
-    :param  bool: bool value default False
-    :return bool value, True if str is an int, False if str is not an int
+
+    :param str input_str: String given that needs to be checked
+    :param bool input_is_int: bool value default False
+    :return: True if str is an int, False if str is not an int
+    :rtype: bool
     """
 
     if input_str.strip().isdigit():
