@@ -221,8 +221,11 @@ def check_is_int(input_str, input_is_int):
 def user_input_change(args, CONFIGPATH):
     """
     Input the data that is asked by function tp change configs
-    :param  str: String given that needs to be checked
-    :param  bool: bool value default False
+
+    :param argparse.Namespace args: Attributes given by the command line
+    :param str CONFIGPATH: Path where the configuration file is stored
+    :return: the ConfigParser object
+    :rtype: configparse.ConfigParser
     """
     # all user options
     choice_table = {"Name": "t1", "Team": "t2", "Year": "t3"}
