@@ -111,8 +111,8 @@ def show_config(CONFIGPATH):
 def create_config(args, CONFIGPATH):
     """
     Create a config file, from users input, where the user data is stored as a dict
-    :param  namespace: Arguments given by the command line
-    :param  str: Path where the configuration file is stored
+    :param argparser.Namespace args: Arguments given by the command line
+    :param str CONFIGPATH: Path where the configuration file is stored
     """
     # name
     print("Please enter your full name --> example: 'Max Musterman'")
