@@ -173,8 +173,9 @@ def how_to_change_config(args, CONFIGPATH):
 def namespace_config_change(args, CONFIGPATH):
     """
     Input arguments direct via the console
-    :param  namespace: Attributes given by the command line
-    :param  str: Path where the configuration file is stored
+
+    :param argparse.Namespace args: Attributes given by the command line
+    :param str CONFIGPATH: Path where the configuration file is stored
     """
     # store all the args from namespace
     name = args.name
