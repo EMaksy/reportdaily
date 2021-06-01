@@ -318,7 +318,7 @@ def cmd_export(args):
 
 
 def parsecli(cliargs=None) -> argparse.Namespace:
-    """Parse CLI with: class: `argparse.ArgumentParser` and return parsed result
+    """Parse CLI with: class:`argparse.ArgumentParser` and return parsed result
 
     : param cliargs: Arguments to parse or None (=use sys.argv)
     : return: parsed CLI result
