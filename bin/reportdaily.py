@@ -154,8 +154,9 @@ def ask_for_input(var, message):
 def how_to_change_config(args, CONFIGPATH):
     """
     Change or overwrite the configs via direct input or cli Attributes
-    :param  namespace: Attributes given by the command line
-    :param  str: Path where the configuration file is stored
+
+    :param argparse.Namespace args: Attributes given by the command line
+    :param str CONFIGPATH: Path where the configuration file is stored
     :return int: int return value for testing
     """
     if args.name is None and args.year is None and args.team is None and args.change:
