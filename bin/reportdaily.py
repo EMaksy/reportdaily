@@ -90,7 +90,8 @@ def cmd_init(args, CONFIGPATH):
 def show_config(CONFIGPATH):
     """
     Show the configs to the user
-    :param str: String with an absolute path for looking up the values of the configfile
+
+    :param str CONFIGPATH: String with an absolute path for looking up the values of the configfile
     """
 
     # read the config
