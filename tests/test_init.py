@@ -23,7 +23,7 @@ import pytest
 STANDARD_SECTIONS = ["settings"]
 STANDARD_OPTIONS = ["name", "team", "start_year", "current_day"]
 STANDARD_CONFIG = {  # Section_name: list of key names
-    "settings": ("name", "team", "start_year", "current_day"),
+    "settings": tuple(STANDARD_OPTIONS),
     # "test": ("test1", "test2"),
     # ...
 }
@@ -393,12 +393,10 @@ def test_cmd_init_with_configpath(mocker_how_to_change_config, mocker_show_confi
     #               cliargs=["init"], name=None,
     #               team=None, year=None,
     #               change=True)
-
     configpath = tmp_path / "reportdailyrc"
     expected_return_value = 1
 
     # WHEN
-    # MagicMock
     mocker_os_path_exists.return_value = MagicMock(return_value=True)
     mocker_show_config.return_value = MagicMock(return_value=True)
     mocker_how_to_change_config.return_value = MagicMock(return_value=True)

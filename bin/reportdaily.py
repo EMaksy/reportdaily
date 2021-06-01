@@ -63,7 +63,8 @@ log.addHandler(logging.NullHandler())
 
 def cmd_init(args, CONFIGPATH):
     """
-    Creates an initial config file for a user config file
+    Initializes global user data (required for the first time).
+    Either user data can be entered directly via options or user will be asked.
     :param  namespace: Arguments given by the command line
     :param  str: Path where the configuration file is stored
     :rtype: int for tests
@@ -192,7 +193,7 @@ def namespace_config_change(args, CONFIGPATH):
         with open(CONFIGPATH, "w") as configfile:
             config.write(configfile)
         # show config to the user , so changes are visible to the user
-    print("namespace_config was selected")
+    log.debug("namespace_config was selected")
 
 
 def check_is_int(input_str, input_is_int):
