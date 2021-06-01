@@ -62,7 +62,12 @@ log.addHandler(logging.NullHandler())
 
 
 def cmd_init(args, CONFIGPATH):
-    """Creates an initial config file for a user config file"""
+    """
+    Creates an initial config file for a user config file
+    :param  namespace: Arguments given by the command line
+    :param  str: Path where the configuration file is stored
+    :rtype: int for tests
+    """
     log.debug("INIT selected %s", args)
 
     # check if a config file already exist
@@ -147,6 +152,7 @@ def how_to_change_config(args, CONFIGPATH):
     Change or overwrite the configs via direct input or cli Attributes
     :param  namespace: Attributes given by the command line
     :param  str: Path where the configuration file is stored
+    :return int: int return value for testing
     """
     if args.name is None and args.year is None and args.team is None and args.change:
         user_input_change(args, CONFIGPATH)
@@ -160,7 +166,11 @@ def how_to_change_config(args, CONFIGPATH):
 
 
 def namespace_config_change(args, CONFIGPATH):
-    """Input changes direct via the console, with just filling the namespace object"""
+    """
+    Input arguments direct via the console
+    :param  namespace: Attributes given by the command line
+    :param  str: Path where the configuration file is stored
+    """
     # store all the args from namespace
     name = args.name
     team = args.team
@@ -204,11 +214,15 @@ def check_is_int(input_str, input_is_int):
 
 
 def user_input_change(args, CONFIGPATH):
+    """
+    Input the data that is asked by function tp change configs
+    :param  str: String given that needs to be checked
+    :param  bool: bool value default False
+    """
     # all user options
     choice_table = {"Name": "t1", "Team": "t2", "Year": "t3"}
     tmp_input = ''
     overwrite_input = ' '
-    change_data = ''
 
     # show and ask user what he wants to overwrite
     print("""
