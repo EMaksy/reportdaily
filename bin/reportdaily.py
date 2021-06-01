@@ -65,9 +65,11 @@ def cmd_init(args, CONFIGPATH):
     """
     Initializes global user data (required for the first time).
     Either user data can be entered directly via options or user will be asked.
-    :param  namespace: Arguments given by the command line
-    :param  str: Path where the configuration file is stored
-    :rtype: int for tests
+
+    :param argparse.Namespace args: Arguments given by the command line
+    :param str CONFIGPATH: Path where the configuration file is stored
+    :return: exit code of this function
+    :rtype: int
     """
     log.debug("INIT selected %s", args)
 
