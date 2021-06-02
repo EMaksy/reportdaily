@@ -2,7 +2,10 @@ name: pytest
 
 # This workflow will
 # run all tests with pytest  
-on: [push]
+on:
+  push:
+    branches:
+      - main 
 
 jobs:
  
@@ -29,4 +32,4 @@ jobs:
         pip install -r devel-requirements.txt
     - name: Run Tests and create coverage
       run: |
-        pytest -rP -v 
+        pytest -rP -v
