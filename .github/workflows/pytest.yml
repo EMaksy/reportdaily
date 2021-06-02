@@ -29,4 +29,8 @@ jobs:
         pip install -r devel-requirements.txt
     - name: Run Tests and create coverage
       run: |
+<<<<<<< HEAD
         pytest -v 
+=======
+        pytest -rP -v 
+>>>>>>> main

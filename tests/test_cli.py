@@ -1,7 +1,9 @@
 import pytest
 import sys
-
 import reportdaily as rd
+
+# import monkey patching
+from unittest.mock import patch
 
 
 def test_version(capsys):
@@ -41,8 +43,13 @@ def test_help(capsys):
 @pytest.mark.parametrize("verbose_count", ["", "-v", "-vv", "-vvv", "-vvvv"])
 def test_verbosity(verbose_count):
     """
+<<<<<<< HEAD
 # Test if the verbosity option was used correctly
 """
+=======
+    Test if the verbosity option was used correctly
+    """
+>>>>>>> main
     # given the user inputs the -v option  to add verbosity level for the logger from -v to -vvvv with an subcommand
     # example cmd  -vvvv and new
     cliargs = ["new"] if not verbose_count else [verbose_count, "new"]
