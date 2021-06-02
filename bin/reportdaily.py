@@ -9,10 +9,6 @@ from datetime import date
 from configparser import ConfigParser
 import os
 
-# this is required for the configparser
-from datetime import *
-from configparser import ConfigParser
-
 
 class MissingSubCommand(ValueError):
     pass
@@ -69,7 +65,6 @@ def cmd_init(args, CONFIGPATH):
     """
     Initializes global user data (required for the first time).
     Either user data can be entered directly via options or user will be asked.
-
     :param argparse.Namespace args: Arguments given by the command line
     :param str CONFIGPATH: Path where the configuration file is stored
     :return: exit code of this function
@@ -94,7 +89,6 @@ def cmd_init(args, CONFIGPATH):
 def show_config(CONFIGPATH):
     """
     Show the configs to the user
-
     :param str CONFIGPATH: String with an absolute path for looking up the values of the configfile
     """
 
@@ -109,7 +103,6 @@ def show_config(CONFIGPATH):
     Team: {parser.get("settings", "team")}
     Date: {parser.get("settings", "current_day")}
     Year: {parser.get("settings", "start_year")}
-
     If you desire to make changes to the configuration try the -c or --change option for the init command
     """
     )
@@ -144,7 +137,6 @@ def create_config(args, CONFIGPATH):
 def ask_for_input(var, message):
     """
     Asks for input if passed variable is None, otherwise return variable value.
-
     :param str|None var: The variable to check
     :param str message: The message to use as a prompt
     :return: Either the input from the user or the value of a variable
@@ -158,7 +150,6 @@ def ask_for_input(var, message):
 def how_to_change_config(args, CONFIGPATH):
     """
     Change or overwrite the configs via direct input or cli Attributes
-
     :param argparse.Namespace args: Attributes given by the command line
     :param str CONFIGPATH: Path where the configuration file is stored
     :return int: int return value for testing
@@ -177,7 +168,6 @@ def how_to_change_config(args, CONFIGPATH):
 def namespace_config_change(args, CONFIGPATH):
     """
     Input arguments direct via the console
-
     :param argparse.Namespace args: Attributes given by the command line
     :param str CONFIGPATH: Path where the configuration file is stored
     """
@@ -208,7 +198,6 @@ def namespace_config_change(args, CONFIGPATH):
 def check_is_int(input_str, input_is_int):
     """
     Prove if the given argument is an int and return True or decline and return False
-
     :param str input_str: String given that needs to be checked
     :param bool input_is_int: bool value default False
     :return: True if str is an int, False if str is not an int
@@ -228,7 +217,6 @@ def check_is_int(input_str, input_is_int):
 def user_input_change(args, CONFIGPATH):
     """
     Input the data that is asked by function tp change configs
-
     :param argparse.Namespace args: Attributes given by the command line
     :param str CONFIGPATH: Path where the configuration file is stored
     :return: the ConfigParser object
@@ -287,108 +275,9 @@ def user_input_change(args, CONFIGPATH):
 
 def cmd_new(args):
     """Creates a new day for the incoming entries"""
-
-    # requires from datetime import date
-    try:
-        check_if_config_exists()
-        check_date()
-        show_config()
-    except FileNotFoundError:
-        create_config()
-
     log.debug("New selected %s", args)
     print("New selected", args)
     return 0
-
-
-def create_config():
-    """This function will create a config file where the user data is stored"""
-    # time to ask the user for his data
-
-    # name
-    print("Please enter your full name --> example: 'Max Musterman'")
-    name = input("Ihr name ist ? ")
-    # team
-    team = input("Please enter your team name: ")
-    # year
-    year = int(input("What year of training are you in? "))
-    # time
-    user_date = date.today()
-    print(
-        f"You are ready to go.  Entries for this {user_date} can  bee added now with reportdaily add")
-
-    # store configfiles in list
-    config_data = [name, team, user_date, year]
-
-    # create a config file
-    config = ConfigParser()
-    config["settings"] = {'user_name': name,
-                          'user_team': team, 'user_date': user_date, 'user_year': year}
-    # create a config file in root
-    with open('./user_config.ini', 'w') as user_config:
-        config.write(user_config)
-
-
-def show_config():
-    """Show the configs to the user"""
-
-    # read the config
-    parser = ConfigParser()
-    parser.read("./user_config.ini")
-
-    print("Your current configuration at the moment")
-    print(f"""
-    Name: {parser.get('settings','user_name')}
-    Team: {parser.get("settings", "user_team")} 
-    Date: {parser.get("settings", "user_date")}
-    Year: {parser.get("settings", "user_year")}
-
-    If you desire to make changes to the configuration try the -c or --change option for the new command 
-    """)
-    # Team: {parser.get("settings", "user_team")}
-    # Team: {parser.get("settings", "user_team")},
-    # Date: {parser.get("settings", "user_date")},
-    # Year: {parser.get("settings", "user_year")}")
-# test
-
-
-def check_if_config_exists():
-    """Check if the config files exists and if not it creates a new config file"""
-
-    try:
-        with open('./user_config.ini') as user_config:
-            print("Configs already exists")
-    except FileNotFoundError:
-        print("Config File does not exist")
-        create_config()
-
-
-def check_date():
-    """
-    Check the date in the config file  when using the new command        
-    If the date is outdated, this function will automatically overwrite the config with todays date
-    """
-
-    # what is our date today ?
-    todays_date = date.today()
-
-    # read data from existing user config
-    parser = ConfigParser()
-    parser.read('./user_config.ini')
-
-    # get the date from config for compering
-    config_date = date(parser.getint('settings', 'user_date'))
-
-    # check if todays date is newer then the config date
-    if todays_date > config_date:
-        print(
-            f"Todays date {todays_date} is newer than config date {config_data} --> need to overwrite")
-    elif todays_date == config_date:
-        print(f"{config_date} is same as {todays_date} --> no need to overwrite")
-
-    elif todays_date < config_date:
-        print(
-            f"{config_date} is smaller as  {todays_date} \n Are you a time traveller?")
 
 
 def cmd_add(args):
@@ -428,7 +317,6 @@ def cmd_export(args):
 
 def parsecli(cliargs=None) -> argparse.Namespace:
     """Parse CLI with: class:`argparse.ArgumentParser` and return parsed result
-
     : param cliargs: Arguments to parse or None (=use sys.argv)
     : return: parsed CLI result
     """
@@ -523,11 +411,7 @@ def main(cliargs=None) -> int:
         # log.warning("I'm a warning message.")
         # log.error("I'm an error message.")
         # log.fatal("I'm a really fatal massage!")
-<<<<<<< HEAD
-        exit_code = args.func(args)
-=======
         exit_code = args.func(args, CONFIGPATH)
->>>>>>> main
         return exit_code
 
     except MissingSubCommand as error:

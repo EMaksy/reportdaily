@@ -1,7 +1,4 @@
 pytest
 pytest-cov
-<<<<<<< HEAD
 coverage-badge
-=======
 pytest-mock
->>>>>>> main
