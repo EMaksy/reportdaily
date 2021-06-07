@@ -16,7 +16,7 @@
 
 
 # -- Project information -----------------------------------------------------
-
+master_doc = "index" 
 project = 'reportdaily'
 copyright = '2021, Eugen Maksymenko'
 author = 'Eugen Maksymenko'
