@@ -50,15 +50,15 @@ init
 
 Is required for the first time use of the programm
 User can enter his data directly or he need to answer some questions provided by this command
-.. code:: bash 
-reportdaily init [-h]
-[--name NAME]
-[--year YEAR]
-[--duration DURATION]
-[--count-teams COUNT_TEAMS]
-[--team TEAM]
-[--team-number TEAM_NUMBER]
-[--change]
+
+.. code-block:: bash 
+   
+   reportdaily init [-h]
+                    [--change]
+                    [--duration DURATION]
+                    [--team TEAM]
+                    [--team-number TEAM_NUMBER]
+                    [--year YEAR]
 
 .. option:: --change
 
@@ -105,7 +105,8 @@ reportdaily init [-h]
 
    Allow to change  the start year of the education  by inputing the argument in the command line
 
-   CARE: Only usable with the --change option 
+   CARE: Only usable with the --change option
+
 new
 ~~~
 
