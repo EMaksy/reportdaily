@@ -165,6 +165,6 @@ export the day by id
 See also
 --------
 
-:Source code:   https://github.com/SchleichsSalaticus/reportdaily
+:Source code:   https://github.com/EMaksy/reportdaily
 
 
