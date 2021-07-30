@@ -61,15 +61,17 @@ A configuration file with all the user information and sqlite database.
    reportdaily init  --help
    reportdaily init  --change [--duration DURATION] [--name Name][--team TEAM] [--team-number TEAM_NUMBER] [--year YEAR]
 
-.. option:: --change | -c
+.. option:: --change, -c
 
 Make changes to the existing config/database
 
-First way:
+The option `--change` can be used in two ways:
 
-Use the --change | -c to make changesto the configuration file
+1. Without further options
+
+Use the --change, -c to make changesto the configuration file
    
-Example: 
+ 
 
 .. code-block:: bash
    
@@ -85,11 +87,9 @@ User is asked for the new values.
 After answering the questions the changes take effect and a changed config file is displayed for the user.
 
 
-Second way:
-
-Additional options allow to make changes direct via the command line.
+2. Additional options allow to make changes direct via the command line.
    
-Example: 
+ 
 
 .. code-block:: bash
    
@@ -106,7 +106,7 @@ The altered configuration is shown in the command line.
 
 .. option:: --duration=DURATION, -d=DURATION
 
-Example:
+
 
 .. code-block:: bash
    
@@ -128,7 +128,7 @@ Changes the name of the trainee  by the passed ""NAME"" argument.
 .. option:: --team=TEAM, -t=TEAM
 
 
-Example:
+
 
 .. code-block:: bash
    
@@ -142,14 +142,14 @@ Changes the team name by the passed ""TEAM"" argument.
    
    reportdaily init --change --team-number "TEAM_NUMBER"
 
-Example:
+
 
 Changes the team number by the passed ""TEAM_NUMBER"" argument.
 
 
 .. option:: --year=YEAR, -y="YEAR"
 
-Example: 
+ 
 
 .. code-block:: bash
    
@@ -157,17 +157,6 @@ Example:
 
 Changes the start year of the education  by the passed ""YEAR"" argument.
 
-Files 
------ 
-
-This script uses the following files:
-
-Configurationpath = ~/.config/reportdaily/reportdailyrc
-
-Databasepath = ~/.config/reportdaily/database.sqlite
-
-See also 
---------
 
 new
 ~~~
@@ -224,6 +213,22 @@ export the day by id
 .. code:: bash
 
    reportdaily  export <ID> 
+
+
+Files 
+----- 
+
+This script uses the following files:
+
+~/.config/reportdaily/reportdailyrc
+
+User configuration file
+
+~/.config/reportdaily/database.sqlite
+
+SQLITE database
+
+
 
 See also
 --------
