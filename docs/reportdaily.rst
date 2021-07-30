@@ -54,11 +54,6 @@ User is asked to answer some question and two files are created.
 
 A configuration file with all the user information and sqlite database.
 
-Configurationpath = ~/.config/reportdaily/reportdailyrc
-
-Databasepath = ~/.config/reportdaily/database.sqlite
-
-
 
 .. code-block:: bash 
 
@@ -162,8 +157,17 @@ Example:
 
 Changes the start year of the education  by the passed ""YEAR"" argument.
 
+Files 
+----- 
 
+This script uses the following files:
 
+Configurationpath = ~/.config/reportdaily/reportdailyrc
+
+Databasepath = ~/.config/reportdaily/database.sqlite
+
+See also 
+--------
 
 new
 ~~~
