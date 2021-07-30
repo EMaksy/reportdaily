@@ -61,13 +61,10 @@ Databasepath = ~/.config/reportdaily/database.sqlite
 
 
 .. code-block:: bash 
-   
-   reportdaily init [-h]
-                    [--change]
-                    [--change] [--duration DURATION]
-                    [--change] [--team TEAM]
-                    [--change] [--team-number TEAM_NUMBER]
-                    [--change] [--year YEAR]
+
+   reportdaily init
+   reportdaily init  --help
+   reportdaily init  --change [--duration DURATION] [--name Name][--team TEAM] [--team-number TEAM_NUMBER] [--year YEAR]
 
 .. option:: --change | -c
 
@@ -124,9 +121,17 @@ Changes the duration of the education by the passed argument  ""DURATION""".
 
 DURATION argument options: 2.5, 3.0 or 3.5.
 
+.. option:: --name=NAME, -n=NAME
+
+.. code-block:: bash
+
+   reportdaily init --change --name "NAME"
+
+Changes the name of the trainee  by the passed ""NAME"" argument.
 
 
 .. option:: --team=TEAM, -t=TEAM
+
 
 Example:
 
@@ -135,8 +140,6 @@ Example:
    reportdaily init --change --team "TEAM"
 
 Changes the team name by the passed ""TEAM"" argument.
-
-CARE: Only usable with the --change option.
 
 .. option:: --team-number=TEAM_NUMBER, -tn=TEAM_NUMBER
 
