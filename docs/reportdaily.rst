@@ -65,97 +65,82 @@ A configuration file with all the user information and sqlite database.
 
 Make changes to the existing config/database
 
-The option `--change` can be used in two ways:
+Use the option  `--change` in two diffrent  ways:
 
-1. Without further options
-
-Use the --change, -c to make changesto the configuration file
-   
  
+1. Ask for user input
 
-.. code-block:: bash
+   .. code-block:: bash
+      
+            reportdaily init --change
+      
+   The exisiting config is shown to the user.
+
+   User is asked to select an option of the configs which requires changes.
+
+   User is asked for the new values.
+
+2. Provide additional options allow to make changes direct via the command line.
    
-
-    reportdaily init --change
    
-The exisiting config is shown to the user.
-
-User is asked to select an option of the configs which requires changes.
-
-User is asked for the new values.
-
-After answering the questions the changes take effect and a changed config file is displayed for the user.
-
-
-2. Additional options allow to make changes direct via the command line.
+   .. code-block:: bash
    
- 
+      reportdaily init --change --name "TEST_NAME"
 
-.. code-block:: bash
-   
-   reportdaily init --change --name "TEST_NAME"
+   The exisiting config is shown to the user. 
 
-The exisiting config is shown to the user. 
+   If the the arguments are properly chosen, then changes are directly saved in the configfile.
 
-If the the arguments are properly chosen, then changes are directly saved in the configfile.
+   If the arguments are wrong, then the user is asked to try again. 
 
-If the arguments are wrong, then the user is asked to try again. 
-
-The altered configuration is shown in the command line.
+   The altered configuration is shown in the command line.
 
 
 .. option:: --duration=DURATION, -d=DURATION
 
 
 
-.. code-block:: bash
-   
-   reportdaily init --change --duration "DURATION"
+   .. code-block:: bash
+      
+      reportdaily init --change --duration "DURATION"
 
-Changes the duration of the education by the passed argument  ""DURATION""".
+   Changes the duration of the education by the passed argument  ""DURATION""".
 
-DURATION argument options: 2.5, 3.0 or 3.5.
+   DURATION argument options: 2.5, 3.0 or 3.5.
 
 .. option:: --name=NAME, -n=NAME
 
-.. code-block:: bash
+   .. code-block:: bash
 
-   reportdaily init --change --name "NAME"
+      reportdaily init --change --name "NAME"
 
-Changes the name of the trainee  by the passed ""NAME"" argument.
+   Changes the name of the trainee  by the passed ""NAME"" argument.
 
 
 .. option:: --team=TEAM, -t=TEAM
 
+   .. code-block:: bash
+      
+      reportdaily init --change --team "TEAM"
 
-
-
-.. code-block:: bash
-   
-   reportdaily init --change --team "TEAM"
-
-Changes the team name by the passed ""TEAM"" argument.
+   Changes the team name by the passed ""TEAM"" argument.
 
 .. option:: --team-number=TEAM_NUMBER, -tn=TEAM_NUMBER
 
-.. code-block:: bash
-   
-   reportdaily init --change --team-number "TEAM_NUMBER"
+   .. code-block:: bash
+      
+      reportdaily init --change --team-number "TEAM_NUMBER"
 
-
-
-Changes the team number by the passed ""TEAM_NUMBER"" argument.
+   Changes the team number by the passed ""TEAM_NUMBER"" argument.
 
 
 .. option:: --year=YEAR, -y="YEAR"
 
- 
+   .. code-block:: bash
+      
+      reportdaily init --change --year "YEAR"
 
-.. code-block:: bash
-   
-   reportdaily init --change --year "YEAR"
-
-Changes the start year of the education  by the passed ""YEAR"" argument.
+   Changes the start year of the education  by the passed ""YEAR"" argument.
 
 
 new
