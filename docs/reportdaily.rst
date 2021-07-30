@@ -48,64 +48,119 @@ Subcommands
 init
 ~~~~
 
-Is required for the first time use of the programm
-User can enter his data directly or he need to answer some questions provided by this command
+The ``init`` subcommand is required for the first time to initialize the program.
+
+User is asked to answer some question and two files are created.
+
+A configuration file with all the user information and sqlite database.
+
+Configurationpath = ~/.config/reportdaily/reportdailyrc
+
+Databasepath = ~/.config/reportdaily/database.sqlite
+
+
 
 .. code-block:: bash 
    
    reportdaily init [-h]
                     [--change]
-                    [--duration DURATION]
-                    [--team TEAM]
-                    [--team-number TEAM_NUMBER]
-                    [--year YEAR]
+                    [--change] [--duration DURATION]
+                    [--change] [--team TEAM]
+                    [--change] [--team-number TEAM_NUMBER]
+                    [--change] [--year YEAR]
 
-.. option:: --change
+.. option:: --change | -c
 
-    Allow to make changes to the existing config/database
+Make changes to the existing config/database
 
-    First way: --change without additonal options
-    
-    Example: reportdaily init --change
-    
-    The exisiting config is shown to the user.
-    User is asked to select an  option of the configs which requires changes.
-    User is asked for the new values.
-    After answering the questions the changes take effect and a changed config file is displayed for the user
+First way:
 
-    Second way: --change + additional options allow to make changes direct via the command line
-    
-    Example: reportdaily init --change --name "TEST_NAME"
-
-    The exisiting config is shown to the user.
-    If the the arguments are properly chosen then changes are directly taken to the config 
-    If the arguments are wrong, the user is asked to try again. 
-    The altered config file is displayed  in the command line so the user can check the new configs.
-
-.. option:: --duration=DURATION
-
-   Allow to change the duration of the education by inputing the argument in the command line
-
-   CARE: Only usable with the --change option
-
-
-.. option:: --team=TEAM
-
-   Allow to change the team name by inputing the argument in the command line
-
-   CARE: Only usable with the --change option
-
-.. option:: --team-number=TEAM_NUMBER
-
-   Allow to change the team number by inputing the argument in the command line
+Use the --change | -c to make changesto the configuration file
    
-   CARE: Only usable with the --change option        
+Example: 
 
-.. option:: --year=YEAR
+.. code-block:: bash
+   
 
-   Allow to change  the start year of the education  by inputing the argument in the command line
+    reportdaily init --change
+   
+The exisiting config is shown to the user.
 
-   CARE: Only usable with the --change option
+User is asked to select an option of the configs which requires changes.
+
+User is asked for the new values.
+
+After answering the questions the changes take effect and a changed config file is displayed for the user.
+
+
+Second way:
+
+Additional options allow to make changes direct via the command line.
+   
+Example: 
+
+.. code-block:: bash
+   
+   reportdaily init --change --name "TEST_NAME"
+
+The exisiting config is shown to the user. 
+
+If the the arguments are properly chosen, then changes are directly saved in the configfile.
+
+If the arguments are wrong, then the user is asked to try again. 
+
+The altered configuration is shown in the command line.
+
+
+.. option:: --duration=DURATION, -d=DURATION
+
+Example:
+
+.. code-block:: bash
+   
+   reportdaily init --change --duration "DURATION"
+
+Changes the duration of the education by the passed argument  ""DURATION""".
+
+DURATION argument options: 2.5, 3.0 or 3.5.
+
+
+
+.. option:: --team=TEAM, -t=TEAM
+
+Example:
+
+.. code-block:: bash
+   
+   reportdaily init --change --team "TEAM"
+
+Changes the team name by the passed ""TEAM"" argument.
+
+CARE: Only usable with the --change option.
+
+.. option:: --team-number=TEAM_NUMBER, -tn=TEAM_NUMBER
+
+.. code-block:: bash
+   
+   reportdaily init --change --team-number "TEAM_NUMBER"
+
+Example:
+
+Changes the team number by the passed ""TEAM_NUMBER"" argument.
+
+
+.. option:: --year=YEAR, -y="YEAR"
+
+Example: 
+
+.. code-block:: bash
+   
+   reportdaily init --change --year "YEAR"
+
+Changes the start year of the education  by the passed ""YEAR"" argument.
+
+
+
 
 new
 ~~~
