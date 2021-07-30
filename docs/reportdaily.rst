@@ -134,7 +134,7 @@ Use the option  `--change` in two diffrent  ways:
    Changes the team number by the passed ""TEAM_NUMBER"" argument.
 
 
-.. option:: --year=YEAR, -y="YEAR"
+.. option:: --year=YEAR, -y=YEAR
 
    .. code-block:: bash
       

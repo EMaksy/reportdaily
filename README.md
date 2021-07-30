@@ -1,6 +1,6 @@
-[![Pages](https://github.com/SchleichsSalaticus/reportdaily/actions/workflows/manpage-build.yml/badge.svg)](https://github.com/SchleichsSalaticus/reportdaily/actions/workflows/manpage-build.yml)
+[![Pages](https://github.com/EMaksy/reportdaily/actions/workflows/manpage-build.yml/badge.svg)](https://github.com/SchleichsSalaticus/reportdaily/actions/workflows/manpage-build.yml)
 
-[![pytest](https://github.com/SchleichsSalaticus/reportdaily/actions/workflows/pytest.yml/badge.svg)](https://github.com/SchleichsSalaticus/reportdaily/actions/workflows/pytest.yml)
+[![pytest](https://github.com/EMaksy/reportdaily/actions/workflows/pytest.yml/badge.svg)](https://github.com/EMaksy/reportdaily/actions/workflows/pytest.yml)
 
 # Reportdaily
 
