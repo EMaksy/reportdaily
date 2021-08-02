@@ -154,18 +154,23 @@ class Database():
         self._execute_sql(create_users_table_entry)
         self._execute_sql(create_users_table_day)
 
-    """
-    this will be added in the upcoming feature #30
+   
     def new_day(self):
         """
-    # Executes sql query to add a new day for upcoming entries
-    """
-        sql_cmd = """
-    # INSERT OR IGNORE INTO DAY (DAY_DATE,TRAINEE_ID)
-    # VALUES (date,1);
-    """
-        return self._execute_sql(sql_cmd)
-    """
+        Executes sql query to add a new day for upcoming entries
+        """
+        day=date.today()
+        sql_cmd = f"""
+        INSERT OR IGNORE INTO DAY (DAY_DATE,TRAINEE_ID)
+        VALUES ({day},1);
+        """
+        sql_cmd2=f"""
+        INSERT OR IGNORE INTO ENTRY (DAY_ID)
+        VALUES (1);"""
+
+        self._execute_sql(sql_cmd)
+        self._execute_sql(sql_cmd2)
+    
 
     def _execute_sql(self, sql_command):
         """
@@ -1295,15 +1300,67 @@ def user_input_change(args, configpath):
             continue
 
 
-def cmd_new(args, configpath):
+def cmd_new(args, configpath,databasepath):
     """Creates a new day for the incoming entries"""
     log.debug("New selected %s", args)
-    # create entry for today
-    # sql_database.new_day()
-    # close database
-    # sql_database.close()  # FIXME Add context manager to simplify the open write close process
-    print("New selected", args)
-    return 0
+    init_cmd=check_config_database_exist(CONFIGPATH,DATABASEPATH)
+    if init_cmd ==True:
+        sql_data=None
+        sql_database = Database(databasepath, sql_data)
+        sql_database.new_day()
+        sql_database.close()  # FIXME Add context manager to simplify the open write close process
+        print("New selected", args)
+        return 0
+
+    elif init_cmd ==False:
+         return 1    
+
+def check_config_database_exist(configpath,databasepath):
+    """
+    execute check if the init command was used and configfile/database exists
+    """
+    txt_no_configpath=textwrap.dedent("""
+                        No configpath exists
+                        Try to use init subcommand first
+                        
+                        Example:
+                        reportdaily init
+                        """)
+
+    txt_no_database=textwrap.dedent("""
+                            No database exists
+                            Try to use init subcommand first
+                            
+                            Example:
+                            reportdaily init
+                            """)
+    
+    # check if configfile exists
+    config_exists=os.path.exists(configpath)
+    
+    # check if database exists 
+    database_exists=os.path.exists(databasepath)
+
+
+    if config_exists==True and database_exists==True:
+        log.debug(f"CONFIG EXISTS: {config_exists}  DATABASE EXISTS: {database_exists}")
+        return True
+    
+    elif config_exists == False or database_exists==False :
+        # feedback if config exists for user
+        if config_exists==False:
+            print(txt_no_configpath)
+        # feedback if database exists for user
+        elif database_exists==False:
+            print(txt_no_configpath)
+        
+        log.debug((f"CONFIG EXISTS: {config_exists}  DATABASE EXISTS: {database_exists}"))
+        return False
+
+
+
+    
+
 
 
 def cmd_add(args):
