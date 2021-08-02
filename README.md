@@ -1,4 +1,4 @@
-[![Pages](https://github.com/EMaksy/reportdaily/actions/workflows/manpage-build.yml/badge.svg)](https://github.com/SchleichsSalaticus/reportdaily/actions/workflows/manpage-build.yml)
+[![Pages](https://github.com/EMaksy/reportdaily/actions/workflows/manpage-build.yml/badge.svg)](https://github.com/EMaksy/reportdaily/actions/workflows/manpage-build.yml)
 
 [![pytest](https://github.com/EMaksy/reportdaily/actions/workflows/pytest.yml/badge.svg)](https://github.com/EMaksy/reportdaily/actions/workflows/pytest.yml)
 
@@ -31,7 +31,7 @@ Just clone the repository and cd into the directory
 
 ### Subcommands
 
-- `init` : initialize and create config on first time
+- `init` : initialize and create config and database
 - `new` : new day for entries
 - `add` : creates a new entry
 - `change` : change an existing entry

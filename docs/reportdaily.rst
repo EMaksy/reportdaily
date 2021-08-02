@@ -71,7 +71,6 @@ Use the option  `--change` in two diffrent  ways:
 1. Ask for user input
 
    .. code-block:: bash
-      
             reportdaily init --change
       
    The exisiting config is shown to the user.
