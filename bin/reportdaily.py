@@ -16,7 +16,7 @@ import textwrap
 # GLOBALS
 CONFIGPATH = os.path.expanduser("~/.config/reportdaily/reportdailyrc")
 DATABASEPATH = os.path.expanduser("~/.config/reportdaily/database.sqlite")
-__version__ = "0.3.0"
+__version__ = "0.3.1"
 __author__ = "Eugen Maksymenko <eugen.maksymenko@suse.com>"
 
 #: The dictionary, passed to :class:`logging.config.dictConfig`,
