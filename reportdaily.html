@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>reportdaily &#8212; reportdaily 0.3.0 documentation</title>
+    <title>reportdaily &#8212; reportdaily 0.3.1 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/classic.css" />
     
@@ -28,7 +28,7 @@
         <li class="right" >
           <a href="index.html" title="Welcome to reportdaily’s documentation"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">reportdaily 0.3.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">reportdaily 0.3.1 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">reportdaily</a></li> 
       </ul>
     </div>  
@@ -77,11 +77,85 @@ scripts. The script supports several subcommands.</p>
 <h2>Subcommands<a class="headerlink" href="#subcommands" title="Permalink to this headline">¶</a></h2>
 <section id="init">
 <h3>init<a class="headerlink" href="#init" title="Permalink to this headline">¶</a></h3>
-<p>Is required for the first time use of the programm
-User can enter his data directly or he need to answer some questions provided by this command</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">init</span></code> subcommand is required for the first time to initialize the program.</p>
+<p>The user is asked to answer some question. After the input is finished, two files are created:</p>
+<p>A configuration file with all the user information and a sqlite database to hold all data.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>reportdaily init
+reportdaily init  --help
+reportdaily init  --change <span class="o">[</span>--duration DURATION<span class="o">]</span> <span class="o">[</span>--name Name<span class="o">][</span>--team TEAM<span class="o">]</span> <span class="o">[</span>--team-number TEAM_NUMBER<span class="o">]</span> <span class="o">[</span>--year YEAR<span class="o">]</span>
 </pre></div>
 </div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-reportdaily-change">
+<span id="cmdoption-reportdaily-c"></span><span class="sig-name descname"><span class="pre">--change</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">-c</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-reportdaily-change" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make changes to the existing config/database</p>
+<p>Use the option  <code class="docutils literal notranslate"><span class="pre">--change</span></code> in two different  ways:</p>
+<ol class="arabic">
+<li><p>Ask for user input</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>reportdaily init --change
+</pre></div>
+</div>
+<p>The exisiting config is shown to the user.</p>
+<p>The user is asked to select an option of the configs which requires changes and to enter new values.</p>
+</li>
+<li><p>Provide additional options allow to make changes direct via the command line.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>reportdaily init --change --name <span class="s2">&quot;TEST_NAME&quot;</span>
+</pre></div>
+</div>
+<p>The exisiting config is shown to the user.</p>
+<p>If the the arguments are properly chosen, then changes are directly saved in the configfile.
+If the arguments are wrong, then the user is asked to try again.
+The altered configuration is shown in the command line.</p>
+</li>
+</ol>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-reportdaily-duration">
+<span id="cmdoption-reportdaily-d"></span><span class="sig-name descname"><span class="pre">--duration</span></span><span class="sig-prename descclassname"><span class="pre">=DURATION</span></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">-d</span></span><span class="sig-prename descclassname"><span class="pre">=DURATION</span></span><a class="headerlink" href="#cmdoption-reportdaily-duration" title="Permalink to this definition">¶</a></dt>
+<dd><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>reportdaily init --change --duration <span class="s2">&quot;DURATION&quot;</span>
+</pre></div>
+</div>
+<p>Changes the duration of the education by the passing argument  <code class="docutils literal notranslate"><span class="pre">DURATION</span></code>.
+Possible values are: 2.5, 3.0, or 3.5.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-reportdaily-name">
+<span id="cmdoption-reportdaily-n"></span><span class="sig-name descname"><span class="pre">--name</span></span><span class="sig-prename descclassname"><span class="pre">=NAME</span></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">-n</span></span><span class="sig-prename descclassname"><span class="pre">=NAME</span></span><a class="headerlink" href="#cmdoption-reportdaily-name" title="Permalink to this definition">¶</a></dt>
+<dd><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>reportdaily init --change --name <span class="s2">&quot;NAME&quot;</span>
+</pre></div>
+</div>
+<p>Changes the name of the trainee by the passing <code class="docutils literal notranslate"><span class="pre">NAME</span></code> argument.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-reportdaily-team">
+<span id="cmdoption-reportdaily-t"></span><span class="sig-name descname"><span class="pre">--team</span></span><span class="sig-prename descclassname"><span class="pre">=TEAM</span></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">-t</span></span><span class="sig-prename descclassname"><span class="pre">=TEAM</span></span><a class="headerlink" href="#cmdoption-reportdaily-team" title="Permalink to this definition">¶</a></dt>
+<dd><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>reportdaily init --change --team <span class="s2">&quot;TEAM&quot;</span>
+</pre></div>
+</div>
+<p>Changes the team name by the passing <code class="docutils literal notranslate"><span class="pre">TEAM</span></code> argument.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-reportdaily-team-number">
+<span id="cmdoption-reportdaily-tn"></span><span class="sig-name descname"><span class="pre">--team-number</span></span><span class="sig-prename descclassname"><span class="pre">=TEAM_NUMBER</span></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">-tn</span></span><span class="sig-prename descclassname"><span class="pre">=TEAM_NUMBER</span></span><a class="headerlink" href="#cmdoption-reportdaily-team-number" title="Permalink to this definition">¶</a></dt>
+<dd><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>reportdaily init --change --team-number <span class="s2">&quot;TEAM_NUMBER&quot;</span>
+</pre></div>
+</div>
+<p>Changes the team number by the passing <code class="docutils literal notranslate"><span class="pre">TEAM_NUMBER</span></code> argument.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-reportdaily-year">
+<span id="cmdoption-reportdaily-y"></span><span class="sig-name descname"><span class="pre">--year</span></span><span class="sig-prename descclassname"><span class="pre">=YEAR</span></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">-y</span></span><span class="sig-prename descclassname"><span class="pre">=YEAR</span></span><a class="headerlink" href="#cmdoption-reportdaily-year" title="Permalink to this definition">¶</a></dt>
+<dd><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>reportdaily init --change --year <span class="s2">&quot;YEAR&quot;</span>
+</pre></div>
+</div>
+<p>Changes the start year of the education by the passing <code class="docutils literal notranslate"><span class="pre">YEAR</span></code> argument.</p>
+</dd></dl>
+
 </section>
 <section id="new">
 <h3>new<a class="headerlink" href="#new" title="Permalink to this headline">¶</a></h3>
@@ -126,11 +200,18 @@ User can enter his data directly or he need to answer some questions provided by
 </div>
 </section>
 </section>
+<section id="files">
+<h2>Files<a class="headerlink" href="#files" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>User configuration file: <code class="file docutils literal notranslate"><span class="pre">~/.config/reportdaily/reportdailyrc</span></code></p></li>
+<li><p>SQLite database: <code class="file docutils literal notranslate"><span class="pre">~/.config/reportdaily/database.sqlite</span></code></p></li>
+</ul>
+</section>
 <section id="see-also">
 <h2>See also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
 <dl class="field-list simple">
 <dt class="field-odd">Source code</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://github.com/SchleichsSalaticus/reportdaily">https://github.com/SchleichsSalaticus/reportdaily</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://github.com/EMaksy/reportdaily">https://github.com/EMaksy/reportdaily</a></p>
 </dd>
 </dl>
 </section>
@@ -159,6 +240,7 @@ User can enter his data directly or he need to answer some questions provided by
 <li><a class="reference internal" href="#export-id">export &lt;ID&gt;</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#files">Files</a></li>
 <li><a class="reference internal" href="#see-also">See also</a></li>
 </ul>
 </li>
@@ -197,7 +279,7 @@ User can enter his data directly or he need to answer some questions provided by
         <li class="right" >
           <a href="index.html" title="Welcome to reportdaily’s documentation"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">reportdaily 0.3.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">reportdaily 0.3.1 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">reportdaily</a></li> 
       </ul>
     </div>
