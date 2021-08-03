@@ -16,7 +16,7 @@ import textwrap
 # GLOBALS
 CONFIGPATH = os.path.expanduser("~/.config/reportdaily/reportdailyrc")
 DATABASEPATH = os.path.expanduser("~/.config/reportdaily/database.sqlite")
-__version__ = "0.3.0"
+__version__ = "0.3.1"
 __author__ = "Eugen Maksymenko <eugen.maksymenko@suse.com>"
 
 #: The dictionary, passed to :class:`logging.config.dictConfig`,
@@ -1417,29 +1417,27 @@ def parsecli(cliargs=None) -> argparse.Namespace:
                         )
 
     # subparser
-    subparsers = parser.add_subparsers(help='available sub commands')
+    subparsers = parser.add_subparsers(help='Available sub commands')
     # init cmd
     parser_init = subparsers.add_parser(
-        'init', help="Create an initial Configuration file")
+        'init', help="Create an initial Configuration file and a sqlite database")
     parser_init.set_defaults(func=cmd_init)
     parser_init.add_argument(
-        '--name', "-n", help='User Name')
+        '--name', "-n", help='Adjust trainee name in the existing configfile')
     parser_init.add_argument(
-        '--year', "-y", help='Start year of the trainee')
+        '--year', "-y", help='Adjust the start education year of the trainee in the existing config/database')
     parser_init.add_argument(
-        '--duration', "-d", help='How long is the education?')
+        '--duration', "-d", help='Adjust  the duration of the education of the trainee in the existing config/database')
     # This value is calculated and is not required any more
     parser_init.add_argument(
-        '--count-teams', "-ct", help='How many teams will be visited?')
+        '--team', "-t", help='Adjust the name of the current team in the existing config/database')
     parser_init.add_argument(
-        '--team', "-t", help='Current team name')
-    parser_init.add_argument(
-        '--team-number', "-tn", help='What is the number of your current team?')
+        '--team-number', "-tn", help='Adjust the team number of the current team in the existing config/database')
     parser_init.add_argument(
         '--change', '-c', action='store_true', help='Change an existing configuration')
 
     # new cmd
-    parser_new = subparsers.add_parser('new', help="creates a new day entry")
+    parser_new = subparsers.add_parser('new', help="Creates a new day entry")
     parser_new.set_defaults(func=cmd_new)
     # add cmd
     parser_add = subparsers.add_parser(
