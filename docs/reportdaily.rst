@@ -71,7 +71,8 @@ Use the option  `--change` in two different  ways:
 1. Ask for user input
 
    .. code-block:: bash
-            reportdaily init --change
+
+       reportdaily init --change
       
    The exisiting config is shown to the user.
 
@@ -205,4 +206,3 @@ See also
 --------
 
 :Source code:   https://github.com/EMaksy/reportdaily
-
