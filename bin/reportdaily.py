@@ -159,17 +159,15 @@ class Database():
         """
         Executes sql query to add a new day for upcoming entries
         """
-        day=date.today()
+        day="2024"
         sql_cmd = f"""
-        INSERT OR IGNORE INTO DAY (DAY_DATE,TRAINEE_ID)
+        INSERT INTO DAY (DAY_DATE,TRAINEE_ID)
         VALUES ({day},1);
         """
-        sql_cmd2=f"""
-        INSERT OR IGNORE INTO ENTRY (DAY_ID)
-        VALUES (1);"""
+
 
         self._execute_sql(sql_cmd)
-        self._execute_sql(sql_cmd2)
+    
     
 
     def _execute_sql(self, sql_command):
