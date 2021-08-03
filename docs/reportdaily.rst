@@ -50,9 +50,9 @@ init
 
 The ``init`` subcommand is required for the first time to initialize the program.
 
-User is asked to answer some question and two files are created.
+The user is asked to answer some question. After the input is finished, two files are created:
 
-A configuration file with all the user information and sqlite database.
+A configuration file with all the user information and a sqlite database to hold all data.
 
 
 .. code-block:: bash 
@@ -65,7 +65,7 @@ A configuration file with all the user information and sqlite database.
 
 Make changes to the existing config/database
 
-Use the option  `--change` in two diffrent  ways:
+Use the option  `--change` in two different  ways:
 
  
 1. Ask for user input
@@ -75,23 +75,19 @@ Use the option  `--change` in two diffrent  ways:
       
    The exisiting config is shown to the user.
 
-   User is asked to select an option of the configs which requires changes.
-
-   User is asked for the new values.
+   The user is asked to select an option of the configs which requires changes and to enter new values.
 
 2. Provide additional options allow to make changes direct via the command line.
    
    
-   .. code-block:: bash
+   .. code:: bash
    
       reportdaily init --change --name "TEST_NAME"
 
    The exisiting config is shown to the user. 
 
    If the the arguments are properly chosen, then changes are directly saved in the configfile.
-
    If the arguments are wrong, then the user is asked to try again. 
-
    The altered configuration is shown in the command line.
 
 
@@ -99,47 +95,47 @@ Use the option  `--change` in two diffrent  ways:
 
 
 
-   .. code-block:: bash
+   .. code:: bash
       
       reportdaily init --change --duration "DURATION"
 
-   Changes the duration of the education by the passed argument  ""DURATION""".
+   Changes the duration of the education by the passing argument  ``DURATION``.
 
-   DURATION argument options: 2.5, 3.0 or 3.5.
+``DURATION`` argument options: 2.5, 3.0 or 3.5.
 
 .. option:: --name=NAME, -n=NAME
 
-   .. code-block:: bash
+   .. code:: bash
 
       reportdaily init --change --name "NAME"
 
-   Changes the name of the trainee  by the passed ""NAME"" argument.
+   Changes the name of the trainee by the passing ``NAME`` argument.
 
 
 .. option:: --team=TEAM, -t=TEAM
 
-   .. code-block:: bash
+   .. code:: bash
       
       reportdaily init --change --team "TEAM"
 
-   Changes the team name by the passed ""TEAM"" argument.
+   Changes the team name by the passing ``TEAM`` argument.
 
 .. option:: --team-number=TEAM_NUMBER, -tn=TEAM_NUMBER
 
-   .. code-block:: bash
+   .. code:: bash
       
       reportdaily init --change --team-number "TEAM_NUMBER"
 
-   Changes the team number by the passed ""TEAM_NUMBER"" argument.
+   Changes the team number by the passing ``TEAM_NUMBER`` argument.
 
 
 .. option:: --year=YEAR, -y=YEAR
 
-   .. code-block:: bash
+   .. code:: bash
       
       reportdaily init --change --year "YEAR"
 
-   Changes the start year of the education  by the passed ""YEAR"" argument.
+   Changes the start year of the education by the passing ``YEAR`` argument.
 
 
 new
@@ -202,15 +198,9 @@ export the day by id
 Files 
 ----- 
 
-This script uses the following files:
+* User configuration file: :file:`~/.config/reportdaily/reportdailyrc`
 
-~/.config/reportdaily/reportdailyrc
-
-User configuration file
-
-~/.config/reportdaily/database.sqlite
-
-SQLITE database
+* SQLite database: :file:`~/.config/reportdaily/database.sqlite`
 
 
 
