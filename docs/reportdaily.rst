@@ -81,7 +81,7 @@ Use the option  `--change` in two different  ways:
 2. Provide additional options allow to make changes direct via the command line.
    
    
-   .. code:: bash
+   .. code-block:: bash
    
       reportdaily init --change --name "TEST_NAME"
 
@@ -93,7 +93,7 @@ Use the option  `--change` in two different  ways:
 
 
 .. option:: --duration=DURATION, -d=DURATION
-   .. code:: bash
+   .. code-block:: bash
       
       reportdaily init --change --duration "DURATION"
 
@@ -103,7 +103,7 @@ Use the option  `--change` in two different  ways:
 
 .. option:: --name=NAME, -n=NAME
 
-   .. code:: bash
+   .. code-block:: bash
 
       reportdaily init --change --name "NAME"
 
@@ -112,7 +112,7 @@ Use the option  `--change` in two different  ways:
 
 .. option:: --team=TEAM, -t=TEAM
 
-   .. code:: bash
+   .. code-block:: bash
       
       reportdaily init --change --team "TEAM"
 
@@ -120,7 +120,7 @@ Use the option  `--change` in two different  ways:
 
 .. option:: --team-number=TEAM_NUMBER, -tn=TEAM_NUMBER
 
-   .. code:: bash
+   .. code-block:: bash
       
       reportdaily init --change --team-number "TEAM_NUMBER"
 
@@ -129,7 +129,7 @@ Use the option  `--change` in two different  ways:
 
 .. option:: --year=YEAR, -y=YEAR
 
-   .. code:: bash
+   .. code-block:: bash
       
       reportdaily init --change --year "YEAR"
 
@@ -141,7 +141,7 @@ new
 
 Creates a new day for incoming entries
 
-.. code:: bash
+.. code-block:: bash
 
    reportdaily new
 
@@ -151,7 +151,7 @@ add <TEXT>
 
 Add a new entry with a timestamp
 
-.. code:: bash
+.. code-block:: bash
 
    reportdaily add <TEXT>
 
@@ -161,7 +161,7 @@ change <ID> <TEXT>
 
 change the text of an  entry by id 
 
-.. code:: bash
+.. code-block:: bash
 
    reportdaily  change <ID> <TEXT>
 
@@ -170,7 +170,7 @@ delete <ID>
 
 delete entry  by id
 
-.. code:: bash
+.. code-block:: bash
 
    reportdaily  delete <ID> 
 
@@ -179,7 +179,7 @@ list <ID>
 
 list all entries of the day by id
 
-.. code:: bash
+.. code-block:: bash
 
    reportdaily  list <ID> 
 
@@ -188,7 +188,7 @@ export <ID>
 ~~~~~~~~~~~
 export the day by id
 
-.. code:: bash
+.. code-block:: bash
 
    reportdaily  export <ID> 
 
