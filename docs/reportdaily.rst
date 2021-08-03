@@ -92,9 +92,6 @@ Use the option  `--change` in two different  ways:
 
 
 .. option:: --duration=DURATION, -d=DURATION
-
-
-
    .. code:: bash
       
       reportdaily init --change --duration "DURATION"
@@ -208,5 +205,4 @@ See also
 --------
 
 :Source code:   https://github.com/EMaksy/reportdaily
-
 
