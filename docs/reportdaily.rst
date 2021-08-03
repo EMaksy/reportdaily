@@ -8,7 +8,7 @@ Synopsis
 
 .. _invocation:
 
-.. code:: bash
+.. code-block:: bash
 
    reportdaily [<GLOBAL_OPTIONS>]  <Command>  [<CMD_OPTIONS>] [<TEXT>]
 
@@ -93,6 +93,7 @@ Use the option  `--change` in two different  ways:
 
 
 .. option:: --duration=DURATION, -d=DURATION
+
    .. code-block:: bash
       
       reportdaily init --change --duration "DURATION"
