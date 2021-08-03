@@ -63,33 +63,32 @@ A configuration file with all the user information and a sqlite database to hold
 
 .. option:: --change, -c
 
-Make changes to the existing config/database
+    Make changes to the existing config/database
 
-Use the option  `--change` in two different  ways:
+    Use the option  ``--change`` in two different  ways:
 
  
-1. Ask for user input
+    1. Ask for user input
 
-   .. code-block:: bash
+       .. code-block:: bash
 
-       reportdaily init --change
-      
-   The exisiting config is shown to the user.
+          reportdaily init --change
 
-   The user is asked to select an option of the configs which requires changes and to enter new values.
+       The exisiting config is shown to the user.
 
-2. Provide additional options allow to make changes direct via the command line.
-   
-   
-   .. code-block:: bash
-   
-      reportdaily init --change --name "TEST_NAME"
+       The user is asked to select an option of the configs which requires changes and to enter new values.
 
-   The exisiting config is shown to the user. 
+    2. Provide additional options allow to make changes direct via the command line.
 
-   If the the arguments are properly chosen, then changes are directly saved in the configfile.
-   If the arguments are wrong, then the user is asked to try again. 
-   The altered configuration is shown in the command line.
+       .. code-block:: bash
+
+          reportdaily init --change --name "TEST_NAME"
+
+       The exisiting config is shown to the user.
+
+       If the the arguments are properly chosen, then changes are directly saved in the configfile.
+       If the arguments are wrong, then the user is asked to try again.
+       The altered configuration is shown in the command line.
 
 
 .. option:: --duration=DURATION, -d=DURATION
@@ -99,8 +98,7 @@ Use the option  `--change` in two different  ways:
       reportdaily init --change --duration "DURATION"
 
    Changes the duration of the education by the passing argument  ``DURATION``.
-
-``DURATION`` argument options: 2.5, 3.0 or 3.5.
+   Possible values are: 2.5, 3.0, or 3.5.
 
 .. option:: --name=NAME, -n=NAME
 
