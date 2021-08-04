@@ -160,24 +160,28 @@ class Database():
         """
         Executes sql query to add a new day for upcoming entries
         """
+        error_msg=textwrap.dedent("""
+                New subcommand was already used
+                You are ready to add entries
+                """)
        
         day=f'"{self.sql_data}"'# care dont forget the double quotes  --> " "  --> Otherwise wrong value error in dabase happen
         log.debug(f"NEW DAY DATE: {day} ")
+        
+        # create new day entry
         sql_cmd_new_day = f"""
         INSERT OR REPLACE INTO DAY  (DAY_DATE,TRAINEE_ID)
         VALUES ({day},1);
         """
-        # need unique index so no duplicates happen
+        # need unique index so no duplicates happen, becaurse there is just one day 
         sql_cmd_unique_index_new= "CREATE UNIQUE INDEX index_day_on_day_date ON day(DAY_DATE);"
         
+    
         try:
             self._execute_sql(sql_cmd_new_day)
             self._execute_sql(sql_cmd_unique_index_new)
         except:
-           print("""
-                New subcommand was already used
-                You are ready to add entries
-                """)
+           print(error_msg)
            pass     
     
 
