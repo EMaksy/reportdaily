@@ -13,6 +13,7 @@ from datetime import datetime
 import textwrap
 
 
+
 # GLOBALS
 CONFIGPATH = os.path.expanduser("~/.config/reportdaily/reportdailyrc")
 DATABASEPATH = os.path.expanduser("~/.config/reportdaily/database.sqlite")
@@ -154,19 +155,20 @@ class Database():
         self._execute_sql(create_users_table_entry)
         self._execute_sql(create_users_table_day)
 
-   
-    def new_day(self):
+
+    def sql_new_day(self):
         """
         Executes sql query to add a new day for upcoming entries
         """
-        day="2024"
-        sql_cmd = f"""
-        INSERT INTO DAY (DAY_DATE,TRAINEE_ID)
+       
+        day=f'"{self.sql_data}"'# care dont forget the double quotes  --> " "  --> Otherwise wrong value error in dabase
+        log.debug(f"NEW DAY DATE: {day} ")
+        sql_cmd_new_day = f"""
+        INSERT OR REPLACE INTO DAY  (DAY_DATE,TRAINEE_ID)
         VALUES ({day},1);
         """
 
-
-        self._execute_sql(sql_cmd)
+        self._execute_sql(sql_cmd_new_day)
     
     
 
@@ -1303,15 +1305,28 @@ def cmd_new(args, configpath,databasepath):
     log.debug("New selected %s", args)
     init_cmd=check_config_database_exist(CONFIGPATH,DATABASEPATH)
     if init_cmd ==True:
-        sql_data=None
+        today_date_obj = datetime.today()
+        today_date_txt=format_date_obj_to_string(today_date_obj)
+        log.debug(f"TODAY DATE: {today_date_txt}")
+        sql_data=today_date_txt
         sql_database = Database(databasepath, sql_data)
-        sql_database.new_day()
+        sql_database.sql_new_day()
+        log.debug(f"SQL DATA: {sql_data} ")
         sql_database.close()  # FIXME Add context manager to simplify the open write close process
         print("New selected", args)
         return 0
 
     elif init_cmd ==False:
          return 1    
+
+def format_date_obj_to_string(date_obj):
+    """
+    Format the given obj to sql suited string
+    """         
+
+    date_string=date_obj.strftime("%Y-%m-%d")
+
+    return date_string
 
 def check_config_database_exist(configpath,databasepath):
     """
