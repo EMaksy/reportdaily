@@ -160,14 +160,13 @@ class Database():
         """
         Executes sql query to add a new day for upcoming entries
         """
-        error_msg=textwrap.dedent("""
-                New subcommand was already used
-                You are ready to add entries
+        error_msg=textwrap.dedent(f"""
+                You are ready to add entries for this date: {self.sql_data}
                 """)
        
         day=f'"{self.sql_data}"'# care dont forget the double quotes  --> " "  --> Otherwise wrong value error in dabase happen
         log.debug(f"NEW DAY DATE: {day} ")
-        
+
         # create new day entry
         sql_cmd_new_day = f"""
         INSERT OR REPLACE INTO DAY  (DAY_DATE,TRAINEE_ID)
@@ -288,6 +287,19 @@ class Database():
         self._execute_sql(sql_cmd_trainee)
 
         # overwrite sql database with the changes
+
+    def sql_read_database_all_teams(self):
+        """
+        Open up database  and return entries
+        """ 
+        sql_cmd_read_all_tems="SELECT * FROM team;"  
+        connection = sqlite3.connect(self.path)
+        cursor = connection.cursor()
+        cursor.execute(sql_cmd_read_all_tems)
+        results = cursor.fetchall()
+        cursor.close()
+        connection.close()
+        return results
 
     def close(self):
         """
@@ -1318,19 +1330,87 @@ def cmd_new(args, configpath,databasepath):
     log.debug("New selected %s", args)
     init_cmd=check_config_database_exist(CONFIGPATH,DATABASEPATH)
     if init_cmd ==True:
+        # get todays date
         today_date_obj = datetime.today()
+        # convert date obj to string 
         today_date_txt=format_date_obj_to_string(today_date_obj)
+        #check_month_team_change
+        check_team_change_date(today_date_txt,databasepath)
+
         log.debug(f"TODAY DATE: {today_date_txt}")
+        # sql injection 
         sql_data=today_date_txt
         sql_database = Database(databasepath, sql_data)
         sql_database.sql_new_day()
         log.debug(f"SQL DATA: {sql_data} ")
         sql_database.close()  # FIXME Add context manager to simplify the open write close process
-        print("New selected", args)
+        #  database close
         return 0
 
     elif init_cmd ==False:
          return 1    
+
+def check_month_team_change(date_string):
+    """
+    Check if new day is  in September or March
+    Print warning message if yes
+    returns date_string
+    """
+    month=date_string[5:7]
+    month_name="None"
+    if month=="08":
+        month_name="September"
+    elif month=="03":
+        month_name="March"  
+    else:
+        month_name =month      
+
+   
+    warning_txt=textwrap.dedent(f"""
+    Since it is the {month_name}, you should have changed the team.
+    
+    You can continue to use the programm.
+    Please change the name of the team as soon as possible.
+
+    Change new team name: 
+    reportdaily new -t
+    """)
+
+    log.debug(f"date_string: {date_string} month: {month} month_name: {month_name}")
+    if month=="08" or month=="03":
+        print(warning_txt)
+        return True
+
+    else:
+        log.debug(f"Month {month} is not March/September ")
+        return False
+
+
+
+def check_team_change_date(date_string,databasepath):
+    """
+    Check date of new cmd and ask user if it is time to update team name and number
+    """
+    #check if it is september or march and the team needs to change
+    did_the_team_change=None
+    did_the_team_change=check_month_team_change(date_string)
+    sql_team_entry=None
+    if did_the_team_change == True:
+        sql_database = Database(databasepath,sql_team_entry)
+        sql_team_entry=sql_database.sql_read_database_all_teams(databasepath,sql_team_entry)
+    
+        for entry in sql_team_entry:
+            print(entry)
+    else:
+        print("TEST")
+
+    # read old team name  and check if it is the same 
+    # check team number  and if its the same
+
+    # ask user to input new team name
+    # update team number
+    # add sql changes to database and add team 
+   
 
 def format_date_obj_to_string(date_obj):
     """
