@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>reportdaily &#8212; reportdaily 0.3.1 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
@@ -13,6 +13,7 @@
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
     
     <link rel="index" title="Index" href="genindex.html" />
@@ -39,21 +40,21 @@
           <div class="body" role="main">
             
   <section id="reportdaily">
-<h1>reportdaily<a class="headerlink" href="#reportdaily" title="Permalink to this headline">¶</a></h1>
+<h1>reportdaily<a class="headerlink" href="#reportdaily" title="Permalink to this heading">¶</a></h1>
 <section id="synopsis">
-<h2>Synopsis<a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h2>
+<h2>Synopsis<a class="headerlink" href="#synopsis" title="Permalink to this heading">¶</a></h2>
 <div class="highlight-bash notranslate" id="invocation"><div class="highlight"><pre><span></span>reportdaily <span class="o">[</span>&lt;GLOBAL_OPTIONS&gt;<span class="o">]</span>  &lt;Command&gt;  <span class="o">[</span>&lt;CMD_OPTIONS&gt;<span class="o">]</span> <span class="o">[</span>&lt;TEXT&gt;<span class="o">]</span>
 </pre></div>
 </div>
 </section>
 <section id="description">
-<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this heading">¶</a></h2>
 <p>The reportdaily script provides a command line tool to create edit and export daily weekly or monthly reports.
 <strong class="command">reportdaily</strong> to make the functionality accessible for shell
 scripts. The script supports several subcommands.</p>
 </section>
 <section id="global-options">
-<h2>Global Options<a class="headerlink" href="#global-options" title="Permalink to this headline">¶</a></h2>
+<h2>Global Options<a class="headerlink" href="#global-options" title="Permalink to this heading">¶</a></h2>
 <dl class="std option">
 <dt class="sig sig-object std" id="cmdoption-reportdaily-h">
 <span id="cmdoption-reportdaily-help"></span><span class="sig-name descname"><span class="pre">-h</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--help</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-reportdaily-h" title="Permalink to this definition">¶</a></dt>
@@ -74,9 +75,9 @@ scripts. The script supports several subcommands.</p>
 
 </section>
 <section id="subcommands">
-<h2>Subcommands<a class="headerlink" href="#subcommands" title="Permalink to this headline">¶</a></h2>
+<h2>Subcommands<a class="headerlink" href="#subcommands" title="Permalink to this heading">¶</a></h2>
 <section id="init">
-<h3>init<a class="headerlink" href="#init" title="Permalink to this headline">¶</a></h3>
+<h3>init<a class="headerlink" href="#init" title="Permalink to this heading">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">init</span></code> subcommand is required for the first time to initialize the program.</p>
 <p>The user is asked to answer some question. After the input is finished, two files are created:</p>
 <p>A configuration file with all the user information and a sqlite database to hold all data.</p>
@@ -158,42 +159,42 @@ Possible values are: 2.5, 3.0, or 3.5.</p>
 
 </section>
 <section id="new">
-<h3>new<a class="headerlink" href="#new" title="Permalink to this headline">¶</a></h3>
+<h3>new<a class="headerlink" href="#new" title="Permalink to this heading">¶</a></h3>
 <p>Creates a new day for incoming entries</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>reportdaily new
 </pre></div>
 </div>
 </section>
 <section id="add-text">
-<h3>add &lt;TEXT&gt;<a class="headerlink" href="#add-text" title="Permalink to this headline">¶</a></h3>
+<h3>add &lt;TEXT&gt;<a class="headerlink" href="#add-text" title="Permalink to this heading">¶</a></h3>
 <p>Add a new entry with a timestamp</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>reportdaily add &lt;TEXT&gt;
 </pre></div>
 </div>
 </section>
 <section id="change-id-text">
-<h3>change &lt;ID&gt; &lt;TEXT&gt;<a class="headerlink" href="#change-id-text" title="Permalink to this headline">¶</a></h3>
+<h3>change &lt;ID&gt; &lt;TEXT&gt;<a class="headerlink" href="#change-id-text" title="Permalink to this heading">¶</a></h3>
 <p>change the text of an  entry by id</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>reportdaily  change &lt;ID&gt; &lt;TEXT&gt;
 </pre></div>
 </div>
 </section>
 <section id="delete-id">
-<h3>delete &lt;ID&gt;<a class="headerlink" href="#delete-id" title="Permalink to this headline">¶</a></h3>
+<h3>delete &lt;ID&gt;<a class="headerlink" href="#delete-id" title="Permalink to this heading">¶</a></h3>
 <p>delete entry  by id</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>reportdaily  delete &lt;ID&gt;
 </pre></div>
 </div>
 </section>
 <section id="list-id">
-<h3>list &lt;ID&gt;<a class="headerlink" href="#list-id" title="Permalink to this headline">¶</a></h3>
+<h3>list &lt;ID&gt;<a class="headerlink" href="#list-id" title="Permalink to this heading">¶</a></h3>
 <p>list all entries of the day by id</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>reportdaily  list &lt;ID&gt;
 </pre></div>
 </div>
 </section>
 <section id="export-id">
-<h3>export &lt;ID&gt;<a class="headerlink" href="#export-id" title="Permalink to this headline">¶</a></h3>
+<h3>export &lt;ID&gt;<a class="headerlink" href="#export-id" title="Permalink to this heading">¶</a></h3>
 <p>export the day by id</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>reportdaily  <span class="nb">export</span> &lt;ID&gt;
 </pre></div>
@@ -201,16 +202,16 @@ Possible values are: 2.5, 3.0, or 3.5.</p>
 </section>
 </section>
 <section id="files">
-<h2>Files<a class="headerlink" href="#files" title="Permalink to this headline">¶</a></h2>
+<h2>Files<a class="headerlink" href="#files" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>User configuration file: <code class="file docutils literal notranslate"><span class="pre">~/.config/reportdaily/reportdailyrc</span></code></p></li>
 <li><p>SQLite database: <code class="file docutils literal notranslate"><span class="pre">~/.config/reportdaily/database.sqlite</span></code></p></li>
 </ul>
 </section>
 <section id="see-also">
-<h2>See also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
+<h2>See also<a class="headerlink" href="#see-also" title="Permalink to this heading">¶</a></h2>
 <dl class="field-list simple">
-<dt class="field-odd">Source code</dt>
+<dt class="field-odd">Source code<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://github.com/EMaksy/reportdaily">https://github.com/EMaksy/reportdaily</a></p>
 </dd>
 </dl>
@@ -224,8 +225,9 @@ Possible values are: 2.5, 3.0, or 3.5.</p>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">reportdaily</a><ul>
 <li><a class="reference internal" href="#synopsis">Synopsis</a></li>
 <li><a class="reference internal" href="#description">Description</a></li>
@@ -246,9 +248,12 @@ Possible values are: 2.5, 3.0, or 3.5.</p>
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="index.html"
-                        title="previous chapter">Welcome to reportdaily’s documentation</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="index.html"
+                          title="previous chapter">Welcome to reportdaily’s documentation</a></p>
+  </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -265,7 +270,7 @@ Possible values are: 2.5, 3.0, or 3.5.</p>
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -285,7 +290,7 @@ Possible values are: 2.5, 3.0, or 3.5.</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2021, Eugen Maksymenko.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.1.2.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.0.1.
     </div>
   </body>
 </html>
